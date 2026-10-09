@@ -2,8 +2,7 @@
 #SBATCH --job-name=play_human
 #SBATCH --output=cluster/%x_%j.out
 #SBATCH --error=cluster/%x_%j.err
-#SBATCH --partition=P100
-#SBATCH --gres=gpu:1
+#SBATCH --partition=CPU
 #SBATCH --cpus-per-task=5
 #SBATCH --mem=20G
 #SBATCH --time=02:00:00

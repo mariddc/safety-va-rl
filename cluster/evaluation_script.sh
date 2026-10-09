@@ -2,8 +2,7 @@
 #SBATCH --job-name=job
 #SBATCH --output=cluster/%x_%j.out
 #SBATCH --error=cluster/%x_%j.err
-#SBATCH --partition=P100
-#SBATCH --gres=gpu:1
+#SBATCH --partition=CPU
 #SBATCH --cpus-per-task=5
 #SBATCH --mem=20G
 #SBATCH --time=30:00:00
@@ -30,6 +29,6 @@ export NUMEXPR_NUM_THREADS=1
 export MUJOCO_GL=egl
 
 # Run experiment
-srun python scripts/evaluate.py ppo_3m600k_goal2_safe
+srun python scripts/evaluate.py ppo_5m600k_goal2_safe_vase_k15
 
 echo "Job finished at: $(date)"

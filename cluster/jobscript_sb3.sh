@@ -4,9 +4,9 @@
 #SBATCH --error=cluster/%x_%j.err
 #SBATCH --partition=P100
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=5
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=20G
-#SBATCH --time=30:00:00
+#SBATCH --time=24:00:00
 
 set -euo pipefail
 
@@ -28,6 +28,6 @@ export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
 
 # Run experiment
-srun python scripts/train.py ppo_500k
+srun python scripts/train.py ppo_5m700k_goal2
 
 echo "Job finished at: $(date)"
