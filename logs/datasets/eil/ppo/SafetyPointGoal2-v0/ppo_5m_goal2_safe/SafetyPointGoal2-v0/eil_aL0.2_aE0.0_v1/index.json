@@ -1,0 +1,61 @@
+{
+  "sessions": [
+    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/n_timesteps_5000000/session_20260202_221150/session.npz",
+    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/n_timesteps_5000000/session_20260202_220538/session.npz",
+    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/n_timesteps_5000000/session_20260202_220752/session.npz"
+  ],
+  "stats": {
+    "steps": 7603,
+    "label_counts": {
+      "G": 3235,
+      "B": 793,
+      "I": 3575
+    },
+    "num_sessions": 3
+  },
+  "per_session": [
+    {
+      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/n_timesteps_5000000/session_20260202_221150/session.npz",
+      "T": 1915,
+      "override_mean": 0.4422976501305483,
+      "takeover_events": 10,
+      "label_counts": {
+        "G": 860,
+        "B": 208,
+        "I": 847
+      },
+      "hazard_entries": 0,
+      "cost_mean": 0.0057441252283751965,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/n_timesteps_5000000/session_20260202_220538/session.npz",
+      "T": 2633,
+      "override_mean": 0.47930117736422334,
+      "takeover_events": 16,
+      "label_counts": {
+        "G": 1108,
+        "B": 263,
+        "I": 1262
+      },
+      "hazard_entries": 1,
+      "cost_mean": 0.031522978097200394,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/n_timesteps_5000000/session_20260202_220752/session.npz",
+      "T": 3055,
+      "override_mean": 0.47986906710310967,
+      "takeover_events": 15,
+      "label_counts": {
+        "G": 1267,
+        "B": 322,
+        "I": 1466
+      },
+      "hazard_entries": 2,
+      "cost_mean": 0.026841243728995323,
+      "cost_max": 1.0
+    }
+  ],
+  "data_file": "data.npz"
+}

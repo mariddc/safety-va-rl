@@ -9,15 +9,11 @@ class FastSafeRewardWrapper(gym.Wrapper):
         time_penalty=1.0,
         hazard_entry_penalty=200.0,
         hazard_step_penalty=10.0,
-        vase_entry_penalty=200.0,
-        vase_step_penalty=10.0,
         hazard_key="cost_hazards",
-        vase_keys=("cost_vases", "cost_vase", "contact_cost", "cost_contact"),
         scale_step_penalty_by_cost=False,
         terminate_on_goal=True,
         use_progress_shaping=True,
         shaping_k=1.0,
-        print_info_keys_once=False,
     ):
         super().__init__(env)
         self.goal_bonus = float(goal_bonus)
@@ -27,21 +23,13 @@ class FastSafeRewardWrapper(gym.Wrapper):
         self.hazard_step_penalty = float(hazard_step_penalty)
         self.hazard_key = hazard_key
 
-        self.vase_keys = tuple(vase_keys)
-        self.vase_entry_penalty = float(vase_entry_penalty)
-        self.vase_step_penalty = float(vase_step_penalty)
-
         self.scale_step_penalty_by_cost = scale_step_penalty_by_cost
 
         self.terminate_on_goal = terminate_on_goal
         self.use_progress_shaping = use_progress_shaping
         self.shaping_k = float(shaping_k)
 
-        self.print_info_keys_once = print_info_keys_once
-        self._printed_keys = False
-
         self._was_in_hazard = False
-        self._was_in_vase_violation = False
         self._prev_goal_dist = None
 
     def reset(self, **kwargs):
@@ -54,7 +42,6 @@ class FastSafeRewardWrapper(gym.Wrapper):
             obs, info = out, {}
 
         self._was_in_hazard = False
-        self._was_in_vase_violation = False
         self._prev_goal_dist = self._goal_distance_or_none()
         return obs, info
 
@@ -78,14 +65,6 @@ class FastSafeRewardWrapper(gym.Wrapper):
             terminated, truncated = bool(done), False
             info = dict(info)
 
-        if self.print_info_keys_once and (not self._printed_keys):
-            print("info keys:", list(info.keys()))
-            # also print likely cost fields if present
-            for k in ("cost", "costs", self.hazard_key, *self.vase_keys):
-                if k in info:
-                    print(f"info[{k!r}] =", info[k])
-            self._printed_keys = True
-
         # Min steps (fast)
         reward = -self.time_penalty
 
@@ -107,7 +86,9 @@ class FastSafeRewardWrapper(gym.Wrapper):
         hz = float(info.get(self.hazard_key, 0.0))
         in_hazard = hz > 0.0
 
-        if in_hazard and (not self._was_in_hazard):
+        hazard_entry = bool(in_hazard and (not self._was_in_hazard))
+
+        if hazard_entry:
             reward -= self.hazard_entry_penalty
 
         if in_hazard:
@@ -117,30 +98,12 @@ class FastSafeRewardWrapper(gym.Wrapper):
                 reward -= self.hazard_step_penalty
 
         self._was_in_hazard = in_hazard
+
+        # Expose hazard tracking signals for eval
+        info["hazard_cost_step"] = hz
+        info["hazard_in_contact"] = bool(in_hazard)
+        info["hazard_entry"] = hazard_entry
         info["cost_hazards_used"] = hz
-
-        # Vase penalties
-        vase_cost = 0.0
-        for k in self.vase_keys:
-            if k in info:
-                try:
-                    vase_cost += float(info[k])
-                except Exception:
-                    pass
-
-        in_vase_violation = vase_cost > 0.0
-
-        if in_vase_violation and (not self._was_in_vase_violation):
-            reward -= self.vase_entry_penalty
-
-        if in_vase_violation:
-            if self.scale_step_penalty_by_cost:
-                reward -= self.vase_step_penalty * vase_cost
-            else:
-                reward -= self.vase_step_penalty
-
-        self._was_in_vase_violation = in_vase_violation
-        info["cost_vases_used"] = vase_cost
 
         info["goal_met_used"] = goal_met
 
@@ -148,13 +111,13 @@ class FastSafeRewardWrapper(gym.Wrapper):
 
     def _goal_distance_or_none(self):
         """
-        Compute distance from agent to current goal using Safety-Gymnasium internals.
+        Compute distance from agent to current goal.
         """
         try:
             e = self.env.unwrapped
             agent_xy = np.asarray(e.task.agent.pos[:2], dtype=np.float32)
             goal_xy = np.asarray(e.task.goal.pos[:2], dtype=np.float32)
             return float(np.linalg.norm(agent_xy - goal_xy))
-        
+
         except Exception:
             return None

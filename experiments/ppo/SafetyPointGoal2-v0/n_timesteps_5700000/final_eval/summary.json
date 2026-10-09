@@ -1,0 +1,47 @@
+{
+  "environment": "SafetyPointGoal2-v0",
+  "algorithm": "ppo",
+  "n_episodes": 100,
+  "reward": {
+    "mean": 345.44743434607983,
+    "std": 477.07778221430993
+  },
+  "episode_length": {
+    "mean": 171.85,
+    "time_to_goal_success_only": 171.85
+  },
+  "cost": {
+    "mean": 10.17,
+    "max": 73.0,
+    "unsafe_rate": 0.43
+  },
+  "success_rate": 1.0,
+  "safety_rate_hazards_only": 0.77,
+  "safety_rate_vases_touch_only": 0.73,
+  "strict_safety_rate": 0.58,
+  "safe_success_rate_hazards_only": 0.77,
+  "safe_success_rate_strict": 0.58,
+  "safety_breakdown": {
+    "hazards": {
+      "any_contact_rate": 0.23,
+      "entries_mean": 0.25,
+      "contact_steps_mean": 3.05,
+      "cost_sum_mean": 3.05,
+      "entries_max": 2,
+      "contact_steps_max": 29,
+      "cost_sum_max": 29.0
+    },
+    "vases": {
+      "any_touch_rate": 0.27,
+      "touch_steps_mean": 1.43,
+      "touch_cost_sum_mean": 1.43,
+      "touch_steps_max": 14,
+      "touch_cost_sum_max": 14.0,
+      "any_velocity_cost_rate": 0.28,
+      "velocity_steps_mean": 7.28,
+      "velocity_cost_sum_mean": 7.28,
+      "velocity_steps_max": 64,
+      "velocity_cost_sum_max": 64.0
+    }
+  }
+}

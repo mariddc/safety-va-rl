@@ -31,7 +31,7 @@ cluster/job_*.err
 # **/*.pth
 
 # Logs / training traces
-**/logs/
+# **/logs/
 **/tb/
 **/torch_save/
 **/progress.csv

@@ -1,0 +1,9 @@
+{
+  "experiment_name": "ppo_5m_goal2_inverted_reward",
+  "env_id": "SafetyPointGoal2-v0",
+  "algorithm": "ppo",
+  "timesteps": 500000,
+  "run_dir": "runs/finetune/ppo_5m_goal2_inverted_reward/20260208_192814",
+  "model_path": "runs/finetune/ppo_5m_goal2_inverted_reward/20260208_192814/model/model.zip",
+  "wrapper": "FastSafeCompleteRewardWrapper"
+}

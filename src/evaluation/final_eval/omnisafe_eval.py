@@ -48,8 +48,6 @@ def run_omnisafe_final_eval(exp: dict, run_dir: Path, n_episodes: int = 50):
     seed_dir = max(seed_dirs, key=_max_epoch_in_seed_dir)
     max_epoch = _max_epoch_in_seed_dir(seed_dir)
 
-    print(f"[FINAL EVAL] Using seed_dir: {seed_dir}")
-    print(f"[FINAL EVAL] Max epoch in seed_dir: {max_epoch}")
 
     if exp.get("timesteps", 0) > 50_000 and max_epoch == 0:
         raise RuntimeError(

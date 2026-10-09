@@ -188,11 +188,65 @@ EXPERIMENTS = {
         "n_envs": 8,
     },
 
-    "ppo_4m_goal2_safe": {
+    "ppo_4m500k_goal2_safe": {
         "backend": "sb3",
         "algorithm": "ppo",
         "env_id": "SafetyPointGoal2-v0",
-        "timesteps": 4_000_000,
+        "timesteps": 4_500_000,
+        "seed": 0,
+        "n_envs": 8,
+    },
+
+    "ppo_5m_goal2_safe": {
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+        "timesteps": 5_000_000,
+        "seed": 0,
+        "n_envs": 8,
+    },
+
+    "ppo_5m500k_goal2_safe_k15": {
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+        "timesteps": 5_500_000,
+        "seed": 0,
+        "n_envs": 8,
+    },
+
+    "ppo_5m550k_goal2_safe_vase_k15": {
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+        "timesteps": 5_550_000,
+        "seed": 0,
+        "n_envs": 8,
+    },
+
+    "ppo_5m600k_goal2_safe_vase_k15": {
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+        "timesteps": 5_600_000,
+        "seed": 0,
+        "n_envs": 8,
+    },
+
+    "ppo_5m700k_goal2": {
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+        "timesteps": 5_700_000,
+        "seed": 0,
+        "n_envs": 8,
+    },
+
+    "ppo_6m_goal2": {
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+        "timesteps": 6_000_000,
         "seed": 0,
         "n_envs": 8,
     },

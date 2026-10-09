@@ -1,0 +1,9 @@
+{
+  "experiment_name": "ppo_5m_goal2_safe",
+  "env_id": "SafetyPointGoal2-v0",
+  "algorithm": "ppo",
+  "timesteps": 5000000,
+  "run_dir": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000",
+  "model_path": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000/model/model.zip",
+  "wrapper": "FastSafeRewardWrapper"
+}

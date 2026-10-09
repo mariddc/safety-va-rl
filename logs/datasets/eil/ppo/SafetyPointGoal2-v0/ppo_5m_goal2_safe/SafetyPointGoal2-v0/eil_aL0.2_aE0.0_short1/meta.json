@@ -1,0 +1,16 @@
+{
+  "env_name": "SafetyPointGoal2-v0",
+  "dataset_id": "eil_aL0.2_aE0.0_short1",
+  "alphaL": 0.2,
+  "alphaE": 0.0,
+  "seed": 0,
+  "downweight_contact": 0.25,
+  "downweight_hazard_step": 0.5,
+  "override_threshold": 0.5,
+  "label_map": {
+    "G": 0,
+    "B": 1,
+    "I": 2
+  },
+  "data_file": "data.npz"
+}

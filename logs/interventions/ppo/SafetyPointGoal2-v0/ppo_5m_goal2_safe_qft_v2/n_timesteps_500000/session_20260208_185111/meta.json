@@ -1,0 +1,9 @@
+{
+  "experiment_name": "ppo_5m_goal2_safe_qft_v2",
+  "env_id": "SafetyPointGoal2-v0",
+  "algorithm": "ppo",
+  "timesteps": 500000,
+  "run_dir": "runs/finetune/ppo_5m_goal2_safe_qft_v2/20260208_105732",
+  "model_path": "runs/finetune/ppo_5m_goal2_safe_qft_v2/20260208_105732/model/model.zip",
+  "wrapper": "FastSafeCompleteRewardWrapper"
+}

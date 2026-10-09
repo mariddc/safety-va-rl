@@ -1,0 +1,32 @@
+{
+  "environment": "SafetyPointGoal2-v0",
+  "algorithm": "ppo",
+  "n_episodes": 50,
+  "reward": {
+    "mean": -176.074216247797,
+    "std": 227.31547888877674
+  },
+  "episode_length": {
+    "mean": 150.62,
+    "time_to_goal_success_only": 133.28571428571428
+  },
+  "cost": {
+    "mean": 15.16,
+    "max": 106.0,
+    "unsafe_rate": 0.48
+  },
+  "success_rate": 0.98,
+  "safety_rate": 0.8,
+  "safe_success_rate": 0.78,
+  "safety_breakdown": {
+    "hazards": {
+      "any_contact_rate": 0.2,
+      "entries_mean": 0.22,
+      "contact_steps_mean": 3.06,
+      "cost_sum_mean": 3.06,
+      "entries_max": 2,
+      "contact_steps_max": 45,
+      "cost_sum_max": 45.0
+    }
+  }
+}

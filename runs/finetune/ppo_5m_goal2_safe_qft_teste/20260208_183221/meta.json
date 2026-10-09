@@ -1,0 +1,14 @@
+{
+  "finetune_exp": "ppo_5m_goal2_safe_qft_teste",
+  "base_exp": "ppo_5m_goal2_safe",
+  "base_run_dir": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000",
+  "base_model_path": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000/model/model.zip",
+  "env_id": "SafetyPointGoal2-v0",
+  "timesteps": 20000,
+  "seed": 0,
+  "n_envs": 8,
+  "q_path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
+  "beta": 0.05,
+  "B": -0.005,
+  "q_device": "cpu"
+}
