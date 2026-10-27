@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 
 import safety_gymnasium
+import torch
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecMonitor
 from stable_baselines3.common.utils import set_random_seed
@@ -29,11 +30,11 @@ def _resolve_model_path(run_dir: Path) -> Path:
     raise FileNotFoundError(f"Model not found in {run_dir / 'model'}")
 
 
-def make_env(env_id: str, rank: int, seed: int, *, q_path: Path, beta: float, B: float, q_device: str):
+def make_env(env_id: str, rank: int, seed: int, *, q_path: Path, beta: float, q_device: str):
     def _init():
         env = safety_gymnasium.make(env_id)
         env = FastSafeRewardWrapper(env)
-        env = InterventionRewardWrapper(env, q_path=str(q_path), beta=beta, B=B, device=q_device)
+        env = InterventionRewardWrapper(env, q_path=str(q_path), beta=beta, device=q_device)
         env.reset(seed=seed + rank)
         return env
     return _init
@@ -45,9 +46,16 @@ def finetune_from_registry(exp_name: str) -> Path:
     base_exp_name = exp["base_exp"]
     q_path = (ROOT / exp["q_path"]).resolve()
     beta = float(exp["beta"])
-    B = float(exp["B"])
     q_device = str(exp["q_device"])
 
+    if "B" in exp:
+        raise ValueError(
+            f"{exp_name}: 'B' is no longer a fine-tune setting. "
+            "The penalty threshold is the Q-training B stored in q_theta.pt; remove 'B' from the definition."
+        )
+
+    # Same fallback as InterventionRewardWrapper
+    B = float(torch.load(q_path, map_location="cpu").get("B", 0.0))
 
     env_id = exp["env_id"]
     timesteps = int(exp["timesteps"])
@@ -68,7 +76,7 @@ def finetune_from_registry(exp_name: str) -> Path:
 
     # Env
     env = SubprocVecEnv(
-        [make_env(env_id, i, seed, q_path=q_path, beta=beta, B=B, q_device=q_device) for i in range(n_envs)],
+        [make_env(env_id, i, seed, q_path=q_path, beta=beta, q_device=q_device) for i in range(n_envs)],
         start_method="spawn",
     )
     env = VecMonitor(env)
@@ -103,6 +111,7 @@ def finetune_from_registry(exp_name: str) -> Path:
         "q_path": str(q_path),
         "beta": beta,
         "B": B,
+        "q_penalty": "indicator",
         "q_device": q_device,
     }
     (run_dir / "meta.json").write_text(__import__("json").dumps(meta, indent=2))

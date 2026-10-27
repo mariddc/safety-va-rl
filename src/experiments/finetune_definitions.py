@@ -14,7 +14,6 @@ FINETUNES = {
         # q penalty
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 1.0,
-        "B": 0.0,
         "q_device": "cpu",
 
         # PPO fine-tune
@@ -39,7 +38,6 @@ FINETUNES = {
 
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 0.05,
-        "B": 0.0,
         "q_device": "cpu",
 
     },
@@ -57,7 +55,6 @@ FINETUNES = {
 
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 0.05,
-        "B": 0.0,
         "q_device": "cpu",
 
         "learning_rate": 1e-4,
@@ -77,7 +74,6 @@ FINETUNES = {
 
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 0.05,
-        "B": -0.005,
         "q_device": "cpu",
 
         "learning_rate": 1e-4,
@@ -97,7 +93,6 @@ FINETUNES = {
 
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 0.05,
-        "B": -0.005,
         "q_device": "cpu",
 
         "learning_rate": 1e-4,
@@ -117,10 +112,49 @@ FINETUNES = {
 
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v1/q_theta.pt",
         "beta": 0.5,
-        "B": -0.02,
         "q_device": "cpu",
 
         "learning_rate": 1e-4,
 
     },
-} 
+
+    # Indicator penalty beta * 1[Q > B], B read from q_theta.pt (to-do item 1)
+    "ppo_5m_goal2_safe_qind_b1.0": {
+        "name": "ppo_5m_goal2_safe_qind_b1.0",
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+
+        "base_exp": "ppo_5m_goal2_safe",
+        "timesteps": 500_000,
+        "seed": 0,
+        "n_envs": 8,
+
+        "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
+        "beta": 1.0,
+        "q_device": "cpu",
+
+        "learning_rate": 1e-4,
+
+    },
+
+    # beta = 0 control for ppo_5m_goal2_safe_qind_b1.0 (to-do item 7)
+    "ppo_5m_goal2_safe_qind_b0.0": {
+        "name": "ppo_5m_goal2_safe_qind_b0.0",
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+
+        "base_exp": "ppo_5m_goal2_safe",
+        "timesteps": 500_000,
+        "seed": 0,
+        "n_envs": 8,
+
+        "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
+        "beta": 0.0,
+        "q_device": "cpu",
+
+        "learning_rate": 1e-4,
+
+    },
+}

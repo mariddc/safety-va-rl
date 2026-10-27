@@ -26,13 +26,18 @@ class QNetwork(nn.Module):
 
 
 class InterventionRewardWrapper(gym.Wrapper):
-    def __init__(self, env: gym.Env, *, q_path: str, beta: float = 1.0, B: float = 0.0, device: str = "cpu"):
+    def __init__(self, env: gym.Env, *, q_path: str, beta: float = 1.0, device: str = "cpu"):
         super().__init__(env)
         self.beta = float(beta)
-        self.B = float(B)
         self.device = torch.device(device)
 
         ckpt = torch.load(q_path, map_location=self.device)
+
+        # B is the Q-training boundary, stored in the checkpoint.
+        # Older checkpoints lack it but were all trained with train_qtheta's default B=0.0.
+        if "B" not in ckpt:
+            print(f"[InterventionRewardWrapper] warning: no 'B' in {q_path}, assuming training default B=0.0")
+        self.B = float(ckpt.get("B", 0.0))
         obs_dim = int(ckpt["obs_dim"])
         act_dim = int(ckpt["act_dim"])
 
@@ -85,8 +90,8 @@ class InterventionRewardWrapper(gym.Wrapper):
             a = torch.from_numpy(act_in).to(self.device).unsqueeze(0)
             q_val = float(self.q(o, a).item())
 
-        # penalty = self.beta * max(0.0, q_val - self.B)
-        penalty = self.beta * max(0.0, self.B - q_val)
+        # EIL "not good enough" indicator: scale-free in Q, beta in reward units
+        penalty = self.beta * float(q_val > self.B)
 
         # Step env
         out = self.env.step(action)

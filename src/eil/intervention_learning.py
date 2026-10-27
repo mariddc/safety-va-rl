@@ -152,7 +152,17 @@ def train_qtheta(dataset_dir: Path, *, B: float = 0.0, lambda_I: float = 1.0,
 
     # Save
     out_path = dataset_dir / "q_theta.pt"
-    torch.save({"state_dict": model.state_dict(), "obs_dim": obs_dim, "act_dim": act_dim}, out_path)
+    # B travels with the network: it is the only threshold where Q > B is meaningful
+    torch.save(
+        {
+            "state_dict": model.state_dict(),
+            "obs_dim": obs_dim,
+            "act_dim": act_dim,
+            "B": float(B),
+            "lambda_I": float(lambda_I),
+        },
+        out_path,
+    )
     (dataset_dir / "q_train_log.json").write_text(json.dumps(log, indent=2))
 
     return out_path

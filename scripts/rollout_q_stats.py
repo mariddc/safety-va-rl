@@ -52,13 +52,20 @@ def main():
     n_steps = int(sys.argv[2]) if len(sys.argv) >= 3 else 20_000
 
     exp = get_experiment(exp_name)
-    run_dir = get_run_dir(exp)
+    try:
+        run_dir = get_run_dir(exp)
+    except FileNotFoundError:
+        # Finetune not run yet: roll out its base policy instead
+        if "base_exp" not in exp:
+            raise
+        run_dir = get_run_dir(get_experiment(exp["base_exp"]))
+        print(f"No finetune run for {exp_name}; using base model {exp['base_exp']}")
     model_path = _resolve_model_path(run_dir)
 
-    # Pull q params from exp if present (works for FINETUNES too)
+    # Pull q params from exp if present (works for FINETUNES too).
+    # B is not set here: the wrapper reads the Q-training B from the checkpoint.
     q_path = exp.get("q_path", None)
-    beta = float(exp.get("beta", 0.05))
-    B = float(exp.get("B", -0.005))
+    beta = float(exp.get("beta", 1.0))
     q_device = str(exp.get("q_device", "cpu"))
 
     env = safety_gymnasium.make(exp["env_id"])
@@ -69,7 +76,8 @@ def main():
             "exp does not contain q_path. Add it to your FINETUNES entry (or pass a finetune exp name)."
         )
 
-    env = InterventionRewardWrapper(env, q_path=str(q_path), beta=beta, B=B, device=q_device)
+    qwrap = InterventionRewardWrapper(env, q_path=str(q_path), beta=beta, device=q_device)
+    env = qwrap
 
     model = _load_model(exp["algorithm"], model_path)
 
@@ -97,12 +105,16 @@ def main():
     penalties = np.asarray(penalties, dtype=np.float32)
     costs = np.asarray(costs, dtype=np.float32)
 
-    print(f"EXP={exp_name}")
+    print(f"EXP={exp_name}  model={model_path}")
+    print(f"B={qwrap.B:+.6f} (from checkpoint)  beta={qwrap.beta}")
     print(f"Q:       {_stats(q_vals)}")
     print(f"Penalty: {_stats(penalties)}")
     if costs.size:
         print(f"Cost:    {_stats(costs)}")
+    print(f"Penalty values = {np.unique(penalties).tolist() if penalties.size else []}")
     print(f"Frac penalty>0 = {float((penalties>0).mean()) if penalties.size else 0.0:.3f}")
+    # Expected active fraction under this policy; mean penalty = beta * this
+    print(f"Frac Q>B       = {float((q_vals>qwrap.B).mean()) if q_vals.size else 0.0:.3f}")
 
 
 if __name__ == "__main__":
