@@ -16,6 +16,9 @@ FINETUNES = {
         "beta": 1.0,
         "q_device": "cpu",
 
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
+
         # PPO fine-tune
         "learning_rate": 1e-4,
         "n_steps": 2048,
@@ -40,6 +43,9 @@ FINETUNES = {
         "beta": 0.05,
         "q_device": "cpu",
 
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
+
     },
 
     "ppo_5m_goal2_safe_qft_v3": {
@@ -56,6 +62,9 @@ FINETUNES = {
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 0.05,
         "q_device": "cpu",
+
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
 
         "learning_rate": 1e-4,
 
@@ -76,6 +85,9 @@ FINETUNES = {
         "beta": 0.05,
         "q_device": "cpu",
 
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
+
         "learning_rate": 1e-4,
 
     },
@@ -95,6 +107,9 @@ FINETUNES = {
         "beta": 0.05,
         "q_device": "cpu",
 
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
+
         "learning_rate": 1e-4,
 
     },
@@ -113,6 +128,10 @@ FINETUNES = {
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v1/q_theta.pt",
         "beta": 0.5,
         "q_device": "cpu",
+
+        # reward differs from base (complete, goal 800)
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
 
         "learning_rate": 1e-4,
 
@@ -134,6 +153,9 @@ FINETUNES = {
         "beta": 1.0,
         "q_device": "cpu",
 
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
+
         "learning_rate": 1e-4,
 
     },
@@ -153,6 +175,9 @@ FINETUNES = {
         "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v2/q_theta.pt",
         "beta": 0.0,
         "q_device": "cpu",
+
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
 
         "learning_rate": 1e-4,
 

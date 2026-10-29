@@ -5,6 +5,8 @@ SWEEPS = {
         "env_id": "SafetyPointGoal2-v0",
         "timesteps": 500_000,
         "device": "cuda",
+        "reward_wrapper": "native",
+        "reward_kwargs": {},
 
         "objective": "reward_minus_cost",
         "lambda_cost": 1.0,
@@ -25,6 +27,8 @@ SWEEPS = {
         "env_id": "SafetyPointGoal1-v0",
         "timesteps": 100_000,
         "device": "cuda",
+        "reward_wrapper": "native",
+        "reward_kwargs": {},
 
         "objective": "reward_minus_cost",
         "lambda_cost": 1.0,
@@ -45,6 +49,8 @@ SWEEPS = {
         "env_id": "SafetyPointGoal1-v0",
         "timesteps": 10_000,
         "device": "cuda",
+        "reward_wrapper": "native",
+        "reward_kwargs": {},
 
         "objective": "reward_minus_cost",
         "lambda_cost": 1.0,
@@ -65,6 +71,8 @@ SWEEPS = {
         "env_id": "SafetyPointGoal2-v0",
         "timesteps": 100_000,
         "device": "cuda",
+        "reward_wrapper": "native",
+        "reward_kwargs": {},
 
         "objective": "reward_minus_cost",
         "lambda_cost": 1.0,
@@ -85,6 +93,8 @@ SWEEPS = {
         "env_id": "SafetyPointGoal1-v0",
         "timesteps": 1_000_000,
         "device": "cuda",
+        "reward_wrapper": "native",
+        "reward_kwargs": {},
 
         "objective": "reward_minus_cost",
         "lambda_cost": 1.0,
@@ -106,6 +116,8 @@ SWEEPS = {
         "env_id": "SafetyPointGoal1-v0",
         "timesteps": 10_000,
         "device": "cuda",
+        "reward_wrapper": "native",
+        "reward_kwargs": {},
 
         "objective": "reward_minus_cost",
         "lambda_cost": 1.0,

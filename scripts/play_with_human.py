@@ -9,7 +9,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.wrappers.FastSafeCompleteRewardWrapper import FastSafeCompleteRewardWrapper
+from src.wrappers.reward import wrap_reward, reward_config
 from src.logging.session_logger import SessionLogger
 from src.experiments.registry import get_experiment, get_run_dir
 from src.utils.path import get_intervention_root
@@ -204,7 +204,7 @@ def main():
         height=H,
         camera_name="fixedfar",
     )
-    env_wrapped = FastSafeCompleteRewardWrapper(env_raw)
+    env_wrapped = wrap_reward(env_raw, exp)
 
     human = KeyboardController(env_raw.action_space, throttle=0.3, turn=1.0)
     env = HumanOverrideWrapper(env_wrapped, human)
@@ -219,7 +219,7 @@ def main():
         "timesteps": timesteps,
         "run_dir": str(run_dir),
         "model_path": str(model_path),
-        "wrapper": "FastSafeCompleteRewardWrapper",
+        **reward_config(exp),
     }
 
 

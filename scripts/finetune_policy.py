@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 
 from src.experiments.registry import get_experiment, get_run_dir
 from src.eil.q_penalty_callback import QPenaltyStatsCallback
-from src.wrappers.FastSafeRewardWrapper import FastSafeRewardWrapper
+from src.wrappers.reward import wrap_reward, reward_config
 from src.wrappers.InterventionRewardWrapper import InterventionRewardWrapper
 
 
@@ -30,10 +30,9 @@ def _resolve_model_path(run_dir: Path) -> Path:
     raise FileNotFoundError(f"Model not found in {run_dir / 'model'}")
 
 
-def make_env(env_id: str, rank: int, seed: int, *, q_path: Path, beta: float, q_device: str):
+def make_env(exp: dict, rank: int, seed: int, *, q_path: Path, beta: float, q_device: str):
     def _init():
-        env = safety_gymnasium.make(env_id)
-        env = FastSafeRewardWrapper(env)
+        env = wrap_reward(safety_gymnasium.make(exp["env_id"]), exp)
         env = InterventionRewardWrapper(env, q_path=str(q_path), beta=beta, device=q_device)
         env.reset(seed=seed + rank)
         return env
@@ -66,6 +65,8 @@ def finetune_from_registry(exp_name: str) -> Path:
 
     # Load baseline model path
     base_exp = get_experiment(base_exp_name)
+    if reward_config(exp) != reward_config(base_exp):
+        print(f"WARNING: fine-tune reward {reward_config(exp)} differs from base {base_exp_name} reward {reward_config(base_exp)}")
     base_run_dir = get_run_dir(base_exp)
     base_model_path = _resolve_model_path(base_run_dir)
 
@@ -76,7 +77,7 @@ def finetune_from_registry(exp_name: str) -> Path:
 
     # Env
     env = SubprocVecEnv(
-        [make_env(env_id, i, seed, q_path=q_path, beta=beta, q_device=q_device) for i in range(n_envs)],
+        [make_env(exp, i, seed, q_path=q_path, beta=beta, q_device=q_device) for i in range(n_envs)],
         start_method="spawn",
     )
     env = VecMonitor(env)
@@ -113,6 +114,7 @@ def finetune_from_registry(exp_name: str) -> Path:
         "B": B,
         "q_penalty": "indicator",
         "q_device": q_device,
+        **reward_config(exp),
     }
     (run_dir / "meta.json").write_text(__import__("json").dumps(meta, indent=2))
 

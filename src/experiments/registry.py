@@ -2,6 +2,12 @@ from pathlib import Path
 from .definitions import EXPERIMENTS
 from .sweep_definitions import SWEEPS
 from .finetune_definitions import FINETUNES
+from src.wrappers.reward import REWARD_WRAPPERS
+
+
+for _name, _exp in {**EXPERIMENTS, **SWEEPS, **FINETUNES}.items():
+    if _exp.get("reward_wrapper") not in REWARD_WRAPPERS or "reward_kwargs" not in _exp:
+        raise ValueError(f"{_name}: definition needs 'reward_wrapper' (one of {list(REWARD_WRAPPERS)}) and 'reward_kwargs'")
 
 
 def get_experiment(name: str):

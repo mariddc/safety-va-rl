@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.experiments.registry import get_experiment, get_run_dir
-from src.wrappers.FastSafeRewardWrapper import FastSafeRewardWrapper
+from src.wrappers.reward import wrap_reward, reward_config
 from src.wrappers.InterventionRewardWrapper import InterventionRewardWrapper
 
 
@@ -69,7 +69,7 @@ def main():
     q_device = str(exp.get("q_device", "cpu"))
 
     env = safety_gymnasium.make(exp["env_id"])
-    env = FastSafeRewardWrapper(env)
+    env = wrap_reward(env, exp)
 
     if q_path is None:
         raise KeyError(
@@ -106,7 +106,7 @@ def main():
     costs = np.asarray(costs, dtype=np.float32)
 
     print(f"EXP={exp_name}  model={model_path}")
-    print(f"B={qwrap.B:+.6f} (from checkpoint)  beta={qwrap.beta}")
+    print(f"B={qwrap.B:+.6f} (from checkpoint)  beta={qwrap.beta}  reward={reward_config(exp)}")
     print(f"Q:       {_stats(q_vals)}")
     print(f"Penalty: {_stats(penalties)}")
     if costs.size:

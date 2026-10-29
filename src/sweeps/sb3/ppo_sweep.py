@@ -1,9 +1,11 @@
 class PPOSpec:
-    def __init__(self, env_id, timesteps, device, search_space):
+    def __init__(self, env_id, timesteps, device, search_space, reward_wrapper, reward_kwargs):
         self.env_id = env_id
         self.timesteps = timesteps
         self.device = device
         self.search_space = search_space
+        self.reward_wrapper = reward_wrapper
+        self.reward_kwargs = reward_kwargs
 
     @classmethod
     def from_sweep_definition(cls, sweep):
@@ -12,6 +14,8 @@ class PPOSpec:
             timesteps=sweep["timesteps"],
             device=sweep.get("device", "cpu"),
             search_space=sweep["search_space"],
+            reward_wrapper=sweep["reward_wrapper"],
+            reward_kwargs=sweep["reward_kwargs"],
         )
 
     def sample_hyperparams(self, trial): 
@@ -33,6 +37,8 @@ class PPOSpec:
             "env_id": self.env_id,
             "timesteps": self.timesteps,
             "device": self.device,
+            "reward_wrapper": self.reward_wrapper,
+            "reward_kwargs": self.reward_kwargs,
             **hparams,
         }
 

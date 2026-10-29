@@ -4,16 +4,16 @@ import safety_gymnasium
 from stable_baselines3 import SAC, PPO
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
 
-from src.wrappers.SafetyGymSB3Wrapper import SafetyGymSB3Wrapper
+from src.wrappers.reward import wrap_reward
 
 
-def make_env(env_id: str):
+def make_env(exp: dict):
     env = safety_gymnasium.make(
-        env_id,
+        exp["env_id"],
         render_mode="rgb_array",
         camera_name="fixedfar",
     )
-    return SafetyGymSB3Wrapper(env)
+    return wrap_reward(env, exp)
 
 
 def save_video(exp_name: str, exp: dict, run_dir: Path):
@@ -30,7 +30,7 @@ def save_video(exp_name: str, exp: dict, run_dir: Path):
 
     video_length = exp.get("video_length", 1000)
 
-    env = DummyVecEnv([lambda: make_env(env_id)])
+    env = DummyVecEnv([lambda: make_env(exp)])
 
     if algo == "sac":
         model = SAC.load(model_path, env=env)

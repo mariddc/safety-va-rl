@@ -7,13 +7,11 @@ import safety_gymnasium
 from stable_baselines3 import SAC, PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 
-from src.wrappers.FastSafeCompleteRewardWrapper import FastSafeCompleteRewardWrapper
+from src.wrappers.reward import wrap_reward, reward_config
 
 
-def make_env(env_id: str):
-    env = safety_gymnasium.make(env_id)
-    env = FastSafeCompleteRewardWrapper(env)
-    return env
+def make_env(exp: dict):
+    return wrap_reward(safety_gymnasium.make(exp["env_id"]), exp)
 
 
 def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
@@ -24,7 +22,7 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
     if not model_path.exists():
         raise FileNotFoundError(f"Model not found: {model_path}")
 
-    env = DummyVecEnv([lambda: make_env(env_id)])
+    env = DummyVecEnv([lambda: make_env(exp)])
 
     if algo == "sac":
         model = SAC.load(model_path, env=env)
@@ -136,6 +134,7 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
         "environment": env_id,
         "algorithm": algo,
         "n_episodes": n_episodes,
+        **reward_config(exp),
         "reward": {
             "mean": float(rewards.mean()),
             "std": float(rewards.std()),

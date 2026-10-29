@@ -1,20 +1,18 @@
 import os
+import json
 import safety_gymnasium
 from pathlib import Path
 
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecMonitor
 from stable_baselines3.common.utils import set_random_seed
 
-from src.wrappers.SafetyGymSB3Wrapper import SafetyGymSB3Wrapper
-from src.wrappers.FastSafeRewardWrapper import FastSafeRewardWrapper
+from src.wrappers.reward import wrap_reward, reward_config
 from src.trainers.sb3.callbacks import SafetyLoggingCallback
 
 
-def make_env(env_id: str, rank: int, seed: int = 0):
+def make_env(exp: dict, rank: int, seed: int = 0):
     def _init():
-        env = safety_gymnasium.make(env_id)
-        #env = SafetyGymSB3Wrapper(env)
-        env = FastSafeRewardWrapper(env)
+        env = wrap_reward(safety_gymnasium.make(exp["env_id"]), exp)
         env.reset(seed=seed + rank)
         return env
     return _init
@@ -34,7 +32,7 @@ def train_sb3(model_class, exp: dict, run_dir: Path, model_kwargs: dict):
 
     # envs 
     env = SubprocVecEnv(
-        [make_env(env_id, i, seed) for i in range(n_envs)],
+        [make_env(exp, i, seed) for i in range(n_envs)],
         start_method="spawn",
     )
     env = VecMonitor(env)
@@ -63,4 +61,6 @@ def train_sb3(model_class, exp: dict, run_dir: Path, model_kwargs: dict):
     )
 
     model.save(model_dir / "model.zip")
+    meta = {**reward_config(exp), "env_id": env_id, "timesteps": timesteps, "seed": seed}
+    (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))
     env.close()
