@@ -170,7 +170,7 @@ def train_qtheta(dataset_dir: Path, *, B: float = 0.0, lambda_I: float = 1.0,
 
 if __name__ == "__main__":
     exp_name = "ppo_5m700k_goal2"
-    dataset_id = "eil_aL0.2_aE0.0_v1"
+    dataset_id = "eil_aL0.2_aE0.0_v3"
 
     dataset_dir = build_dataset_from_sessions(exp_name, dataset_id)
     q_path = train_qtheta(dataset_dir, device="cpu")

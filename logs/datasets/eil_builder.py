@@ -50,6 +50,14 @@ def _segments(mask01: np.ndarray) -> List[Tuple[int, int, int]]:
     return segments
 
 
+def _episode_bounds(session: Dict[str, np.ndarray], T: int) -> List[Tuple[int, int]]:
+    """Episode intervals (start, end), end exclusive, from terminated|truncated."""
+    done = (session["terminated"] | session["truncated"]).astype(bool)
+    ends = np.flatnonzero(done) + 1
+    bounds = np.unique(np.concatenate([[0], ends, [T]]))
+    return list(zip(bounds[:-1].tolist(), bounds[1:].tolist()))
+
+
 def _split_learner_segment(start: int, end: int, alphaL: float, min_len: int) -> List[Tuple[int, int, int]]:
     """Split learner [start,end) into G then B tail (last alphaL fraction)."""
     L = end - start
@@ -137,6 +145,7 @@ def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_n
         "downweight_contact": cfg.downweight_contact,
         "downweight_hazard_step": cfg.downweight_hazard_step,
         "override_threshold": cfg.override_threshold,
+        "split_on_episodes": True,
         "label_map": {"G": LABEL_G, "B": LABEL_B, "I": LABEL_I},
         "data_file": "data.npz",
     }
@@ -195,18 +204,16 @@ def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_n
         override = data["human_override"]
         override01 = (override.astype(np.float32) > cfg.override_threshold).astype(np.int32)
 
-        segs = _segments(override01)
         w = _compute_weights(data, cfg)
 
         labeled_intervals: List[Tuple[int, int, int]] = []
         takeover_events = 0
 
-        if all(v == 0 for (_, _, v) in segs):
-            labeled_intervals.append((0, T, LABEL_G))
-        else:
-            i = 0
-            while i < len(segs):
-                s, e, v = segs[i]
+        # Segment inside each episode: a takeover says nothing about steps before a reset
+        episodes = _episode_bounds(data, T)
+        for ep_s, ep_e in episodes:
+            segs = [(s + ep_s, e + ep_s, v) for (s, e, v) in _segments(override01[ep_s:ep_e])]
+            for i, (s, e, v) in enumerate(segs):
                 if v == 0:
                     if i + 1 < len(segs) and segs[i + 1][2] == 1:
                         labeled_intervals.extend(_split_learner_segment(s, e, cfg.alphaL, cfg.min_segment_len))
@@ -215,7 +222,6 @@ def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_n
                         labeled_intervals.append((s, e, LABEL_G))
                 else:
                     labeled_intervals.extend(_split_expert_segment(s, e, cfg.alphaE, cfg.min_segment_len))
-                i += 1
 
         labels = np.empty((T,), dtype=np.int64)
         actions = np.empty_like(a_exec, dtype=np.float32)
@@ -240,6 +246,7 @@ def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_n
         per_sess = {
             "path": str(p),
             "T": int(T),
+            "episodes": len(episodes),
             "override_mean": float(np.mean(override01)),
             "takeover_events": int(takeover_events),
             "label_counts": {"G": g, "B": b, "I": ii},
