@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import glob
 import json
 from pathlib import Path
 
@@ -32,13 +31,29 @@ class QNetwork(nn.Module):
         return self.net(x).squeeze(-1)  
 
 
-def build_dataset_from_sessions(exp_name: str, dataset_id: str) -> Path:
+def _select_session_files(interventions_root: Path, sessions: list[str] | None) -> list[Path]:
+    """Session files whose folder name matches any pattern, sorted so the builder's shuffle is reproducible."""
+    patterns = ["session_*"] if sessions is None else sessions
+
+    session_files = set()
+    for pattern in patterns:
+        matches = list(interventions_root.glob(f"{pattern}/session.npz"))
+        if not matches:
+            raise FileNotFoundError(f"No sessions match {pattern!r} under: {interventions_root}")
+        session_files.update(matches)
+    return sorted(session_files)
+
+
+def build_dataset_from_sessions(exp_name: str, dataset_id: str, sessions: list[str] | None = None) -> Path:
+    """
+    Build a new dataset. Raises FileExistsError if dataset_id already exists for this experiment.
+
+    sessions: session folder names or patterns, e.g. ["session_202611*"]. None uses every session.
+    """
     exp = get_experiment(exp_name)
 
     interventions_root = get_intervention_root(exp, ROOT, exp_name)
-    session_files = [Path(p) for p in glob.glob(str(interventions_root / "session_*" / "session.npz"))]
-    if not session_files:
-        raise FileNotFoundError(f"No sessions found under: {interventions_root}")
+    session_files = _select_session_files(interventions_root, sessions)
 
     out_root = get_eil_dataset_root(exp, ROOT, exp_name, dataset_id)
 

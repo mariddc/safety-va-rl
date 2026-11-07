@@ -155,7 +155,7 @@ def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_n
     session_paths = [session_paths[i] for i in order]
 
     out_dir = Path(cfg.out_root) / env_name / cfg.dataset_id
-    out_dir.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=False)  # a dataset may have a q_theta.pt that fine-tunes point to
 
     meta = {
         "env_name": env_name,
