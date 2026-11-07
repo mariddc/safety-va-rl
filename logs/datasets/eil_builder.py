@@ -31,6 +31,9 @@ class BuilderConfig:
 
     override_threshold: float = 0.5 
 
+    # Accept session_misaligned.npz files. Only for comparing old and new data.
+    allow_misaligned: bool = False
+
 
 def _segments(mask01: np.ndarray) -> List[Tuple[int, int, int]]:
     """Return contiguous segments as (start, end, value), end exclusive."""
@@ -118,6 +121,23 @@ def _compute_weights(session: Dict[str, np.ndarray], cfg: BuilderConfig) -> np.n
     return w
 
 
+def _usable_sessions(paths: List[Path], cfg: BuilderConfig) -> List[Path]:
+    """Refuse misaligned sessions and skip empty ones, before anything is written."""
+    kept: List[Path] = []
+    for p in paths:
+        with np.load(p, allow_pickle=False) as z:
+            if not cfg.allow_misaligned and not ("obs_aligned" in z.files and bool(z["obs_aligned"])):
+                raise ValueError(
+                    f"{p}: no obs_aligned marker (misaligned session). Use the realigned session.npz, "
+                    "or BuilderConfig(allow_misaligned=True) to compare old and new data."
+                )
+            if z["obs"].shape[0] == 0:
+                print(f"[eil] skipping empty session: {p}")
+                continue
+        kept.append(p)
+    return kept
+
+
 def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_name: str) -> Path:
     """
     Build a unified EIL dataset from session.npz files.
@@ -126,6 +146,7 @@ def build_eil_dataset(session_files: List[str | Path], cfg: BuilderConfig, env_n
 
     session_paths = [Path(p) for p in session_files]
     session_paths = [p for p in session_paths if p.exists()]
+    session_paths = _usable_sessions(session_paths, cfg)
     if not session_paths:
         raise FileNotFoundError("No session files found.")
 

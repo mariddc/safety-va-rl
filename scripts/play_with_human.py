@@ -236,7 +236,7 @@ def main():
                     running = False
 
             policy_action, _ = model.predict(obs, deterministic=True)
-            obs, reward, cost, terminated, truncated, info = env.step(policy_action)
+            next_obs, reward, cost, terminated, truncated, info = env.step(policy_action)
 
             cost_comps = extract_cost_components(info)
 
@@ -255,8 +255,10 @@ def main():
             info["hazard_in_contact"] = bool(info.get("hazard_in_contact", haz_cost_step > 0.0))
 
 
+            # obs is the state the action was chosen from, not the one it led to
             logger.add(obs, info, reward, cost, terminated, truncated)
 
+            obs = next_obs
             if terminated or truncated:
                 obs, _ = env.reset()
 

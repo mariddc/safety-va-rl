@@ -73,5 +73,6 @@ class SessionLogger:
             velocity_cost=np.array(self.velocity_cost, dtype=np.float32),
             terminated=np.array(self.terminated, dtype=np.int8),
             truncated=np.array(self.truncated, dtype=np.int8),
+            obs_aligned=np.array(True),
         )
         print(f"[logger] saved {len(self.override)} steps to {self.npz_path}")
