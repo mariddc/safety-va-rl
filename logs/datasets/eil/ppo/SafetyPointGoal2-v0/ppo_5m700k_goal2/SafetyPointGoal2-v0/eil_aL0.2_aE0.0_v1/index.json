@@ -1,18 +1,18 @@
 {
   "sessions": [
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221447/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221019/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222524/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_001608/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221314/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223115/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_224522/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223946/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221746/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222742/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222403/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_220644/session.npz",
-    "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_000937/session.npz"
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221447/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221019/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222524/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_001608/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221314/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223115/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_224522/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223946/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221746/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222742/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222403/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_220644/session_misaligned.npz",
+    "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_000937/session_misaligned.npz"
   ],
   "stats": {
     "steps": 59231,
@@ -25,7 +25,7 @@
   },
   "per_session": [
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221447/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221447/session_misaligned.npz",
       "T": 3764,
       "override_mean": 0.36211477151965993,
       "takeover_events": 15,
@@ -39,7 +39,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221019/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221019/session_misaligned.npz",
       "T": 4244,
       "override_mean": 0.38854853911404336,
       "takeover_events": 22,
@@ -53,7 +53,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222524/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222524/session_misaligned.npz",
       "T": 3084,
       "override_mean": 0.3751621271076524,
       "takeover_events": 19,
@@ -67,7 +67,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_001608/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_001608/session_misaligned.npz",
       "T": 7218,
       "override_mean": 0.35369908561928515,
       "takeover_events": 42,
@@ -81,7 +81,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221314/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221314/session_misaligned.npz",
       "T": 1873,
       "override_mean": 0.43246129204484784,
       "takeover_events": 7,
@@ -95,7 +95,7 @@
       "cost_max": 0.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223115/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223115/session_misaligned.npz",
       "T": 3466,
       "override_mean": 0.33929601846508944,
       "takeover_events": 18,
@@ -109,7 +109,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_224522/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_224522/session_misaligned.npz",
       "T": 3580,
       "override_mean": 0.37486033519553075,
       "takeover_events": 19,
@@ -123,7 +123,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223946/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223946/session_misaligned.npz",
       "T": 8443,
       "override_mean": 0.3914485372497927,
       "takeover_events": 52,
@@ -137,7 +137,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221746/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221746/session_misaligned.npz",
       "T": 2496,
       "override_mean": 0.4250801282051282,
       "takeover_events": 13,
@@ -151,7 +151,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222742/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222742/session_misaligned.npz",
       "T": 5190,
       "override_mean": 0.3722543352601156,
       "takeover_events": 27,
@@ -165,7 +165,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222403/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222403/session_misaligned.npz",
       "T": 695,
       "override_mean": 0.5539568345323741,
       "takeover_events": 2,
@@ -179,7 +179,7 @@
       "cost_max": 0.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_220644/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_220644/session_misaligned.npz",
       "T": 5187,
       "override_mean": 0.30460767302872566,
       "takeover_events": 25,
@@ -193,7 +193,7 @@
       "cost_max": 1.0
     },
     {
-      "path": "/Users/marianaolm/Desktop/telecom-paris/3A/PRIM/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_000937/session.npz",
+      "path": "logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_000937/session_misaligned.npz",
       "T": 9991,
       "override_mean": 0.31268141327194476,
       "takeover_events": 43,
