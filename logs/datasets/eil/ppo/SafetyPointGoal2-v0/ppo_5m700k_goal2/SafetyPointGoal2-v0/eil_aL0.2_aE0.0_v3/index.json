@@ -1,0 +1,224 @@
+{
+  "sessions": [
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_224522/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221314/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222742/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221746/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222403/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_001608/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_220644/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221447/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222524/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223946/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_000937/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223115/session.npz",
+    "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221019/session.npz"
+  ],
+  "stats": {
+    "steps": 58834,
+    "label_counts": {
+      "G": 34783,
+      "B": 2614,
+      "I": 21437
+    },
+    "num_sessions": 13
+  },
+  "per_session": [
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_224522/session.npz",
+      "T": 3560,
+      "episodes": 20,
+      "override_mean": 0.37696629213483146,
+      "takeover_events": 19,
+      "label_counts": {
+        "G": 2073,
+        "B": 145,
+        "I": 1342
+      },
+      "hazard_entries": 3,
+      "cost_mean": 0.017134832218289375,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221314/session.npz",
+      "T": 1858,
+      "episodes": 14,
+      "override_mean": 0.43595263724434874,
+      "takeover_events": 7,
+      "label_counts": {
+        "G": 987,
+        "B": 61,
+        "I": 810
+      },
+      "hazard_entries": 0,
+      "cost_mean": 0.0,
+      "cost_max": 0.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222742/session.npz",
+      "T": 5157,
+      "episodes": 33,
+      "override_mean": 0.37463641652123325,
+      "takeover_events": 27,
+      "label_counts": {
+        "G": 2984,
+        "B": 241,
+        "I": 1932
+      },
+      "hazard_entries": 1,
+      "cost_mean": 0.022493697702884674,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221746/session.npz",
+      "T": 2476,
+      "episodes": 20,
+      "override_mean": 0.42851373182552505,
+      "takeover_events": 13,
+      "label_counts": {
+        "G": 1302,
+        "B": 113,
+        "I": 1061
+      },
+      "hazard_entries": 2,
+      "cost_mean": 0.01292407140135765,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222403/session.npz",
+      "T": 690,
+      "episodes": 5,
+      "override_mean": 0.5579710144927537,
+      "takeover_events": 2,
+      "label_counts": {
+        "G": 295,
+        "B": 10,
+        "I": 385
+      },
+      "hazard_entries": 0,
+      "cost_mean": 0.0,
+      "cost_max": 0.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_001608/session.npz",
+      "T": 7174,
+      "episodes": 44,
+      "override_mean": 0.3558684137161974,
+      "takeover_events": 42,
+      "label_counts": {
+        "G": 4236,
+        "B": 385,
+        "I": 2553
+      },
+      "hazard_entries": 1,
+      "cost_mean": 0.010872595943510532,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_220644/session.npz",
+      "T": 5144,
+      "episodes": 43,
+      "override_mean": 0.307153965785381,
+      "takeover_events": 25,
+      "label_counts": {
+        "G": 3342,
+        "B": 222,
+        "I": 1580
+      },
+      "hazard_entries": 1,
+      "cost_mean": 0.01866251975297928,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221447/session.npz",
+      "T": 3739,
+      "episodes": 24,
+      "override_mean": 0.3645359721850762,
+      "takeover_events": 15,
+      "label_counts": {
+        "G": 2203,
+        "B": 173,
+        "I": 1363
+      },
+      "hazard_entries": 2,
+      "cost_mean": 0.008290986530482769,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_222524/session.npz",
+      "T": 3064,
+      "episodes": 20,
+      "override_mean": 0.37761096605744127,
+      "takeover_events": 19,
+      "label_counts": {
+        "G": 1756,
+        "B": 151,
+        "I": 1157
+      },
+      "hazard_entries": 0,
+      "cost_mean": 0.037859007716178894,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223946/session.npz",
+      "T": 8387,
+      "episodes": 56,
+      "override_mean": 0.39406223917968286,
+      "takeover_events": 52,
+      "label_counts": {
+        "G": 4712,
+        "B": 370,
+        "I": 3305
+      },
+      "hazard_entries": 4,
+      "cost_mean": 0.017527125775814056,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260214_000937/session.npz",
+      "T": 9923,
+      "episodes": 68,
+      "override_mean": 0.3148241459236118,
+      "takeover_events": 43,
+      "label_counts": {
+        "G": 6461,
+        "B": 338,
+        "I": 3124
+      },
+      "hazard_entries": 0,
+      "cost_mean": 0.0024186233058571815,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_223115/session.npz",
+      "T": 3443,
+      "episodes": 22,
+      "override_mean": 0.34156259076386875,
+      "takeover_events": 18,
+      "label_counts": {
+        "G": 2100,
+        "B": 167,
+        "I": 1176
+      },
+      "hazard_entries": 0,
+      "cost_mean": 0.007261109538376331,
+      "cost_max": 1.0
+    },
+    {
+      "path": "/home/infres/dutra-24/projects/safe-gym/safety-va-rl/logs/interventions/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/n_timesteps_5700000/session_20260212_221019/session.npz",
+      "T": 4219,
+      "episodes": 25,
+      "override_mean": 0.3908509125385162,
+      "takeover_events": 22,
+      "label_counts": {
+        "G": 2332,
+        "B": 238,
+        "I": 1649
+      },
+      "hazard_entries": 3,
+      "cost_mean": 0.014221379533410072,
+      "cost_max": 1.0
+    }
+  ],
+  "data_file": "data.npz"
+}
