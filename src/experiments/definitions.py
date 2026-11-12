@@ -293,7 +293,7 @@ EXPERIMENTS = {
         "seed": 0,
         "n_envs": 8,
 
-        # reward inferred, unconfirmed (to-do open question 1)
+        # confirmed
         "reward_wrapper": "fastsafe",
         "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
     },
@@ -345,7 +345,7 @@ EXPERIMENTS = {
         "seed": 0,
         "n_envs": 8,
 
-        # reward inferred, unconfirmed (to-do open question 1)
+        # confirmed
         "reward_wrapper": "complete",
         "reward_kwargs": {"goal_bonus": 800.0, "shaping_k": 1.5},
     },
