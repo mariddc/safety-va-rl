@@ -30,6 +30,17 @@ def _resolve_model_path(run_dir: Path) -> Path:
     raise FileNotFoundError(f"Model not found in {run_dir / 'model'}")
 
 
+def _check_reward_matches_base(exp_name: str, exp: dict, base_exp_name: str, base_exp: dict) -> None:
+    # A different reward would make the fine-tune result not comparable to its base (CLAUDE.md research rule).
+    ft_reward = reward_config(exp)
+    base_reward = reward_config(base_exp)
+    if ft_reward != base_reward:
+        raise ValueError(
+            f"{exp_name}: reward {ft_reward} differs from base {base_exp_name} reward {base_reward}. "
+            f"Set 'reward_wrapper' and 'reward_kwargs' in {exp_name} equal to those of {base_exp_name}."
+        )
+
+
 def make_env(exp: dict, rank: int, seed: int, *, q_path: Path, beta: float, q_device: str):
     def _init():
         env = wrap_reward(safety_gymnasium.make(exp["env_id"]), exp)
@@ -65,8 +76,7 @@ def finetune_from_registry(exp_name: str) -> Path:
 
     # Load baseline model path
     base_exp = get_experiment(base_exp_name)
-    if reward_config(exp) != reward_config(base_exp):
-        print(f"WARNING: fine-tune reward {reward_config(exp)} differs from base {base_exp_name} reward {reward_config(base_exp)}")
+    _check_reward_matches_base(exp_name, exp, base_exp_name, base_exp)
     base_run_dir = get_run_dir(base_exp)
     base_model_path = _resolve_model_path(base_run_dir)
 
