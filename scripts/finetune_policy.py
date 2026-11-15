@@ -72,7 +72,7 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
             f"Set 'env_id' in {exp_name} equal to that of {base_exp_name}."
         )
 
-    # ft and ref share these values, so a pair differs only in beta (and the per-run seed)
+    # ft and ref share these values and the seed; only beta differs between them
     frozen = FINETUNE_HPARAMS[base_exp_name]
     changed = [k for k in frozen if exp[k] != frozen[k]]
     if changed:
@@ -105,6 +105,8 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
             raise ValueError(f"{exp_name}: Q {q_path.name} sha256 {q_sha256} differs from frozen {frozen_sha256}")
         q_hash_check = "matched"
     q_ckpt = torch.load(q_path, map_location="cpu")
+    q_rel, base_model_rel = repo_relative(q_path), repo_relative(base_model_path)
+    base_model_sha256 = sha256_file(base_model_path)
 
     job = os.environ.get("SLURM_JOB_ID") or os.getpid()
     run_dir = ROOT / "runs" / "finetune" / exp_name / f"{datetime.now():%Y%m%d_%H%M%S}_{run_pass}_{job}"
@@ -115,10 +117,9 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
         run_dir / "meta.json", exp_name, run_pass, git,
         seed=seed, beta=beta, timesteps=timesteps, n_envs=n_envs, env_id=env_id, **reward_config(exp),
         hyperparameters={"requested": requested, "effective": None},
-        q_path=repo_relative(q_path), q_sha256=q_sha256, q_hash_check=q_hash_check,
+        q_path=q_rel, q_sha256=q_sha256, q_hash_check=q_hash_check,
         B=q_ckpt.get("B"), lambda_I=q_ckpt.get("lambda_I"), dataset_id=q_path.parent.name,
-        base_exp=base_exp_name, base_model_path=repo_relative(base_model_path),
-        base_model_sha256=sha256_file(base_model_path),
+        base_exp=base_exp_name, base_model_path=base_model_rel, base_model_sha256=base_model_sha256,
     ) as meta:
         (run_dir / "logs").mkdir()
         (run_dir / "model").mkdir()
