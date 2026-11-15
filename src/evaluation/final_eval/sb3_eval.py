@@ -14,7 +14,9 @@ def make_env(exp: dict):
     return wrap_reward(safety_gymnasium.make(exp["env_id"]), exp)
 
 
-def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
+def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100, *, seeds=None, out_dir=None):
+    if seeds is not None:
+        n_episodes = len(seeds)
     env_id = exp["env_id"]
     algo = exp["algorithm"]
 
@@ -45,7 +47,10 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
     episode_vase_contact_steps = []
     episode_vase_velocity_steps = []
 
-    for _ in range(n_episodes):
+    for ep in range(n_episodes):
+        if seeds is not None:
+            # DummyVecEnv passes this seed to the next reset() only
+            env.seed(seeds[ep])
         obs = env.reset()
         done = False
 
@@ -179,8 +184,11 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
         },
     }
 
-    out_dir = run_dir / "final_eval"
-    out_dir.mkdir(exist_ok=True)
+    if seeds is not None:
+        results["seeds"] = seeds
+
+    out_dir = Path(out_dir) if out_dir is not None else run_dir / "final_eval"
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     out_path = out_dir / "summary.json"
     with open(out_path, "w") as f:
@@ -207,3 +215,10 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100):
     plt.close()
 
     return results
+
+
+def run_sb3_seeded_eval(exp: dict, run_dir: Path, seeds: list[int], out_dir: Path):
+    """One deterministic episode per reset seed; seeds come from src.utils.seed_pools."""
+    if not seeds:
+        raise ValueError("seeded eval needs a non-empty seed list")
+    return run_sb3_final_eval(exp, run_dir, seeds=seeds, out_dir=out_dir)
