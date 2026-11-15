@@ -9,6 +9,7 @@ import pytest
 import torch
 
 import scripts.finetune_policy as finetune_policy
+from src.experiments.finetune_hparams import FINETUNE_HPARAMS
 from src.utils import run_meta
 from src.utils.run_meta import (
     build_run_meta, dirty_paths_from_status, finetune_run_dir_name, git_provenance, q_info,
@@ -256,10 +257,11 @@ def test_finetune_dirty_raises_before_any_dir(tmp_path: Path, monkeypatch: pytes
     (base_dir / "model" / "model.zip").write_bytes(b"zip")
 
     reward = {"reward_wrapper": "fastsafe", "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0}}
+    base = "ppo_5m_goal2_safe"  # needs frozen fine-tune hyperparameters (0.6)
     exps = {
-        "ft": {"name": "ft", "base_exp": "base", "env_id": "SafetyPointGoal2-v0", "timesteps": 1, "seed": 0,
-               "n_envs": 1, "q_path": str(q_path), "beta": 0.0, "q_device": "cpu", **reward},
-        "base": {"env_id": "SafetyPointGoal2-v0", "timesteps": 1, "seed": 0, **reward},
+        "ft": {"name": "ft", "base_exp": base, "env_id": "SafetyPointGoal2-v0", "seed": 0,
+               "q_path": str(q_path), "beta": 0.0, "q_device": "cpu", **reward, **FINETUNE_HPARAMS[base]},
+        base: {"env_id": "SafetyPointGoal2-v0", "timesteps": 1, "seed": 0, **reward},
     }
     repo = tmp_path / "repo"
     repo.mkdir()

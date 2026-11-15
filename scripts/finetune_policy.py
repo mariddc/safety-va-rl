@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 import sys
 from pathlib import Path
 
@@ -14,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.experiments.registry import get_experiment, get_run_dir
+from src.experiments.finetune_hparams import check_effective_hparams, resolve_finetune_hparams
 from src.eil.q_penalty_callback import QPenaltyStatsCallback
 from src.wrappers.reward import wrap_reward, reward_config
 from src.wrappers.InterventionRewardWrapper import InterventionRewardWrapper
@@ -69,16 +69,26 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
             "The penalty threshold is the Q-training B stored in q_theta.pt; remove 'B' from the definition."
         )
 
-    env_id = exp["env_id"]
-    timesteps = int(exp["timesteps"])
-    seed = int(exp.get("seed", 0))
-    n_envs = int(exp.get("n_envs", int(os.environ.get("N_ENVS", "8"))))
-
-    set_random_seed(seed)
-
     # Load baseline model path
     base_exp = get_experiment(base_exp_name)
     _check_reward_matches_base(exp_name, exp, base_exp_name, base_exp)
+
+    if exp["env_id"] != base_exp["env_id"]:
+        raise ValueError(
+            f"{exp_name}: env_id {exp['env_id']!r} differs from base {base_exp_name} env_id {base_exp['env_id']!r}. "
+            f"Set 'env_id' in {exp_name} equal to that of {base_exp_name}."
+        )
+
+    # Frozen PPO hyperparameters (0.6): missing, unknown or changed keys are errors (D023, D067)
+    model_kwargs = resolve_finetune_hparams(exp_name, exp)
+
+    env_id = exp["env_id"]
+    timesteps = int(exp["timesteps"])
+    seed = exp["seed"]
+    n_envs = int(exp["n_envs"])
+
+    set_random_seed(seed)
+
     base_run_dir = get_run_dir(base_exp)
     base_model_path = _resolve_model_path(base_run_dir)
 
@@ -86,13 +96,6 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
     git = require_clean(git_provenance(), what=exp_name, allow_dirty=allow_dirty)
     q = q_info(q_path)
     q_hash_check = check_frozen_q(base_exp_name, q["q_sha256"])
-
-    model_kwargs = {"device": exp.get("device", "cuda")}
-
-    # PPO hyperparams for fine-tune
-    for k in ["learning_rate", "n_steps", "batch_size", "gamma", "clip_range"]:
-        if k in exp:
-            model_kwargs[k] = exp[k]
 
     meta = build_run_meta(
         run_kind="finetune",
@@ -106,7 +109,9 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
         n_envs=n_envs,
         env_id=env_id,
         **reward_config(exp),
-        hyperparameters={"requested": dict(model_kwargs), "effective": None},
+        # n_envs is set through the env and seed is passed to PPO.load separately; the model reads both back,
+        # so they are compared too
+        hyperparameters={"requested": {**model_kwargs, "n_envs": n_envs, "seed": seed}, "effective": None},
         **q,
         q_hash_check=q_hash_check,
         base_exp=base_exp_name,
@@ -137,14 +142,22 @@ def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = 
         env = VecMonitor(env)
 
         # Load model + continue learning
-        model = PPO.load(str(base_model_path), env=env, **model_kwargs, verbose=1)
+        # tensorboard_log: otherwise PPO.load keeps the base run's log dir and the curves land there (D068)
+        # seed: otherwise _setup_model re-seeds RNGs and env.seed() with the zip's seed (0 for both bases) and
+        # every fine-tune trains with seed 0 whatever its definition says (D070)
+        model = PPO.load(str(base_model_path), env=env, **model_kwargs, seed=seed,
+                         tensorboard_log=str(run_dir / "logs"), verbose=1)
 
-        # Read back after load: PPO.load rebuilds schedules from the overrides (D024)
+        # Read back after load: PPO.load rebuilds schedules from the overrides (D024).
+        # An override that did not take must stop the run before any gradient step (D067).
         meta["hyperparameters"]["effective"] = sb3_effective_hyperparameters(model)
         meta["hardware"]["device"] = str(model.device)
+        check_effective_hparams(exp_name, meta["hyperparameters"]["requested"], meta["hyperparameters"]["effective"])
 
         cb = QPenaltyStatsCallback(print_every_rollout=True, verbose=0)
+        meta["timesteps_at_start"] = int(model.num_timesteps)
         model.learn(total_timesteps=timesteps, reset_num_timesteps=False, progress_bar=False, callback=cb)
+        meta["timesteps_trained"] = int(model.num_timesteps) - meta["timesteps_at_start"]
 
         #model.learn(total_timesteps=timesteps, reset_num_timesteps=False, progress_bar=False)
 

@@ -64,6 +64,10 @@ def _schema_template() -> dict[str, Any]:
         "seed": None,
         "beta": None,
         "timesteps": None,
+        # fine-tune: model.num_timesteps when learn() started and the steps it actually trained. With
+        # reset_num_timesteps=False learn() trains `timesteps` more, rounded up to whole rollouts.
+        "timesteps_at_start": None,
+        "timesteps_trained": None,
         "n_envs": None,
         "env_id": None,
         "reward_wrapper": None,
@@ -298,6 +302,8 @@ def sb3_effective_hyperparameters(model: Any) -> dict[str, Any]:
     for k in ("n_steps", "batch_size", "n_epochs", "gamma", "gae_lambda", "ent_coef", "vf_coef", "max_grad_norm", "n_envs"):
         out[k] = _plain(getattr(model, k, None))
     out["device"] = str(model.device)
+    # PPO.load re-seeds RNGs and env from model.seed (the zip's value unless overridden), so it is a run setting
+    out["seed"] = _plain(getattr(model, "seed", None))
     return out
 
 
