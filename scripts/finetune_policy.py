@@ -1,12 +1,11 @@
 from __future__ import annotations
 
+import argparse
 import os
 import sys
-import time
 from pathlib import Path
 
 import safety_gymnasium
-import torch
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecMonitor
 from stable_baselines3.common.utils import set_random_seed
@@ -18,6 +17,11 @@ from src.experiments.registry import get_experiment, get_run_dir
 from src.eil.q_penalty_callback import QPenaltyStatsCallback
 from src.wrappers.reward import wrap_reward, reward_config
 from src.wrappers.InterventionRewardWrapper import InterventionRewardWrapper
+from src.utils.frozen import check_frozen_q
+from src.utils.run_meta import (
+    build_run_meta, finetune_run_dir_name, git_provenance, q_info, recorded_run, repo_relative,
+    require_clean, sb3_effective_hyperparameters, sha256_file, validate_run_pass,
+)
 
 
 def _resolve_model_path(run_dir: Path) -> Path:
@@ -50,7 +54,8 @@ def make_env(exp: dict, rank: int, seed: int, *, q_path: Path, beta: float, q_de
     return _init
 
 
-def finetune_from_registry(exp_name: str) -> Path:
+def finetune_from_registry(exp_name: str, *, run_pass: str, allow_dirty: bool = False) -> Path:
+    validate_run_pass(run_pass)
     exp = get_experiment(exp_name)
 
     base_exp_name = exp["base_exp"]
@@ -63,9 +68,6 @@ def finetune_from_registry(exp_name: str) -> Path:
             f"{exp_name}: 'B' is no longer a fine-tune setting. "
             "The penalty threshold is the Q-training B stored in q_theta.pt; remove 'B' from the definition."
         )
-
-    # Same fallback as InterventionRewardWrapper
-    B = float(torch.load(q_path, map_location="cpu").get("B", 0.0))
 
     env_id = exp["env_id"]
     timesteps = int(exp["timesteps"])
@@ -80,19 +82,11 @@ def finetune_from_registry(exp_name: str) -> Path:
     base_run_dir = get_run_dir(base_exp)
     base_model_path = _resolve_model_path(base_run_dir)
 
-    ts = time.strftime("%Y%m%d_%H%M%S")
-    run_dir = ROOT / "runs" / "finetune" / exp_name / ts
-    (run_dir / "logs").mkdir(parents=True, exist_ok=True)
-    (run_dir / "model").mkdir(parents=True, exist_ok=True)
+    # Provenance checks before anything is written: a refused run leaves nothing on disk.
+    git = require_clean(git_provenance(), what=exp_name, allow_dirty=allow_dirty)
+    q = q_info(q_path)
+    q_hash_check = check_frozen_q(base_exp_name, q["q_sha256"])
 
-    # Env
-    env = SubprocVecEnv(
-        [make_env(exp, i, seed, q_path=q_path, beta=beta, q_device=q_device) for i in range(n_envs)],
-        start_method="spawn",
-    )
-    env = VecMonitor(env)
-
-    # Load model + continue learning
     model_kwargs = {"device": exp.get("device", "cuda")}
 
     # PPO hyperparams for fine-tune
@@ -100,37 +94,77 @@ def finetune_from_registry(exp_name: str) -> Path:
         if k in exp:
             model_kwargs[k] = exp[k]
 
-    model = PPO.load(str(base_model_path), env=env, **model_kwargs, verbose=1)
-
-    cb = QPenaltyStatsCallback(print_every_rollout=True, verbose=0)
-    model.learn(total_timesteps=timesteps, reset_num_timesteps=False, progress_bar=False, callback=cb)
-
-    #model.learn(total_timesteps=timesteps, reset_num_timesteps=False, progress_bar=False)
-
-    model.save(run_dir / "model" / "model.zip")
-    env.close()
-
-    meta = {
-        "finetune_exp": exp_name,
-        "base_exp": base_exp_name,
-        "base_run_dir": str(base_run_dir),
-        "base_model_path": str(base_model_path),
-        "env_id": env_id,
-        "timesteps": timesteps,
-        "seed": seed,
-        "n_envs": n_envs,
-        "q_path": str(q_path),
-        "beta": beta,
-        "B": B,
-        "q_penalty": "indicator",
-        "q_device": q_device,
+    meta = build_run_meta(
+        run_kind="finetune",
+        run_pass=run_pass,
+        exp_name=exp_name,
+        git=git,
+        device=model_kwargs["device"],
+        seed=seed,
+        beta=beta,
+        timesteps=timesteps,
+        n_envs=n_envs,
+        env_id=env_id,
         **reward_config(exp),
-    }
-    (run_dir / "meta.json").write_text(__import__("json").dumps(meta, indent=2))
+        hyperparameters={"requested": dict(model_kwargs), "effective": None},
+        **q,
+        q_hash_check=q_hash_check,
+        base_exp=base_exp_name,
+        base_model_path=repo_relative(base_model_path),
+        base_model_sha256=sha256_file(base_model_path),
+        # Keys of the pre-schema fine-tune meta, kept for older readers
+        extra={
+            "finetune_exp": exp_name,
+            "base_run_dir": repo_relative(base_run_dir),
+            "q_penalty": "indicator",
+            "q_device": q_device,
+        },
+    )
+
+    # exist_ok=False: two runs must never share a directory (D032)
+    run_dir = ROOT / "runs" / "finetune" / exp_name / finetune_run_dir_name(run_pass)
+    run_dir.mkdir(parents=True, exist_ok=False)
+
+    with recorded_run(run_dir / "meta.json", meta):
+        (run_dir / "logs").mkdir()
+        (run_dir / "model").mkdir()
+
+        # Env
+        env = SubprocVecEnv(
+            [make_env(exp, i, seed, q_path=q_path, beta=beta, q_device=q_device) for i in range(n_envs)],
+            start_method="spawn",
+        )
+        env = VecMonitor(env)
+
+        # Load model + continue learning
+        model = PPO.load(str(base_model_path), env=env, **model_kwargs, verbose=1)
+
+        # Read back after load: PPO.load rebuilds schedules from the overrides (D024)
+        meta["hyperparameters"]["effective"] = sb3_effective_hyperparameters(model)
+        meta["hardware"]["device"] = str(model.device)
+
+        cb = QPenaltyStatsCallback(print_every_rollout=True, verbose=0)
+        model.learn(total_timesteps=timesteps, reset_num_timesteps=False, progress_bar=False, callback=cb)
+
+        #model.learn(total_timesteps=timesteps, reset_num_timesteps=False, progress_bar=False)
+
+        model.save(run_dir / "model" / "model.zip")
+        env.close()
 
     print("Saved fine-tuned model to:", run_dir / "model" / "model.zip")
     return run_dir
 
 
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Fine-tune a base PPO policy with the Q-intervention penalty.")
+    parser.add_argument("exp_name", help="Fine-tune experiment name in the registry")
+    parser.add_argument("--run-pass", required=True,
+                        help="Implementation round tag stored in the run dir name and meta.json, e.g. pass1 (D064)")
+    parser.add_argument("--allow-dirty", action="store_true",
+                        help="Run with uncommitted code changes (recorded as dirty_allowed=true; not for reported runs)")
+    args = parser.parse_args()
+    finetune_from_registry(args.exp_name, run_pass=args.run_pass, allow_dirty=args.allow_dirty)
+
+
 if __name__ == "__main__":
-    finetune_from_registry(sys.argv[1])
+    main()

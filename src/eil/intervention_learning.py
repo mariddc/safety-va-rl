@@ -11,6 +11,7 @@ from src.experiments.registry import get_experiment
 from src.utils.path import get_intervention_root, get_eil_dataset_root
 from logs.datasets.eil_builder import BuilderConfig, build_eil_dataset
 from src.eil.q_losses import compute_total_loss
+from src.utils.run_meta import build_run_meta, git_provenance, q_info, recorded_run, repo_relative, sha256_file
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -72,9 +73,46 @@ def build_dataset_from_sessions(exp_name: str, dataset_id: str, sessions: list[s
     return out_dir
 
 
-def train_qtheta(dataset_dir: Path, *, B: float = 0.0, lambda_I: float = 1.0,
+def train_qtheta(dataset_dir: Path, *, run_pass: str, B: float = 0.0, lambda_I: float = 1.0,
                  lr: float = 3e-4, batch_size: int = 2048, steps: int = 20_000,
                  device: str = "cpu") -> Path:
+    """
+    Train Q on dataset_dir/data.npz and write q_theta.pt, q_train_log.json and the run record q_meta.json
+    next to it (the dataset's own meta.json is left alone).
+    """
+    data_path = dataset_dir / "data.npz"
+    if not data_path.exists():
+        raise FileNotFoundError(f"Missing: {data_path}")
+
+    hyperparameters = {"lr": lr, "batch_size": batch_size, "steps": steps, "device": str(device),
+                       "B": float(B), "lambda_I": float(lambda_I)}
+    meta = build_run_meta(
+        run_kind="q_train",
+        run_pass=run_pass,
+        exp_name=None,
+        git=git_provenance(),  # record only (D029)
+        device=device,
+        seed=None,  # train_qtheta has no seed yet (task 1.1)
+        hyperparameters={"requested": hyperparameters, "effective": None},
+        q_path=repo_relative(dataset_dir / "q_theta.pt"),
+        B=B,
+        lambda_I=lambda_I,
+        dataset_id=dataset_dir.name,
+        data_npz_sha256=sha256_file(data_path),
+    )
+
+    with recorded_run(dataset_dir / "q_meta.json", meta):
+        out_path = _fit_qtheta(dataset_dir, B=B, lambda_I=lambda_I, lr=lr, batch_size=batch_size,
+                               steps=steps, device=device)
+        # The values stored in the written file, which is what fine-tunes read.
+        meta.update(q_info(out_path))
+        meta["hyperparameters"]["effective"] = {**hyperparameters, "B": meta["B"], "lambda_I": meta["lambda_I"]}
+
+    return out_path
+
+
+def _fit_qtheta(dataset_dir: Path, *, B: float, lambda_I: float, lr: float, batch_size: int, steps: int,
+                device: str) -> Path:
     data_path = dataset_dir / "data.npz"
     if not data_path.exists():
         raise FileNotFoundError(f"Missing: {data_path}")
@@ -188,4 +226,4 @@ if __name__ == "__main__":
     dataset_id = "eil_aL0.2_aE0.0_v3"
 
     dataset_dir = build_dataset_from_sessions(exp_name, dataset_id)
-    q_path = train_qtheta(dataset_dir, device="cpu")
+    q_path = train_qtheta(dataset_dir, run_pass="pass1", device="cpu")
