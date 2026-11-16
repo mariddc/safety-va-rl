@@ -1,0 +1,5 @@
+Starting job on node: LAPTOP-RM2K23OI
+Job started at: Mon Nov 16 02:24:46 -03 2026
+[eval] success_rate=0.950 safe_success_rate_hazards_only=0.750 safe_success_rate_strict=0.500
+[eval] out_dir=/home/mariddc/Documentos/tcc2/safe-gym/safety-va-rl/runs/finetune/ppo_5m700k_goal2_v3_b0.0/20261116_011400_pass1_221591/final_eval/selection_n20
+Job finished at: Mon Nov 16 02:25:56 -03 2026
