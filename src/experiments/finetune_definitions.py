@@ -222,3 +222,15 @@ FINETUNES = {
         "reward_kwargs": {"goal_bonus": 800.0, "shaping_k": 1.5},
     },
 }
+
+# Pilot arms: beta in {0, 1}, three pilot seeds per base, otherwise identical to the v3 entries.
+for _base in ("ppo_5m_goal2_safe", "ppo_5m700k_goal2"):
+    for _beta in (0.0, 1.0):
+        for _i in range(3):
+            _name = f"{_base}_v3_pilot_b{_beta}_s{_i}"
+            FINETUNES[_name] = {
+                **FINETUNES[f"{_base}_v3_b0.0"],
+                "name": _name,
+                "beta": _beta,
+                "seed": load_pool("pilot")[_i],
+            }
