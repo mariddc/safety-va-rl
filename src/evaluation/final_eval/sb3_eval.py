@@ -1,4 +1,5 @@
 from pathlib import Path
+import csv
 import json
 import numpy as np
 import matplotlib.pyplot as plt
@@ -193,6 +194,22 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100, *, seeds
     out_path = out_dir / "summary.json"
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)
+
+    if seeds is not None:
+        with open(out_dir / "episodes.csv", "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                "seed", "success", "return", "length", "cost",
+                "hazard_steps", "hazard_entries", "hazard_cost",
+                "vase_contact_steps", "vase_contact_cost", "vase_velocity_steps", "vase_velocity_cost",
+                "safe_success_hazards_only", "safe_success_strict",
+            ])
+            writer.writerows(zip(
+                seeds, success_mask.astype(int), episode_rewards, episode_lengths, episode_costs,
+                episode_hazard_steps, episode_hazard_entries, episode_hazard_costs,
+                episode_vase_contact_steps, episode_vase_contact_costs, episode_vase_velocity_steps, episode_vase_velocity_costs,
+                (success_mask & safe_haz_mask).astype(int), (success_mask & strict_safe_mask).astype(int),
+            ))
 
     plt.figure(figsize=(8, 6))
     plt.hist(rewards, bins=30, edgecolor="black")
