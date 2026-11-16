@@ -1,0 +1,9 @@
+Starting job on node: LAPTOP-RM2K23OI
+Job started at: Mon Nov 16 00:40:10 -03 2026
+[rollout_q_stats] EXP=ppo_5m700k_goal2_v3_b0.0  base=ppo_5m700k_goal2  model=/home/mariddc/Documentos/tcc2/safe-gym/safety-va-rl/experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5700000/model/model.zip
+[rollout_q_stats] B=+0.000000 (from checkpoint)  reward={'reward_wrapper': 'complete', 'reward_kwargs': {'goal_bonus': 800.0, 'shaping_k': 1.5}}
+[rollout_q_stats] Q: {'mean': -0.02963367001393394, 'p10': -0.0696103811264038, 'p50': -0.02286166325211525, 'p90': 0.002770412713289261, 'min': -0.25913938879966736, 'max': 0.07867324352264404}
+[rollout_q_stats] episode active fraction: {'mean': 0.08456411678937391, 'p10': 0.0, 'p50': 0.041546866014951125, 'p90': 0.244739759778257, 'min': 0.0, 'max': 0.492}
+[rollout_q_stats] frac Q>B = 0.144  (steps=15853, episodes=100)
+[rollout_q_stats] out_dir=/home/mariddc/Documentos/tcc2/safe-gym/safety-va-rl/runs/q_diagnostics/ppo_5m700k_goal2/20261116_004013_pass1_diagnostic_n100
+Job finished at: Mon Nov 16 00:43:24 -03 2026

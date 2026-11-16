@@ -1,0 +1,822 @@
+{
+  "steps": 15853,
+  "frac_q_gt_B": 0.14407367690657918,
+  "q": {
+    "mean": -0.02963367001393394,
+    "p10": -0.0696103811264038,
+    "p50": -0.02286166325211525,
+    "p90": 0.002770412713289261,
+    "min": -0.25913938879966736,
+    "max": 0.07867324352264404
+  },
+  "episode_active_frac": {
+    "mean": 0.08456411678937391,
+    "p10": 0.0,
+    "p50": 0.041546866014951125,
+    "p90": 0.244739759778257,
+    "min": 0.0,
+    "max": 0.492
+  },
+  "episodes": [
+    {
+      "seed": 3000000,
+      "length": 97,
+      "active_frac": 0.030927835051546393,
+      "hazard_steps": 12,
+      "hazard_cost": 12.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000001,
+      "length": 118,
+      "active_frac": 0.03389830508474576,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000002,
+      "length": 74,
+      "active_frac": 0.04054054054054054,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 57.0
+    },
+    {
+      "seed": 3000003,
+      "length": 56,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000004,
+      "length": 98,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000005,
+      "length": 100,
+      "active_frac": 0.07,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 40.0
+    },
+    {
+      "seed": 3000006,
+      "length": 85,
+      "active_frac": 0.07058823529411765,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000007,
+      "length": 70,
+      "active_frac": 0.014285714285714285,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 36.0
+    },
+    {
+      "seed": 3000008,
+      "length": 50,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000009,
+      "length": 467,
+      "active_frac": 0.145610278372591,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 72.0
+    },
+    {
+      "seed": 3000010,
+      "length": 402,
+      "active_frac": 0.22885572139303484,
+      "hazard_steps": 2,
+      "hazard_cost": 2.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000011,
+      "length": 53,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000012,
+      "length": 47,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000013,
+      "length": 324,
+      "active_frac": 0.31790123456790126,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 33.0
+    },
+    {
+      "seed": 3000014,
+      "length": 113,
+      "active_frac": 0.08849557522123894,
+      "hazard_steps": 15,
+      "hazard_cost": 15.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000015,
+      "length": 95,
+      "active_frac": 0.15789473684210525,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000016,
+      "length": 180,
+      "active_frac": 0.12777777777777777,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 23.0
+    },
+    {
+      "seed": 3000017,
+      "length": 75,
+      "active_frac": 0.04,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000018,
+      "length": 130,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000019,
+      "length": 84,
+      "active_frac": 0.10714285714285714,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000020,
+      "length": 93,
+      "active_frac": 0.053763440860215055,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000021,
+      "length": 34,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000022,
+      "length": 156,
+      "active_frac": 0.3525641025641026,
+      "hazard_steps": 14,
+      "hazard_cost": 14.0,
+      "vase_cost": 12.0
+    },
+    {
+      "seed": 3000023,
+      "length": 200,
+      "active_frac": 0.105,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 16.0
+    },
+    {
+      "seed": 3000024,
+      "length": 61,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000025,
+      "length": 115,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000026,
+      "length": 105,
+      "active_frac": 0.2,
+      "hazard_steps": 17,
+      "hazard_cost": 17.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000027,
+      "length": 169,
+      "active_frac": 0.11242603550295859,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 23.0
+    },
+    {
+      "seed": 3000028,
+      "length": 129,
+      "active_frac": 0.17054263565891473,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000029,
+      "length": 217,
+      "active_frac": 0.07373271889400922,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000030,
+      "length": 125,
+      "active_frac": 0.064,
+      "hazard_steps": 15,
+      "hazard_cost": 15.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000031,
+      "length": 130,
+      "active_frac": 0.17692307692307693,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000032,
+      "length": 141,
+      "active_frac": 0.0425531914893617,
+      "hazard_steps": 8,
+      "hazard_cost": 8.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000033,
+      "length": 69,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 43.0
+    },
+    {
+      "seed": 3000034,
+      "length": 120,
+      "active_frac": 0.016666666666666666,
+      "hazard_steps": 8,
+      "hazard_cost": 8.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000035,
+      "length": 83,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000036,
+      "length": 65,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000037,
+      "length": 76,
+      "active_frac": 0.06578947368421052,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000038,
+      "length": 90,
+      "active_frac": 0.044444444444444446,
+      "hazard_steps": 6,
+      "hazard_cost": 6.0,
+      "vase_cost": 30.0
+    },
+    {
+      "seed": 3000039,
+      "length": 53,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000040,
+      "length": 378,
+      "active_frac": 0.16137566137566137,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 16.0
+    },
+    {
+      "seed": 3000041,
+      "length": 302,
+      "active_frac": 0.30132450331125826,
+      "hazard_steps": 8,
+      "hazard_cost": 8.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000042,
+      "length": 62,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000043,
+      "length": 36,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000044,
+      "length": 668,
+      "active_frac": 0.1721556886227545,
+      "hazard_steps": 29,
+      "hazard_cost": 29.0,
+      "vase_cost": 15.0
+    },
+    {
+      "seed": 3000045,
+      "length": 99,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000046,
+      "length": 71,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000047,
+      "length": 323,
+      "active_frac": 0.09287925696594428,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 48.0
+    },
+    {
+      "seed": 3000048,
+      "length": 92,
+      "active_frac": 0.021739130434782608,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 15.0
+    },
+    {
+      "seed": 3000049,
+      "length": 410,
+      "active_frac": 0.07560975609756097,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000050,
+      "length": 69,
+      "active_frac": 0.08695652173913043,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000051,
+      "length": 101,
+      "active_frac": 0.32673267326732675,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 49.0
+    },
+    {
+      "seed": 3000052,
+      "length": 88,
+      "active_frac": 0.056818181818181816,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 27.0
+    },
+    {
+      "seed": 3000053,
+      "length": 54,
+      "active_frac": 0.018518518518518517,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000054,
+      "length": 320,
+      "active_frac": 0.071875,
+      "hazard_steps": 11,
+      "hazard_cost": 11.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000055,
+      "length": 196,
+      "active_frac": 0.29081632653061223,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 87.0
+    },
+    {
+      "seed": 3000056,
+      "length": 57,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000057,
+      "length": 119,
+      "active_frac": 0.46218487394957986,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 53.0
+    },
+    {
+      "seed": 3000058,
+      "length": 373,
+      "active_frac": 0.013404825737265416,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000059,
+      "length": 71,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000060,
+      "length": 58,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000061,
+      "length": 105,
+      "active_frac": 0.02857142857142857,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 62.0
+    },
+    {
+      "seed": 3000062,
+      "length": 40,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000063,
+      "length": 255,
+      "active_frac": 0.24313725490196078,
+      "hazard_steps": 14,
+      "hazard_cost": 14.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000064,
+      "length": 128,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000065,
+      "length": 57,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000066,
+      "length": 415,
+      "active_frac": 0.12048192771084337,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 18.0
+    },
+    {
+      "seed": 3000067,
+      "length": 45,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000068,
+      "length": 61,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000069,
+      "length": 133,
+      "active_frac": 0.21804511278195488,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000070,
+      "length": 86,
+      "active_frac": 0.03488372093023256,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000071,
+      "length": 149,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000072,
+      "length": 86,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 22.0
+    },
+    {
+      "seed": 3000073,
+      "length": 214,
+      "active_frac": 0.04672897196261682,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 48.0
+    },
+    {
+      "seed": 3000074,
+      "length": 53,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000075,
+      "length": 382,
+      "active_frac": 0.2591623036649215,
+      "hazard_steps": 14,
+      "hazard_cost": 14.0,
+      "vase_cost": 44.0
+    },
+    {
+      "seed": 3000076,
+      "length": 72,
+      "active_frac": 0.027777777777777776,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 29.0
+    },
+    {
+      "seed": 3000077,
+      "length": 75,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000078,
+      "length": 321,
+      "active_frac": 0.0529595015576324,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000079,
+      "length": 50,
+      "active_frac": 0.02,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000080,
+      "length": 171,
+      "active_frac": 0.05847953216374269,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000081,
+      "length": 151,
+      "active_frac": 0.1456953642384106,
+      "hazard_steps": 47,
+      "hazard_cost": 47.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000082,
+      "length": 97,
+      "active_frac": 0.10309278350515463,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 24.0
+    },
+    {
+      "seed": 3000083,
+      "length": 54,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000084,
+      "length": 392,
+      "active_frac": 0.10714285714285714,
+      "hazard_steps": 12,
+      "hazard_cost": 12.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000085,
+      "length": 68,
+      "active_frac": 0.014705882352941176,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000086,
+      "length": 368,
+      "active_frac": 0.1875,
+      "hazard_steps": 14,
+      "hazard_cost": 14.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000087,
+      "length": 348,
+      "active_frac": 0.382183908045977,
+      "hazard_steps": 8,
+      "hazard_cost": 8.0,
+      "vase_cost": 109.0
+    },
+    {
+      "seed": 3000088,
+      "length": 298,
+      "active_frac": 0.030201342281879196,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 32.0
+    },
+    {
+      "seed": 3000089,
+      "length": 122,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000090,
+      "length": 93,
+      "active_frac": 0.06451612903225806,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000091,
+      "length": 80,
+      "active_frac": 0.0,
+      "hazard_steps": 21,
+      "hazard_cost": 21.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000092,
+      "length": 154,
+      "active_frac": 0.3051948051948052,
+      "hazard_steps": 18,
+      "hazard_cost": 18.0,
+      "vase_cost": 51.0
+    },
+    {
+      "seed": 3000093,
+      "length": 198,
+      "active_frac": 0.15151515151515152,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 82.0
+    },
+    {
+      "seed": 3000094,
+      "length": 35,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000095,
+      "length": 1000,
+      "active_frac": 0.492,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000096,
+      "length": 333,
+      "active_frac": 0.16816816816816818,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000097,
+      "length": 85,
+      "active_frac": 0.0,
+      "hazard_steps": 12,
+      "hazard_cost": 12.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000098,
+      "length": 134,
+      "active_frac": 0.08955223880597014,
+      "hazard_steps": 15,
+      "hazard_cost": 15.0,
+      "vase_cost": 0.0
+    },
+    {
+      "seed": 3000099,
+      "length": 49,
+      "active_frac": 0.0,
+      "hazard_steps": 0,
+      "hazard_cost": 0.0,
+      "vase_cost": 0.0
+    }
+  ]
+}
