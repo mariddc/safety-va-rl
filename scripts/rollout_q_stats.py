@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import argparse
+import json
 import sys
+from datetime import datetime
 from pathlib import Path
 import numpy as np
 import safety_gymnasium
@@ -10,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.experiments.registry import get_experiment, get_run_dir
+from src.utils.run_meta import git_info, recorded_run, repo_relative, sha256_file
+from src.utils.seed_pools import SEED_POOLS_PATH, load_pool
 from src.wrappers.reward import wrap_reward, reward_config
 from src.wrappers.InterventionRewardWrapper import InterventionRewardWrapper
 
@@ -33,88 +38,97 @@ def _load_model(algo: str, model_path: Path):
     raise ValueError(f"Unsupported algorithm: {algo}")
 
 
-def _stats(x: np.ndarray) -> str:
-    if x.size == 0:
-        return "n=0"
-    return (
-        f"n={x.size} mean={x.mean():+.6f} "
-        f"p10={np.percentile(x,10):+.6f} p50={np.percentile(x,50):+.6f} p90={np.percentile(x,90):+.6f} "
-        f"min={x.min():+.6f} max={x.max():+.6f}"
-    )
+def _stats(x) -> dict:
+    x = np.asarray(x, dtype=np.float64)
+    return {
+        "mean": float(x.mean()), "p10": float(np.percentile(x, 10)), "p50": float(np.percentile(x, 50)),
+        "p90": float(np.percentile(x, 90)), "min": float(x.min()), "max": float(x.max()),
+    }
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python scripts/rollout_q_stats.py <exp_name> [n_steps]")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Q statistics of the base policy on the first n diagnostic seeds.")
+    parser.add_argument("exp_name", help="Fine-tune entry with q_path and base_exp")
+    parser.add_argument("--n", type=int, required=True, help="Use the first n seeds of the diagnostic pool")
+    parser.add_argument("--run-pass", required=True, help="Round tag stored in meta.json")
+    parser.add_argument("--allow-dirty", action="store_true",
+                        help="Run with uncommitted code changes (recorded as dirty_allowed=true; not for reported runs)")
+    args = parser.parse_args()
 
-    exp_name = sys.argv[1]
-    n_steps = int(sys.argv[2]) if len(sys.argv) >= 3 else 20_000
+    exp = get_experiment(args.exp_name)
+    pool = load_pool("diagnostic")
+    if not 1 <= args.n <= len(pool):
+        raise ValueError(f"--n {args.n} must be between 1 and {len(pool)}, the size of seed pool diagnostic")
+    seeds = pool[: args.n]
 
-    exp = get_experiment(exp_name)
-    try:
-        run_dir = get_run_dir(exp)
-    except FileNotFoundError:
-        # Finetune not run yet: roll out its base policy instead
-        if "base_exp" not in exp:
-            raise
-        run_dir = get_run_dir(get_experiment(exp["base_exp"]))
-        print(f"No finetune run for {exp_name}; using base model {exp['base_exp']}")
-    model_path = _resolve_model_path(run_dir)
+    git = git_info()
+    if git["dirty"] and not args.allow_dirty:
+        raise RuntimeError(f"{args.exp_name}: uncommitted code changes {git['dirty_paths']}; commit them or pass --allow-dirty")
+    git["dirty_allowed"] = args.allow_dirty
 
-    # Pull q params from exp if present (works for FINETUNES too).
+    # Always the base policy, never a fine-tuned run of this entry.
+    base = get_experiment(exp["base_exp"])
+    model_path = _resolve_model_path(ROOT / get_run_dir(base))
+    q_path = ROOT / exp["q_path"]
+
     # B is not set here: the wrapper reads the Q-training B from the checkpoint.
-    q_path = exp.get("q_path", None)
-    beta = float(exp.get("beta", 1.0))
-    q_device = str(exp.get("q_device", "cpu"))
+    env = wrap_reward(safety_gymnasium.make(base["env_id"]), base)
+    env = InterventionRewardWrapper(env, q_path=str(q_path), device=str(exp.get("q_device", "cpu")))
 
-    env = safety_gymnasium.make(exp["env_id"])
-    env = wrap_reward(env, exp)
+    model = _load_model(base["algorithm"], model_path)
 
-    if q_path is None:
-        raise KeyError(
-            "exp does not contain q_path. Add it to your FINETUNES entry (or pass a finetune exp name)."
-        )
+    fields = dict(
+        base_exp=exp["base_exp"], base_model_path=repo_relative(model_path), base_model_sha256=sha256_file(model_path),
+        q_path=repo_relative(q_path), q_sha256=sha256_file(q_path), B=env.B,
+        env_id=base["env_id"], **reward_config(base),
+        seed_pool={"name": "diagnostic", "n": args.n, "file": repo_relative(SEED_POOLS_PATH),
+                   "sha256": sha256_file(SEED_POOLS_PATH)},
+        deterministic=True,
+    )
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_dir = ROOT / "runs" / "q_diagnostics" / exp["base_exp"] / f"{stamp}_{args.run_pass}_diagnostic_n{args.n}"
+    out_dir.mkdir(parents=True, exist_ok=False)
 
-    qwrap = InterventionRewardWrapper(env, q_path=str(q_path), beta=beta, device=q_device)
-    env = qwrap
+    with recorded_run(out_dir / "meta.json", args.exp_name, args.run_pass, git, **fields):
+        q_vals = []
+        episodes = []
+        for s in seeds:
+            obs, _ = env.reset(seed=s)
+            ep_q = []
+            haz_steps, haz_cost, vase_cost = 0, 0.0, 0.0
+            done = False
+            while not done:
+                action, _ = model.predict(obs, deterministic=True)
+                obs, _, terminated, truncated, info = env.step(action)
+                ep_q.append(info["q_value"])
+                # Same info keys and fallbacks as the final eval
+                hz = float(info.get("hazard_cost_step", info.get("cost_hazards_used", info.get("cost_hazards", 0.0))))
+                haz_cost += hz
+                haz_steps += int(bool(info.get("hazard_in_contact", False)) or (hz > 0.0))
+                vase_cost += float(info.get("cost_vases_contact", info.get("cost_vases_contact_used", 0.0)))
+                vase_cost += float(info.get("cost_vases_velocity", info.get("cost_vases_velocity_used", 0.0)))
+                done = terminated or truncated
+            q_vals += ep_q
+            episodes.append({"seed": s, "length": len(ep_q),
+                             "active_frac": float((np.asarray(ep_q) > env.B).mean()),
+                             "hazard_steps": haz_steps, "hazard_cost": haz_cost, "vase_cost": vase_cost})
 
-    model = _load_model(exp["algorithm"], model_path)
+        q_vals = np.asarray(q_vals)
+        stats = {
+            "steps": int(q_vals.size),
+            "frac_q_gt_B": float((q_vals > env.B).mean()),
+            "q": _stats(q_vals),
+            "episode_active_frac": _stats([e["active_frac"] for e in episodes]),
+            "episodes": episodes,
+        }
+        (out_dir / "stats.json").write_text(json.dumps(stats, indent=2))
 
-    obs, _ = env.reset()
-
-    q_vals = []
-    penalties = [] 
-    costs = []
-
-    for _ in range(n_steps):
-        action, _ = model.predict(obs, deterministic=True)
-        obs, reward, terminated, truncated, info = env.step(action)
-
-        if "q_value" in info:
-            q_vals.append(float(info["q_value"]))
-        if "q_penalty" in info:
-            penalties.append(float(info["q_penalty"]))
-        if "cost" in info:
-            costs.append(float(info["cost"]))
-
-        if terminated or truncated:
-            obs, _ = env.reset()
-
-    q_vals = np.asarray(q_vals, dtype=np.float32)
-    penalties = np.asarray(penalties, dtype=np.float32)
-    costs = np.asarray(costs, dtype=np.float32)
-
-    print(f"EXP={exp_name}  model={model_path}")
-    print(f"B={qwrap.B:+.6f} (from checkpoint)  beta={qwrap.beta}  reward={reward_config(exp)}")
-    print(f"Q:       {_stats(q_vals)}")
-    print(f"Penalty: {_stats(penalties)}")
-    if costs.size:
-        print(f"Cost:    {_stats(costs)}")
-    print(f"Penalty values = {np.unique(penalties).tolist() if penalties.size else []}")
-    print(f"Frac penalty>0 = {float((penalties>0).mean()) if penalties.size else 0.0:.3f}")
-    # Expected active fraction under this policy; mean penalty = beta * this
-    print(f"Frac Q>B       = {float((q_vals>qwrap.B).mean()) if q_vals.size else 0.0:.3f}")
+    print(f"[rollout_q_stats] EXP={args.exp_name}  base={exp['base_exp']}  model={model_path}")
+    print(f"[rollout_q_stats] B={env.B:+.6f} (from checkpoint)  reward={reward_config(base)}")
+    print(f"[rollout_q_stats] Q: {stats['q']}")
+    print(f"[rollout_q_stats] episode active fraction: {stats['episode_active_frac']}")
+    print(f"[rollout_q_stats] frac Q>B = {stats['frac_q_gt_B']:.3f}  (steps={stats['steps']}, episodes={len(episodes)})")
+    print(f"[rollout_q_stats] out_dir={out_dir}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,30 @@
+{
+  "exp_name": "ppo_5m_goal2_safe",
+  "status": "finished",
+  "error": null,
+  "pass": "pass1",
+  "start_time": "2026-11-16T02:43:40+00:00",
+  "end_time": "2026-11-16T02:52:17+00:00",
+  "exec_mode": "local",
+  "hostname": "LAPTOP-RM2K23OI",
+  "slurm_job_id": null,
+  "git": {
+    "commit": "82eaf66f428650d5c6541e8bbaa0dbb1fc2794d3",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "seed": 9000000,
+  "hyperparameters": {
+    "lr": 0.0003,
+    "batch_size": 2048,
+    "steps": 20000,
+    "device": "cpu"
+  },
+  "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3/q_theta.pt",
+  "B": 0.0,
+  "lambda_I": 1.0,
+  "dataset_id": "eil_aL0.2_aE0.0_v3",
+  "dataset_dir": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3",
+  "data_npz_sha256": "f46bba81615df6e0adeb8f00be3cd58a52eedd6e382b0e2f0aefbe5f1628f06b",
+  "q_sha256": "a40493aff0ce6b73fe749cef3c204d454bb82888979ae8d54e083021a053f3dc"
+}
