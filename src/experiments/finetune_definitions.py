@@ -1,3 +1,6 @@
+from src.experiments.finetune_hparams import FINETUNE_HPARAMS
+from src.utils.seed_pools import load_pool
+
 FINETUNES = {
     "ppo_5m_goal2_safe_qft_v1": {
         "name": "ppo_5m_goal2_safe_qft_v1",
@@ -181,5 +184,41 @@ FINETUNES = {
 
         "learning_rate": 1e-4,
 
+    },
+
+    "ppo_5m_goal2_safe_v3_b0.0": {
+        **FINETUNE_HPARAMS["ppo_5m_goal2_safe"],
+        "name": "ppo_5m_goal2_safe_v3_b0.0",
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+
+        "base_exp": "ppo_5m_goal2_safe",
+        "seed": load_pool("pilot")[0],
+
+        "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3/q_theta.pt",
+        "beta": 0.0,
+        "q_device": "cpu",
+
+        "reward_wrapper": "fastsafe",
+        "reward_kwargs": {"goal_bonus": 50.0, "shaping_k": 1.0},
+    },
+
+    "ppo_5m700k_goal2_v3_b0.0": {
+        **FINETUNE_HPARAMS["ppo_5m700k_goal2"],
+        "name": "ppo_5m700k_goal2_v3_b0.0",
+        "backend": "sb3",
+        "algorithm": "ppo",
+        "env_id": "SafetyPointGoal2-v0",
+
+        "base_exp": "ppo_5m700k_goal2",
+        "seed": load_pool("pilot")[0],
+
+        "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3/q_theta.pt",
+        "beta": 0.0,
+        "q_device": "cpu",
+
+        "reward_wrapper": "complete",
+        "reward_kwargs": {"goal_bonus": 800.0, "shaping_k": 1.5},
     },
 }

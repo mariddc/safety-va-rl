@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -12,6 +13,7 @@ from src.utils.path import get_intervention_root, get_eil_dataset_root
 from logs.datasets.eil_builder import BuilderConfig, build_eil_dataset
 from src.eil.q_losses import compute_total_loss
 from src.utils.run_meta import git_info, recorded_run, repo_relative, sha256_file
+from src.utils.seed_pools import load_q_seed
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -73,22 +75,27 @@ def build_dataset_from_sessions(exp_name: str, dataset_id: str, sessions: list[s
     return out_dir
 
 
-def train_qtheta(dataset_dir: Path, *, run_pass: str, B: float = 0.0, lambda_I: float = 1.0,
-                 lr: float = 3e-4, batch_size: int = 2048, steps: int = 20_000,
-                 device: str = "cpu") -> Path:
-    """Train Q on dataset_dir/data.npz; the run record goes to q_meta.json (the dataset's meta.json is left alone)."""
-    with recorded_run(dataset_dir / "q_meta.json", None, run_pass, git_info(),
+def train_qtheta(dataset_dir: Path, *, out_path: Path, seed: int, run_pass: str, exp_name: str | None = None,
+                 B: float = 0.0, lambda_I: float = 1.0, lr: float = 3e-4, batch_size: int = 2048,
+                 steps: int = 20_000, device: str = "cpu") -> Path:
+    """Train Q on dataset_dir/data.npz into out_path; q_meta.json and q_train_log.json go next to it."""
+    meta_path = out_path.parent / "q_meta.json"
+    # Fine-tunes point at a Q by path, so a trained Q is never overwritten.
+    for p in (out_path, meta_path, out_path.parent / "q_train_log.json"):
+        if p.exists():
+            raise FileExistsError(f"{p} already exists")
+    with recorded_run(meta_path, exp_name, run_pass, git_info(), seed=seed,
                       hyperparameters={"lr": lr, "batch_size": batch_size, "steps": steps, "device": device},
-                      q_path=repo_relative(dataset_dir / "q_theta.pt"), B=B, lambda_I=lambda_I, dataset_id=dataset_dir.name,
-                      data_npz_sha256=sha256_file(dataset_dir / "data.npz")) as meta:
-        out_path = _fit_qtheta(dataset_dir, B=B, lambda_I=lambda_I, lr=lr, batch_size=batch_size,
-                               steps=steps, device=device)
+                      q_path=repo_relative(out_path), B=B, lambda_I=lambda_I, dataset_id=dataset_dir.name,
+                      dataset_dir=repo_relative(dataset_dir), data_npz_sha256=sha256_file(dataset_dir / "data.npz")) as meta:
+        _fit_qtheta(dataset_dir, out_path, seed=seed, B=B, lambda_I=lambda_I, lr=lr, batch_size=batch_size,
+                    steps=steps, device=device)
         meta["q_sha256"] = sha256_file(out_path)
     return out_path
 
 
-def _fit_qtheta(dataset_dir: Path, *, B: float, lambda_I: float, lr: float, batch_size: int, steps: int,
-                device: str) -> Path:
+def _fit_qtheta(dataset_dir: Path, out_path: Path, *, seed: int, B: float, lambda_I: float, lr: float,
+                batch_size: int, steps: int, device: str) -> None:
     data_path = dataset_dir / "data.npz"
     if not data_path.exists():
         raise FileNotFoundError(f"Missing: {data_path}")
@@ -115,6 +122,8 @@ def _fit_qtheta(dataset_dir: Path, *, B: float, lambda_I: float, lr: float, batc
     idx_B = torch.where(labels_t == 1)[0]
     idx_I = torch.where(labels_t == 2)[0]
 
+    # Covers network init and the batch sampling below
+    torch.manual_seed(seed)
     model = QNetwork(obs_dim, act_dim).to(device)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
 
@@ -180,7 +189,6 @@ def _fit_qtheta(dataset_dir: Path, *, B: float, lambda_I: float, lr: float, batc
             print(f"[{it:05d}] L={log['L_total'][-1]:.4f}  G={log['L_G'][-1]:.4f}  B={log['L_B'][-1]:.4f}  I={log['L_I'][-1]:.4f}")
 
     # Save
-    out_path = dataset_dir / "q_theta.pt"
     # B travels with the network: it is the only threshold where Q > B is meaningful
     torch.save(
         {
@@ -192,14 +200,19 @@ def _fit_qtheta(dataset_dir: Path, *, B: float, lambda_I: float, lr: float, batc
         },
         out_path,
     )
-    (dataset_dir / "q_train_log.json").write_text(json.dumps(log, indent=2))
-
-    return out_path
+    (out_path.parent / "q_train_log.json").write_text(json.dumps(log, indent=2))
 
 
 if __name__ == "__main__":
-    exp_name = "ppo_5m700k_goal2"
-    dataset_id = "eil_aL0.2_aE0.0_v3"
+    parser = argparse.ArgumentParser(description="Train Q on an existing dataset.")
+    parser.add_argument("exp_name")
+    parser.add_argument("dataset_id")
+    parser.add_argument("--out", required=True, help="q_theta.pt path, repo-relative or absolute")
+    parser.add_argument("--run-pass", required=True)
+    args = parser.parse_args()
 
-    dataset_dir = build_dataset_from_sessions(exp_name, dataset_id)
-    q_path = train_qtheta(dataset_dir, run_pass="pass1", device="cpu")
+    exp = get_experiment(args.exp_name)
+    # The builder nests the dataset under env_id
+    dataset_dir = get_eil_dataset_root(exp, ROOT, args.exp_name, args.dataset_id).parent / exp["env_id"] / args.dataset_id
+    train_qtheta(dataset_dir, out_path=ROOT / args.out, seed=load_q_seed(), run_pass=args.run_pass,
+                 exp_name=args.exp_name)

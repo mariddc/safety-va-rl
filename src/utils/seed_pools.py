@@ -10,7 +10,7 @@ EPISODE_POOLS = ("selection", "test", "diagnostic")
 
 def _load_checked() -> dict:
     data = json.loads(SEED_POOLS_PATH.read_text())
-    unknown = set(data) - set(TRAINING_POOLS) - set(EPISODE_POOLS) - {"sampler_seed"}
+    unknown = set(data) - set(TRAINING_POOLS) - set(EPISODE_POOLS) - {"sampler_seed", "q_seed"}
     if unknown:
         raise ValueError(f"unknown seed pools {sorted(unknown)}: add them to TRAINING_POOLS or EPISODE_POOLS")
 
@@ -18,7 +18,7 @@ def _load_checked() -> dict:
     n_envs = max(h["n_envs"] for h in FINETUNE_HPARAMS.values())
     owner = {}
     for name, seeds in data.items():
-        if name == "sampler_seed":
+        if name in ("sampler_seed", "q_seed"):
             continue
         width = n_envs if name in TRAINING_POOLS else 1
         for s in seeds:
@@ -40,3 +40,7 @@ def load_pool(name: str, *, allow_test: bool = False) -> list[int]:
 
 def load_sampler_seed() -> int:
     return _load_checked()["sampler_seed"]
+
+
+def load_q_seed() -> int:
+    return _load_checked()["q_seed"]
