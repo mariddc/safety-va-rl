@@ -17,6 +17,9 @@ __pycache__/
 # SLURM / cluster outputs
 cluster/job_*.out
 cluster/job_*.err
+cluster/*.out
+cluster/*.err
+cluster/local_*.log
 
 # Experiment outputs
 # experiments/ppo
