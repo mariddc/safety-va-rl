@@ -4,8 +4,8 @@
 #SBATCH --error=cluster/%x_%A_%a.err
 #SBATCH --partition=CPU
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=8G
-#SBATCH --time=1:00:00
+#SBATCH --mem=12G
+#SBATCH --time=2:15:00
 #SBATCH --array=0-11
 
 # Usage: sbatch cluster/pilot.sh <run_pass> (whole array); plain bash: bash cluster/pilot.sh <run_pass> <index>
