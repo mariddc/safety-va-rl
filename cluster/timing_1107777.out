@@ -1,0 +1,4 @@
+Starting job on node: nodecpu10
+Job started at: Tue Nov 17 03:47:27 CET 2026
+cpus available (sched_getaffinity): 8
+Logging to /home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m700k_goal2_v3_pilot_b0.0_s0/20261117_034731_pass1_1107777/logs/PPO_0

@@ -1,0 +1,60 @@
+Starting job on node: nodecpu10
+Job started at: Tue Nov 17 03:52:20 CET 2026
+cpus available (sched_getaffinity): 8
+Logging to /home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m700k_goal2_v3_pilot_b0.0_s0/20261117_035223_pass1_1107778/logs/PPO_0
+[QPenalty] mean_penalty=0.000000  mean_q=-0.029624  active_frac=0.132  mean_step_reward=2.5408  penalty_ratio=0.0000  n=16384
+----------------------------------
+| q/                  |          |
+|    active_frac      | 0.132    |
+|    mean_penalty     | 0        |
+|    mean_q           | -0.0296  |
+|    mean_step_reward | 2.54     |
+|    penalty_ratio    | 0        |
+| rollout/            |          |
+|    ep_len_mean      | 142      |
+|    ep_rew_mean      | 352      |
+| time/               |          |
+|    fps              | 106      |
+|    iterations       | 1        |
+|    time_elapsed     | 154      |
+|    total_timesteps  | 5718016  |
+----------------------------------
+[QPenalty] mean_penalty=0.000000  mean_q=-0.032087  active_frac=0.083  mean_step_reward=3.4631  penalty_ratio=0.0000  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.0826       |
+|    mean_penalty         | 0            |
+|    mean_q               | -0.0321      |
+|    mean_step_reward     | 3.46         |
+|    penalty_ratio        | 0            |
+| rollout/                |              |
+|    ep_len_mean          | 133          |
+|    ep_rew_mean          | 444          |
+| time/                   |              |
+|    fps                  | 99           |
+|    iterations           | 2            |
+|    time_elapsed         | 329          |
+|    total_timesteps      | 5734400      |
+| train/                  |              |
+|    approx_kl            | 0.0048782127 |
+|    clip_fraction        | 0.0457       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.429        |
+|    explained_variance   | 0.925        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 847          |
+|    n_updates            | 3490         |
+|    policy_gradient_loss | -0.0014      |
+|    std                  | 0.199        |
+|    value_loss           | 3.87e+03     |
+------------------------------------------
+Saved fine-tuned model to: /home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m700k_goal2_v3_pilot_b0.0_s0/20261117_035223_pass1_1107778/model/model.zip
+[timing] finetune_wall_s=350.9 timesteps=32768
+[timing] max_rss_main_mb=665 max_rss_largest_child_mb=1289
+[timing] finetune_total_s=353
+[timing] run_dir=runs/finetune/ppo_5m700k_goal2_v3_pilot_b0.0_s0/20261117_035223_pass1_1107778
+[eval] success_rate=0.975 safe_success_rate_hazards_only=0.750 safe_success_rate_strict=0.500
+[eval] out_dir=/home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m700k_goal2_v3_pilot_b0.0_s0/20261117_035223_pass1_1107778/final_eval/selection_n40
+[timing] eval_total_s=38 n=40
+[timing] job_memory_peak_bytes=8486166528
+Job finished at: Tue Nov 17 03:58:51 CET 2026
