@@ -1,7 +1,10 @@
 from pathlib import Path
 import csv
 import json
+import multiprocessing as mp
+import os
 import numpy as np
+import torch
 import matplotlib.pyplot as plt
 
 import safety_gymnasium
@@ -15,16 +18,9 @@ def make_env(exp: dict):
     return wrap_reward(safety_gymnasium.make(exp["env_id"]), exp)
 
 
-def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100, *, seeds=None, out_dir=None):
-    if seeds is not None:
-        n_episodes = len(seeds)
-    env_id = exp["env_id"]
+def _eval_episodes(exp: dict, model_path: Path, n_episodes: int, seeds=None):
+    """Play episodes; returns one tuple of per-episode metrics each."""
     algo = exp["algorithm"]
-
-    model_path = run_dir / "model" / "model.zip"
-    if not model_path.exists():
-        raise FileNotFoundError(f"Model not found: {model_path}")
-
     env = DummyVecEnv([lambda: make_env(exp)])
 
     if algo == "sac":
@@ -34,20 +30,7 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100, *, seeds
     else:
         raise ValueError(f"Unsupported SB3 algorithm: {algo}")
 
-    episode_rewards = []
-    episode_lengths = []
-    episode_costs = []
-    episode_successes = []
-
-    episode_hazard_costs = []
-    episode_hazard_steps = []
-    episode_hazard_entries = []
-
-    episode_vase_contact_costs = []
-    episode_vase_velocity_costs = []
-    episode_vase_contact_steps = []
-    episode_vase_velocity_steps = []
-
+    records = []
     for ep in range(n_episodes):
         if seeds is not None:
             # DummyVecEnv passes this seed to the next reset() only
@@ -100,21 +83,48 @@ def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100, *, seeds
             if done_flag:
                 break
 
-        episode_rewards.append(ep_reward)
-        episode_lengths.append(ep_length)
-        episode_costs.append(ep_cost)
-        episode_successes.append(ep_success)
-
-        episode_hazard_costs.append(haz_cost)
-        episode_hazard_steps.append(haz_steps)
-        episode_hazard_entries.append(haz_entries)
-
-        episode_vase_contact_costs.append(vase_contact_cost)
-        episode_vase_velocity_costs.append(vase_velocity_cost)
-        episode_vase_contact_steps.append(vase_contact_steps)
-        episode_vase_velocity_steps.append(vase_velocity_steps)
+        records.append((
+            ep_reward, ep_length, ep_cost, ep_success,
+            haz_cost, haz_steps, haz_entries,
+            vase_contact_cost, vase_velocity_cost, vase_contact_steps, vase_velocity_steps,
+        ))
 
     env.close()
+    return records
+
+
+def _init_worker():
+    torch.set_num_threads(1)
+
+
+def _eval_chunk(args):
+    return _eval_episodes(*args)
+
+
+def run_sb3_final_eval(exp: dict, run_dir: Path, n_episodes: int = 100, *, seeds=None, out_dir=None):
+    if seeds is not None:
+        n_episodes = len(seeds)
+    env_id = exp["env_id"]
+    algo = exp["algorithm"]
+
+    model_path = run_dir / "model" / "model.zip"
+    if not model_path.exists():
+        raise FileNotFoundError(f"Model not found: {model_path}")
+
+    # Seeded episodes are independent, so chunks of seeds run in separate processes.
+    n_workers = min(len(os.sched_getaffinity(0)), n_episodes) if seeds is not None else 1
+    if n_workers > 1:
+        size = -(-n_episodes // n_workers)
+        chunks = [(exp, model_path, len(seeds[i:i + size]), seeds[i:i + size]) for i in range(0, n_episodes, size)]
+        with mp.get_context("spawn").Pool(n_workers, initializer=_init_worker) as pool:
+            records = [r for chunk in pool.map(_eval_chunk, chunks) for r in chunk]
+    else:
+        records = _eval_episodes(exp, model_path, n_episodes, seeds)
+
+    (episode_rewards, episode_lengths, episode_costs, episode_successes,
+     episode_hazard_costs, episode_hazard_steps, episode_hazard_entries,
+     episode_vase_contact_costs, episode_vase_velocity_costs,
+     episode_vase_contact_steps, episode_vase_velocity_steps) = map(list, zip(*records))
 
     rewards = np.array(episode_rewards)
     lengths = np.array(episode_lengths)
