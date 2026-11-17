@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=12G
 #SBATCH --time=2:15:00
-#SBATCH --array=0-11
+#SBATCH --array=0-11%6
 
 # Usage: sbatch cluster/pilot.sh <run_pass> (whole array); plain bash: bash cluster/pilot.sh <run_pass> <index>
 # Fine-tunes one pilot run, then evaluates it on the selection pool.
