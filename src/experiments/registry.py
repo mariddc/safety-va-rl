@@ -1,8 +1,10 @@
+import re
 from pathlib import Path
 from .definitions import EXPERIMENTS
 from .sweep_definitions import SWEEPS
 from .finetune_definitions import FINETUNES
 from src.wrappers.reward import REWARD_WRAPPERS
+from src.utils.seed_pools import load_pool
 
 
 for _name, _exp in {**EXPERIMENTS, **SWEEPS, **FINETUNES}.items():
@@ -17,6 +19,10 @@ def get_experiment(name: str):
         return SWEEPS[name]
     if name in FINETUNES:
         return FINETUNES[name]
+    # Sweep runs <base>_v3_sweep_b<beta>_s<i>: the base's v3 entry with that beta and sweep seed i
+    m = re.fullmatch(r"(.+)_v3_sweep_b(.+)_s(\d+)", name)
+    if m and f"{m[1]}_v3_b0.0" in FINETUNES:
+        return {**FINETUNES[f"{m[1]}_v3_b0.0"], "name": name, "beta": float(m[2]), "seed": load_pool("sweep")[int(m[3])]}
     
     raise ValueError(f"Unknown experiment or sweep: {name}")
 
