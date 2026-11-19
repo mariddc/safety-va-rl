@@ -57,7 +57,8 @@ if __name__ == "__main__":
     t0 = time.time()
     runpy.run_path("scripts/finetune_policy.py", run_name="__main__")
     s, c = resource.getrusage(resource.RUSAGE_SELF), resource.getrusage(resource.RUSAGE_CHILDREN)
-    print(f"[packing] finetune_wall_s={time.time() - t0:.1f} timesteps={exp['timesteps']} n_envs={exp['n_envs']}")
+    ts, ne = exp["timesteps"], exp["n_envs"]
+    print(f"[packing] finetune_wall_s={time.time() - t0:.1f} timesteps={ts} n_envs={ne}")
     print(f"[packing] cpu_s_main={s.ru_utime + s.ru_stime:.0f} cpu_s_children={c.ru_utime + c.ru_stime:.0f}")
     print(f"[packing] max_rss_main_mb={s.ru_maxrss / 1024:.0f} max_rss_largest_child_mb={c.ru_maxrss / 1024:.0f}")
 '
