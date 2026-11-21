@@ -1,0 +1,33 @@
+{
+  "exp_name": "ppo_5m700k_goal2_v3_sweep_b4.161791450287817_s1",
+  "status": "finished",
+  "error": null,
+  "pass": "pass1",
+  "start_time": "2026-11-19T22:33:16+00:00",
+  "end_time": "2026-11-19T22:37:54+00:00",
+  "exec_mode": "slurm",
+  "hostname": "nodecpu05",
+  "slurm_job_id": "1113531",
+  "git": {
+    "commit": "97cce43f0ba54d748d81ddd906c83747c50c05ee",
+    "dirty": false,
+    "dirty_paths": [],
+    "dirty_allowed": false
+  },
+  "run_dir": "runs/finetune/ppo_5m700k_goal2_v3_sweep_b4.161791450287817_s1/20261119_214025_pass1_1113531",
+  "model_path": "runs/finetune/ppo_5m700k_goal2_v3_sweep_b4.161791450287817_s1/20261119_214025_pass1_1113531/model/model.zip",
+  "model_sha256": "b4b3ea993fd90e487ddd1a2ea7366487056286cd866653d2d0a3e1204cd17702",
+  "env_id": "SafetyPointGoal2-v0",
+  "reward_wrapper": "complete",
+  "reward_kwargs": {
+    "goal_bonus": 800.0,
+    "shaping_k": 1.5
+  },
+  "seed_pool": {
+    "name": "selection",
+    "n": 500,
+    "file": "configs/seed_pools.json",
+    "sha256": "2dd5a31370e76a284f39d7a9dd8af52d1b630b1d742a8861fd95fe361e6be288"
+  },
+  "deterministic": true
+}
