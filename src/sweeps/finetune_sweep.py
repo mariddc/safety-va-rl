@@ -1,6 +1,6 @@
 """One beta-sweep trial per call: ask the study for beta, fine-tune and evaluate each sweep seed, tell the mean.
 
-The study of a base lives in runs/sweeps/<base>_<run_pass>/journal.log, next to one log file per seed-run.
+The study of a base lives in runs/sweeps/<base>_<run_pass>[_<tag>]/journal.log, next to one log file per seed-run.
 Only one trial runs at a time per study, so a job can open the journal, run one trial and exit.
 """
 from __future__ import annotations
@@ -15,6 +15,7 @@ import time
 from pathlib import Path
 
 import optuna
+from optuna.distributions import FloatDistribution
 from optuna.storages import JournalStorage
 from optuna.storages.journal import JournalFileBackend
 from optuna.trial import TrialState
@@ -65,16 +66,16 @@ def _reusable_run(name: str, run_pass: str, n_eval: int, commit: str, allow_dirt
 
 
 def _run_seeds(base: str, beta: float, *, run_pass: str, n_eval: int, allow_dirty: bool, serial: bool,
-               commit: str, log_prefix: Path) -> list[dict]:
+               commit: str, log_prefix: Path, pool: str = "sweep", seed_indices=range(N_SEEDS)) -> list[dict]:
     dirty_flag = ["--allow-dirty"] if allow_dirty else []
     # repr keeps every digit, so the beta parsed back from the name is this exact float
-    names = [f"{base}_v3_sweep_b{beta!r}_s{i}" for i in range(N_SEEDS)]
-    found = [_reusable_run(name, run_pass, n_eval, commit, allow_dirty) for name in names]
-    run_dirs = [f[0] if f else None for f in found]
-    eval_done = [bool(f and f[1]) for f in found]
+    names = {i: f"{base}_v3_{pool}_b{beta!r}_s{i}" for i in seed_indices}
+    found = {i: _reusable_run(name, run_pass, n_eval, commit, allow_dirty) for i, name in names.items()}
+    run_dirs = {i: f[0] if f else None for i, f in found.items()}
+    eval_done = {i: bool(f and f[1]) for i, f in found.items()}
 
     procs = {}
-    for i, name in enumerate(names):
+    for i, name in names.items():
         if run_dirs[i] is None:
             log = open(f"{log_prefix}_s{i}.log", "a")
             procs[i] = (subprocess.Popen(
@@ -92,7 +93,7 @@ def _run_seeds(base: str, beta: float, *, run_pass: str, n_eval: int, allow_dirt
 
     # One eval at a time: each eval starts one worker per CPU of the job.
     # Seeds whose fine-tune finished are evaluated even if another failed, so a retry reuses them.
-    for i, run_dir in enumerate(run_dirs):
+    for i, run_dir in run_dirs.items():
         if run_dir is not None and not eval_done[i]:
             with open(f"{log_prefix}_s{i}.log", "a") as log:
                 subprocess.run(
@@ -104,7 +105,7 @@ def _run_seeds(base: str, beta: float, *, run_pass: str, n_eval: int, allow_dirt
         raise RuntimeError(f"fine-tune failed for {failed}; see {log_prefix}_s*.log")
 
     results = []
-    for i, run_dir in enumerate(run_dirs):
+    for i, run_dir in run_dirs.items():
         eval_dir = run_dir / "final_eval" / f"selection_n{n_eval}"
         summary = json.loads((eval_dir / "summary.json").read_text())
         tb = load_tb_scalars(run_dir / "logs" / "PPO_0")
@@ -118,8 +119,12 @@ def _run_seeds(base: str, beta: float, *, run_pass: str, n_eval: int, allow_dirt
 
 
 def run_trial(base: str, *, run_pass: str, allow_dirty: bool = False, n_trials: int = 12, n_eval: int = 500,
-              serial: bool = False) -> None:
-    sweep_dir = CODE_ROOT / "runs" / "sweeps" / f"{base}_{run_pass}"
+              serial: bool = False, beta_range: tuple[float, float] = BETA_RANGE, study_tag: str | None = None,
+              warm_start: Path | None = None) -> None:
+    """warm_start: journal of an earlier study of the base; its complete trials are copied in at creation."""
+    sweep_dir = CODE_ROOT / "runs" / "sweeps" / (f"{base}_{run_pass}_{study_tag}" if study_tag else f"{base}_{run_pass}")
+    if warm_start and Path(warm_start).resolve() == (sweep_dir / "journal.log").resolve():
+        raise ValueError(f"beta_{base}: warm-start journal {warm_start} is the study's own journal")
     sweep_dir.mkdir(parents=True, exist_ok=True)
     sampler_seed = load_sampler_seed()
     study = optuna.create_study(
@@ -142,23 +147,46 @@ def run_trial(base: str, *, run_pass: str, allow_dirty: bool = False, n_trials: 
         raise RuntimeError(f"beta_{base}: uncommitted code changes {git['dirty_paths']}; commit them or pass --allow-dirty")
     seeds = load_pool("sweep")[:N_SEEDS]
     base_model = CODE_ROOT / get_run_dir(get_experiment(base)) / "model" / "model.zip"
+    startup_betas = [] if warm_start else STARTUP_BETAS
     setup = {
-        "code_commit": git["commit"], "run_pass": run_pass, "beta_range": list(BETA_RANGE),
-        "startup_betas": STARTUP_BETAS, "sweep_seeds": seeds, "sampler_seed": sampler_seed,
+        "code_commit": git["commit"], "run_pass": run_pass, "beta_range": list(beta_range),
+        "startup_betas": startup_betas, "sweep_seeds": seeds, "sampler_seed": sampler_seed,
         "n_trials": n_trials, "selection_n": n_eval, "objective_key": OBJECTIVE_KEY[base],
         "seed_pools_file": repo_relative(SEED_POOLS_PATH), "seed_pools_sha256": sha256_file(SEED_POOLS_PATH),
         "q_sha256": sha256_file(CODE_ROOT / get_experiment(f"{base}_v3_b0.0")["q_path"]),
         "base_model_sha256": sha256_file(base_model), "optuna_version": optuna.__version__,
         "uv_lock_sha256": sha256_file(CODE_ROOT / "uv.lock"),
     }
+    if warm_start:
+        setup["warm_start"] = repo_relative(warm_start)
+        setup["warm_start_sha256"] = sha256_file(warm_start)
     if "code_commit" not in study.user_attrs:
-        for beta in STARTUP_BETAS:
+        if warm_start:
+            # Trials without a recorded setup were left by a job killed while copying
+            if study.get_trials(deepcopy=False):
+                raise RuntimeError(f"beta_{base}: {sweep_dir / 'journal.log'} has trials but no setup; "
+                                   "a warm start was interrupted, remove this journal and run again")
+            # load_study only reads; create_study(load_if_exists=True) would append to the source journal
+            source = optuna.load_study(study_name=f"beta_{base}",
+                                       storage=JournalStorage(JournalFileBackend(str(warm_start))))
+            # Copied values are comparable only if measured on the same seeds, episodes, Q and base
+            same = ("sweep_seeds", "selection_n", "objective_key", "seed_pools_sha256", "q_sha256", "base_model_sha256",
+                    "uv_lock_sha256")
+            changed = {k: (source.user_attrs[k], setup[k]) for k in same if source.user_attrs[k] != setup[k]}
+            if changed:
+                raise ValueError(f"beta_{base}: warm-start study {setup['warm_start']} (recorded, current) differ: {changed}")
+            for t in source.get_trials(deepcopy=False, states=(TrialState.COMPLETE,)):
+                study.add_trial(optuna.trial.create_trial(
+                    params={"beta": t.params["beta"]}, value=t.value,
+                    distributions={"beta": FloatDistribution(*beta_range, log=True)},
+                    user_attrs={**t.user_attrs, "copied_from_trial": t.number}))
+        for beta in startup_betas:
             study.enqueue_trial({"beta": beta})
         for k, v in setup.items():
             study.set_user_attr(k, v)
     # Trials are comparable only with the same code, seeds, episodes and inputs; the budget may be raised.
     recorded = study.user_attrs
-    changed = {k: (recorded[k], v) for k, v in setup.items() if k != "n_trials" and recorded[k] != v}
+    changed = {k: (recorded.get(k), v) for k, v in setup.items() if k != "n_trials" and recorded.get(k) != v}
     if changed:
         raise ValueError(f"beta_{base}: (recorded, current) differ: {changed}")
 
@@ -179,7 +207,7 @@ def run_trial(base: str, *, run_pass: str, allow_dirty: bool = False, n_trials: 
             print(f"[sweep] trial {t.number} (beta={beta!r}) was left running; failed and re-enqueued")
 
     trial = study.ask()
-    beta = trial.suggest_float("beta", *BETA_RANGE, log=True)
+    beta = trial.suggest_float("beta", *beta_range, log=True)
     # A re-proposed measured beta adds no new point; the human decides how to go on
     for t in study.get_trials(deepcopy=False, states=(TrialState.COMPLETE,)):
         if abs(math.log(beta) - math.log(t.params["beta"])) < 1e-6:
