@@ -14,6 +14,24 @@ from src.utils.seed_pools import SEED_POOLS_PATH, load_pool
 from src.wrappers.reward import reward_config
 
 
+def evaluate_seeded(exp_name: str, exp: dict, run_dir: Path, pool: str, seeds: list[int], run_pass: str,
+                    git: dict) -> tuple[dict, Path]:
+    """Evaluate run_dir on seeds into run_dir/final_eval/<pool>_n<len(seeds)>/, with its meta.json."""
+    model_path = run_dir / "model" / "model.zip"
+    fields = dict(
+        run_dir=repo_relative(run_dir), model_path=repo_relative(model_path), model_sha256=sha256_file(model_path),
+        env_id=exp["env_id"], **reward_config(exp),
+        seed_pool={"name": pool, "n": len(seeds), "file": repo_relative(SEED_POOLS_PATH),
+                   "sha256": sha256_file(SEED_POOLS_PATH)},
+        deterministic=True,
+    )
+    out_dir = run_dir / "final_eval" / f"{pool}_n{len(seeds)}"
+    out_dir.mkdir(parents=True, exist_ok=False)
+    with recorded_run(out_dir / "meta.json", exp_name, run_pass, git, **fields):
+        results = run_sb3_seeded_eval(exp, run_dir, seeds, out_dir)
+    return results, out_dir
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Deterministic eval of one run on the first n seeds of a seed pool.")
     parser.add_argument("exp_name", help="Experiment name in the registry (env, reward, algorithm)")
@@ -47,20 +65,7 @@ def main() -> None:
         ok = run_dir == (PROJECT_ROOT / get_run_dir(exp)).resolve()
     if not ok:
         raise ValueError(f"{args.exp_name}: {args.run_dir} is not a run of this experiment")
-    model_path = run_dir / "model" / "model.zip"
-    fields = dict(
-        run_dir=repo_relative(run_dir), model_path=repo_relative(model_path), model_sha256=sha256_file(model_path),
-        env_id=exp["env_id"], **reward_config(exp),
-        seed_pool={"name": args.pool, "n": args.n, "file": repo_relative(SEED_POOLS_PATH),
-                   "sha256": sha256_file(SEED_POOLS_PATH)},
-        deterministic=True,
-    )
-
-    out_dir = run_dir / "final_eval" / f"{args.pool}_n{args.n}"
-    out_dir.mkdir(parents=True, exist_ok=False)
-    with recorded_run(out_dir / "meta.json", args.exp_name, args.run_pass, git, **fields):
-        results = run_sb3_seeded_eval(exp, run_dir, seeds, out_dir)
-
+    results, out_dir = evaluate_seeded(args.exp_name, exp, run_dir, args.pool, seeds, args.run_pass, git)
     print(f"[eval] success_rate={results['success_rate']:.3f} "
           f"safe_success_rate_hazards_only={results['safe_success_rate_hazards_only']:.3f} "
           f"safe_success_rate_strict={results['safe_success_rate_strict']:.3f}")
