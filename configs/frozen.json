@@ -1,0 +1,12 @@
+{
+  "q": {
+    "ppo_5m_goal2_safe": {
+      "path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m_goal2_safe/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3/q_theta.pt",
+      "sha256": "a40493aff0ce6b73fe749cef3c204d454bb82888979ae8d54e083021a053f3dc"
+    },
+    "ppo_5m700k_goal2": {
+      "path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3/q_theta.pt",
+      "sha256": "1b348c76d5d0c343bb5a4b2ceb4f7f177e5dbfcde19a166be95198bdd5cef875"
+    }
+  }
+}
