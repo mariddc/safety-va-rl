@@ -2,9 +2,11 @@
 
 Each eval goes to <run_dir>/final_eval/<pool>_n<n>/ (as scripts/evaluate_seeded.py), and an index of the 13 eval
 dirs to runs/final_test/<base>_<run_pass>_<pool>_n<n>.json. Every check runs before anything is written.
+A re-run after a job died part-way keeps the finished evals, redoes an unfinished one and evaluates the rest.
 """
 import argparse
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -68,7 +70,7 @@ def main() -> None:
         for i in range(N_FINAL):
             name = f"{args.base}_v3_final_b{arm_beta!r}_s{i}"
             run_dir, meta = _newest_finished(name, args.run_pass)
-            if meta["git"]["dirty"]:
+            if meta["git"]["dirty"] and not args.allow_dirty:
                 raise ValueError(f"{name}: {run_dir.name} ran with uncommitted code")
             if meta["beta"] != arm_beta or meta["seed"] != final_seeds[i]:
                 raise ValueError(f"{name}: beta {meta['beta']} seed {meta['seed']}, "
@@ -87,22 +89,36 @@ def main() -> None:
     out_name = f"{args.pool}_n{len(seeds)}"
     evals = [(args.base, CODE_ROOT / get_run_dir(get_experiment(args.base)))]
     evals += [(name, run_dir) for name, (run_dir, _) in runs.items()]
-    # The test runs once: any earlier test output, even a partial one, stops it
-    done = [repo_relative(d) for _, d in evals
-            if list((d / "final_eval").glob("test_*")) or (d / "final_eval" / out_name).exists()]
-    if done:
-        raise RuntimeError(f"eval output already exists in {done}")
+    # The test runs once: only its own output, left by a job that died part-way, may exist
+    other = [repo_relative(p) for _, d in evals for p in (d / "final_eval").glob("test_*") if p.name != out_name]
+    if other:
+        raise RuntimeError(f"other test output exists: {other}")
+    index_path = CODE_ROOT / "runs" / "final_test" / f"{args.base}_{args.run_pass}_{out_name}.json"
+    if index_path.exists():
+        raise FileExistsError(f"{index_path} exists: this test already ran to the end")
 
     index = {"base": args.base, "pool": args.pool, "n": len(seeds), "beta": beta,
              "chosen": {"path": str(args.chosen), "sha256": sha256_file(args.chosen)},
              "seed_pools_file": repo_relative(SEED_POOLS_PATH), "seed_pools_sha256": sha256_file(SEED_POOLS_PATH),
              "evals": {}}
     for name, run_dir in evals:
-        results, out_dir = evaluate_seeded(name, get_experiment(name), run_dir.resolve(), args.pool, seeds,
-                                           args.run_pass, git)
-        index["evals"][name] = repo_relative(out_dir)
-        print(f"[final_test] {name}: {OBJECTIVE_KEY[args.base]}={results[OBJECTIVE_KEY[args.base]]:.4f}")
-    index_path = CODE_ROOT / "runs" / "final_test" / f"{args.base}_{args.run_pass}_{out_name}.json"
+        out_dir = run_dir / "final_eval" / out_name
+        eval_meta = json.loads((out_dir / "meta.json").read_text()) if (out_dir / "meta.json").exists() else {}
+        if eval_meta.get("status") == "finished" and (out_dir / "summary.json").exists():
+            results = json.loads((out_dir / "summary.json").read_text())
+            evaluated = "earlier job"
+        else:
+            evaluated = "this job"
+            if out_dir.exists():
+                shutil.rmtree(out_dir)
+                evaluated = "this job, unfinished earlier dir removed"
+            results, out_dir = evaluate_seeded(name, get_experiment(name), run_dir.resolve(), args.pool, seeds,
+                                               args.run_pass, git)
+            eval_meta = json.loads((out_dir / "meta.json").read_text())
+        index["evals"][name] = {"eval_dir": repo_relative(out_dir), "evaluated": evaluated,
+                                "job_id": eval_meta["slurm_job_id"], "hostname": eval_meta["hostname"]}
+        print(f"[final_test] {name} ({evaluated}): "
+              f"{OBJECTIVE_KEY[args.base]}={results[OBJECTIVE_KEY[args.base]]:.4f}")
     index_path.parent.mkdir(parents=True, exist_ok=True)
     index_path.write_text(json.dumps(index, indent=2))
     print(f"[final_test] index={index_path}")

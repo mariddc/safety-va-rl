@@ -8,15 +8,17 @@
 #SBATCH --time=4:00:00
 #SBATCH --no-requeue
 
-# Usage, from the repo to run: sbatch -J sweep_ref_<base> cluster/sweep_ref.sh <base> <run_pass>   ([ALLOW_DIRTY=1] for dry runs)
-#        plain bash: [ALLOW_DIRTY=1] bash cluster/sweep_ref.sh <base> <run_pass>
+# Usage, from the repo to run: sbatch -J sweep_ref_<base> cluster/sweep_ref.sh <base> <run_pass> [args]   ([ALLOW_DIRTY=1] for dry runs)
+#        plain bash: [ALLOW_DIRTY=1] bash cluster/sweep_ref.sh <base> <run_pass> [args]
 # The code run is that of the dir sbatch is called from (SLURM_SUBMIT_DIR); --chdir does not change it.
-# Runs the base's sweep seeds at beta = 0 (3 fine-tunes in parallel, then their evals), with the resources of a
-# sweep trial job, so the result pairs with every trial.
+# Runs one beta on 3 seeds of a training pool (3 fine-tunes in parallel, then their evals), with the resources of a
+# sweep trial job. Without args: the base's sweep seeds at beta = 0, which pairs with every trial. Extra args go to
+# scripts/sweep_reference.py as they are (e.g. --beta-file <json> --rank 0 --pool confirm --seeds 0,1,2).
 set -euo pipefail
 
 BASE="$1"
 RUN_PASS="$2"
+shift 2
 DIRTY_FLAG="${ALLOW_DIRTY:+--allow-dirty}"
 
 echo "Starting job on node: $(hostname)"
@@ -35,7 +37,7 @@ export PYTHONUNBUFFERED=1
 
 # Plain python: the script starts its own fine-tune and eval processes inside this job's allocation.
 RC=0
-python scripts/sweep_reference.py "$BASE" --run-pass "$RUN_PASS" ${DIRTY_FLAG} || RC=$?
+python scripts/sweep_reference.py "$BASE" --run-pass "$RUN_PASS" ${DIRTY_FLAG} "$@" || RC=$?
 
 # Peak memory of the whole job from the cgroup, when readable (also after a failure).
 F=/sys/fs/cgroup/system.slice/slurmstepd.scope/job_"${SLURM_JOB_ID:-none}"/memory.peak

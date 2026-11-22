@@ -27,6 +27,10 @@ def fit_top3(base: str, journal: Path, out_dir: Path) -> list[float]:
     # load_study only reads the journal
     study = optuna.load_study(study_name=f"beta_{base}",
                               storage=JournalStorage(JournalFileBackend(str(journal))))
+    # A re-proposal is the normal end of the sweep; any other stop means something broke
+    stopped = study.user_attrs.get("stopped")
+    if stopped and not stopped.startswith("GP re-proposed"):
+        raise RuntimeError(f"{journal}: sweep stopped: {stopped}; a human decides how to go on")
     trials = study.get_trials(deepcopy=False, states=(TrialState.COMPLETE,))
 
     # The model GPSampler(deterministic_objective=False) fits: beta normalized on log scale to [0, 1],
