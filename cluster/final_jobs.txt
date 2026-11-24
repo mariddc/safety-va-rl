@@ -1,0 +1,56 @@
+1116957 ext_B_1
+    sbatch --job-name=ext_B_1 --cpus-per-task=8 --mem=36G --time=4:00:00 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116958 ext_B_2
+    sbatch --job-name=ext_B_2 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116957 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116959 ext_B_3
+    sbatch --job-name=ext_B_3 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116958 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116960 ext_B_4
+    sbatch --job-name=ext_B_4 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116959 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116961 ext_B_5
+    sbatch --job-name=ext_B_5 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116960 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116962 ext_B_6
+    sbatch --job-name=ext_B_6 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116961 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116963 ext_B_7
+    sbatch --job-name=ext_B_7 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116962 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116964 ext_B_8
+    sbatch --job-name=ext_B_8 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterany:1116963 cluster/sweep_trial.sh ppo_5m_goal2_safe pass1 --beta-range 0.1 300 --study-tag ext --warm-start runs/sweeps/ppo_5m_goal2_safe_pass1/journal.log
+1116965 fit_A
+    sbatch --job-name=fit_A --cpus-per-task=2 --mem=8G --time=0:20:00 cluster/beta_select.sh fit ppo_5m700k_goal2 --journal runs/sweeps/ppo_5m700k_goal2_pass1/journal.log --out-dir runs/sweeps/ppo_5m700k_goal2_pass1_select
+1116966 conf_A_r0
+    sbatch --job-name=conf_A_r0 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116965 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --beta-file runs/sweeps/ppo_5m700k_goal2_pass1_select/top3.json --rank 0 --pool confirm --seeds 0,1,2
+1116967 conf_A_r1
+    sbatch --job-name=conf_A_r1 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116965 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --beta-file runs/sweeps/ppo_5m700k_goal2_pass1_select/top3.json --rank 1 --pool confirm --seeds 0,1,2
+1116968 conf_A_r2
+    sbatch --job-name=conf_A_r2 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116965 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --beta-file runs/sweeps/ppo_5m700k_goal2_pass1_select/top3.json --rank 2 --pool confirm --seeds 0,1,2
+1116969 sel_A
+    sbatch --job-name=sel_A --cpus-per-task=2 --mem=8G --time=0:20:00 --dependency=afterok:1116966:1116967:1116968 cluster/beta_select.sh select ppo_5m700k_goal2 pass1 --top3 runs/sweeps/ppo_5m700k_goal2_pass1_select/top3.json --out-dir runs/sweeps/ppo_5m700k_goal2_pass1_select
+1116970 f_ft_A_s0-2
+    sbatch --job-name=f_ft_A_s0-2 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116969 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --beta-file runs/sweeps/ppo_5m700k_goal2_pass1_select/chosen_beta.json --pool final --seeds 0,1,2
+1116971 f_ft_A_s3-5
+    sbatch --job-name=f_ft_A_s3-5 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116969 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --beta-file runs/sweeps/ppo_5m700k_goal2_pass1_select/chosen_beta.json --pool final --seeds 3,4,5
+1116972 fit_B
+    sbatch --job-name=fit_B --cpus-per-task=2 --mem=8G --time=0:20:00 --dependency=afterany:1116964 cluster/beta_select.sh fit ppo_5m_goal2_safe --journal runs/sweeps/ppo_5m_goal2_safe_pass1_ext/journal.log --out-dir runs/sweeps/ppo_5m_goal2_safe_pass1_select
+1116973 conf_B_r0
+    sbatch --job-name=conf_B_r0 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116972 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --beta-file runs/sweeps/ppo_5m_goal2_safe_pass1_select/top3.json --rank 0 --pool confirm --seeds 0,1,2
+1116974 conf_B_r1
+    sbatch --job-name=conf_B_r1 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116972 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --beta-file runs/sweeps/ppo_5m_goal2_safe_pass1_select/top3.json --rank 1 --pool confirm --seeds 0,1,2
+1116975 conf_B_r2
+    sbatch --job-name=conf_B_r2 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116972 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --beta-file runs/sweeps/ppo_5m_goal2_safe_pass1_select/top3.json --rank 2 --pool confirm --seeds 0,1,2
+1116976 sel_B
+    sbatch --job-name=sel_B --cpus-per-task=2 --mem=8G --time=0:20:00 --dependency=afterok:1116973:1116974:1116975 cluster/beta_select.sh select ppo_5m_goal2_safe pass1 --top3 runs/sweeps/ppo_5m_goal2_safe_pass1_select/top3.json --out-dir runs/sweeps/ppo_5m_goal2_safe_pass1_select
+1116977 f_ft_B_s0-2
+    sbatch --job-name=f_ft_B_s0-2 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116976 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --beta-file runs/sweeps/ppo_5m_goal2_safe_pass1_select/chosen_beta.json --pool final --seeds 0,1,2
+1116978 f_ft_B_s3-5
+    sbatch --job-name=f_ft_B_s3-5 --cpus-per-task=8 --mem=36G --time=4:00:00 --dependency=afterok:1116976 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --beta-file runs/sweeps/ppo_5m_goal2_safe_pass1_select/chosen_beta.json --pool final --seeds 3,4,5
+1116979 f_ref_A_s0-2
+    sbatch --job-name=f_ref_A_s0-2 --cpus-per-task=8 --mem=36G --time=4:00:00 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --pool final --seeds 0,1,2
+1116980 f_ref_A_s3-5
+    sbatch --job-name=f_ref_A_s3-5 --cpus-per-task=8 --mem=36G --time=4:00:00 cluster/sweep_ref.sh ppo_5m700k_goal2 pass1 --pool final --seeds 3,4,5
+1116981 f_ref_B_s0-2
+    sbatch --job-name=f_ref_B_s0-2 --cpus-per-task=8 --mem=36G --time=4:00:00 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --pool final --seeds 0,1,2
+1116982 f_ref_B_s3-5
+    sbatch --job-name=f_ref_B_s3-5 --cpus-per-task=8 --mem=36G --time=4:00:00 cluster/sweep_ref.sh ppo_5m_goal2_safe pass1 --pool final --seeds 3,4,5
+1116983 test_A
+    sbatch --job-name=test_A --cpus-per-task=8 --mem=16G --time=6:00:00 --dependency=afterok:1116970:1116971:1116979:1116980 cluster/final_test.sh ppo_5m700k_goal2 pass1 runs/sweeps/ppo_5m700k_goal2_pass1_select/chosen_beta.json test
+1116984 test_B
+    sbatch --job-name=test_B --cpus-per-task=8 --mem=16G --time=6:00:00 --dependency=afterok:1116977:1116978:1116981:1116982 cluster/final_test.sh ppo_5m_goal2_safe pass1 runs/sweeps/ppo_5m_goal2_safe_pass1_select/chosen_beta.json test
