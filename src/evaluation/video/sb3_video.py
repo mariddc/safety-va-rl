@@ -148,7 +148,15 @@ def label_frames(frames, steps, label: str, n_frames: int | None = None):
     return out
 
 
-def write_mp4(path: Path, frames, fps: int = 30):
-    with imageio.get_writer(path, fps=fps, codec="libx264", quality=8) as w:
+def write_mp4(path: Path, frames, fps: int = 30, lossless: bool = False):
+    # lossless: RGB H.264 at crf 0 reads back bit-exact (not every player opens it)
+    kw = (dict(codec="libx264rgb", quality=None, pixelformat="rgb24", output_params=["-crf", "0", "-preset", "veryslow"])
+          if lossless else dict(codec="libx264", quality=8))
+    with imageio.get_writer(path, fps=fps, **kw) as w:
         for f in frames:
             w.append_data(f)
+
+
+def read_mp4(path: Path):
+    with imageio.get_reader(path) as r:
+        return [np.asarray(f) for f in r]

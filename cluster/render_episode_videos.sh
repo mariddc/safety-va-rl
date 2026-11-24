@@ -12,6 +12,8 @@
 #        plain bash: [OUT_DIR=...] [MUJOCO_GL=osmesa] bash cluster/render_episode_videos.sh ...
 # Replays must run on the host that ran the test (recorded in the index): on other hardware the same
 # seed can give a different episode. Each replay is checked against the recorded episodes.csv row.
+# Unlabeled replays go to OUT_DIR (default results/video/raw), labeled videos to its parent; the labeling
+# step alone runs anywhere: python scripts/label_episode_videos.py [--raw-dir ...]
 set -euo pipefail
 
 INDEX="$1"
@@ -36,5 +38,6 @@ while [ "$#" -ge 2 ]; do
     python scripts/render_episode_videos.py "$INDEX" --train-seed "$1" --episode-seed "$2" ${OUT_DIR:+--out-dir "$OUT_DIR"}
     shift 2
 done
+python scripts/label_episode_videos.py ${OUT_DIR:+--raw-dir "$OUT_DIR"}
 
 echo "Job finished at: $(date)"
