@@ -1,0 +1,63 @@
+{
+  "beta": 17.320508075688775,
+  "base": "ppo_5m700k_goal2",
+  "objective_key": "safe_success_rate_strict",
+  "rule": "highest mean of safe_success_rate_strict over the confirm seeds; exact tie: the smaller beta",
+  "confirm": [
+    {
+      "beta": 15.556070447914701,
+      "mean": 0.6313333333333333,
+      "sd": 0.018583146486355156,
+      "values": [
+        0.652,
+        0.626,
+        0.616
+      ]
+    },
+    {
+      "beta": 17.320508075688775,
+      "mean": 0.65,
+      "sd": 0.01907878402833893,
+      "values": [
+        0.648,
+        0.67,
+        0.632
+      ]
+    },
+    {
+      "beta": 22.2572919846484,
+      "mean": 0.638,
+      "sd": 0.019697715603592226,
+      "values": [
+        0.622,
+        0.632,
+        0.66
+      ]
+    }
+  ],
+  "earlier_rule": {
+    "beta": 17.320508075688775,
+    "margin": 0.01,
+    "rule": "smallest beta whose confirm mean >= best mean - margin (recorded, not used)"
+  },
+  "inputs": {
+    "top3": {
+      "path": "runs/sweeps/ppo_5m700k_goal2_pass1_select/top3.json",
+      "sha256": "8a6cd1f5a3c53d4230ad206b5737457433b78ad2d33c670158ec88e7ebe022c6"
+    },
+    "runs": [
+      {
+        "path": "runs/sweeps/ppo_5m700k_goal2_pass1_confirm_b15.556070447914701_s0-2/runs.json",
+        "sha256": "4fd8443023dec00b4eb5c7b51bb01d8251afb1d7fe5eb78ae78caa5bf615ebe0"
+      },
+      {
+        "path": "runs/sweeps/ppo_5m700k_goal2_pass1_confirm_b17.320508075688775_s0-2/runs.json",
+        "sha256": "f3abda11fae6eaad6e68df0d85fc40a47cbd9eb23368cae07e746ac11e550870"
+      },
+      {
+        "path": "runs/sweeps/ppo_5m700k_goal2_pass1_confirm_b22.2572919846484_s0-2/runs.json",
+        "sha256": "c1c3c792e5e1cefe973974a083449788b425561882575059938c362a40bee55e"
+      }
+    ]
+  }
+}

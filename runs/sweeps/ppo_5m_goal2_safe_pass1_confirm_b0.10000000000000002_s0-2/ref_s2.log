@@ -1,0 +1,891 @@
+Logging to /home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m_goal2_safe_v3_confirm_b0.10000000000000002_s2/20261122_144358_pass1_1116973/logs/PPO_0
+[QPenalty] mean_penalty=0.010895  mean_q=-0.028038  active_frac=0.109  mean_step_reward=-1.0025  penalty_ratio=0.0110  n=16384
+----------------------------------
+| q/                  |          |
+|    active_frac      | 0.109    |
+|    mean_penalty     | 0.0109   |
+|    mean_q           | -0.028   |
+|    mean_step_reward | -1       |
+|    penalty_ratio    | 0.011    |
+| rollout/            |          |
+|    ep_len_mean      | 178      |
+|    ep_rew_mean      | -175     |
+| time/               |          |
+|    fps              | 81       |
+|    iterations       | 1        |
+|    time_elapsed     | 200      |
+|    total_timesteps  | 5029888  |
+----------------------------------
+[QPenalty] mean_penalty=0.010205  mean_q=-0.031174  active_frac=0.102  mean_step_reward=-0.9912  penalty_ratio=0.0104  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.102       |
+|    mean_penalty         | 0.0102      |
+|    mean_q               | -0.0312     |
+|    mean_step_reward     | -0.991      |
+|    penalty_ratio        | 0.0104      |
+| rollout/                |             |
+|    ep_len_mean          | 158         |
+|    ep_rew_mean          | -159        |
+| time/                   |             |
+|    fps                  | 77          |
+|    iterations           | 2           |
+|    time_elapsed         | 422         |
+|    total_timesteps      | 5046272     |
+| train/                  |             |
+|    approx_kl            | 0.008520111 |
+|    clip_fraction        | 0.0766      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.134       |
+|    explained_variance   | 0.844       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 23          |
+|    n_updates            | 3070        |
+|    policy_gradient_loss | -0.00291    |
+|    std                  | 0.226       |
+|    value_loss           | 251         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010095  mean_q=-0.031842  active_frac=0.101  mean_step_reward=-0.9615  penalty_ratio=0.0106  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.101        |
+|    mean_penalty         | 0.0101       |
+|    mean_q               | -0.0318      |
+|    mean_step_reward     | -0.961       |
+|    penalty_ratio        | 0.0106       |
+| rollout/                |              |
+|    ep_len_mean          | 141          |
+|    ep_rew_mean          | -139         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 3            |
+|    time_elapsed         | 674          |
+|    total_timesteps      | 5062656      |
+| train/                  |              |
+|    approx_kl            | 0.0075320257 |
+|    clip_fraction        | 0.0635       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.138        |
+|    explained_variance   | 0.8          |
+|    learning_rate        | 0.0001       |
+|    loss                 | 170          |
+|    n_updates            | 3080         |
+|    policy_gradient_loss | -0.00289     |
+|    std                  | 0.227        |
+|    value_loss           | 379          |
+------------------------------------------
+[QPenalty] mean_penalty=0.009692  mean_q=-0.031108  active_frac=0.097  mean_step_reward=-0.9917  penalty_ratio=0.0099  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.0969      |
+|    mean_penalty         | 0.00969     |
+|    mean_q               | -0.0311     |
+|    mean_step_reward     | -0.992      |
+|    penalty_ratio        | 0.00987     |
+| rollout/                |             |
+|    ep_len_mean          | 154         |
+|    ep_rew_mean          | -151        |
+| time/                   |             |
+|    fps                  | 73          |
+|    iterations           | 4           |
+|    time_elapsed         | 890         |
+|    total_timesteps      | 5079040     |
+| train/                  |             |
+|    approx_kl            | 0.007060989 |
+|    clip_fraction        | 0.0664      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.139       |
+|    explained_variance   | 0.785       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 192         |
+|    n_updates            | 3090        |
+|    policy_gradient_loss | -0.00298    |
+|    std                  | 0.225       |
+|    value_loss           | 391         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.011523  mean_q=-0.028810  active_frac=0.115  mean_step_reward=-0.9544  penalty_ratio=0.0122  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.115        |
+|    mean_penalty         | 0.0115       |
+|    mean_q               | -0.0288      |
+|    mean_step_reward     | -0.954       |
+|    penalty_ratio        | 0.0122       |
+| rollout/                |              |
+|    ep_len_mean          | 158          |
+|    ep_rew_mean          | -151         |
+| time/                   |              |
+|    fps                  | 74           |
+|    iterations           | 5            |
+|    time_elapsed         | 1106         |
+|    total_timesteps      | 5095424      |
+| train/                  |              |
+|    approx_kl            | 0.0063425815 |
+|    clip_fraction        | 0.0657       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.143        |
+|    explained_variance   | 0.835        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 75.2         |
+|    n_updates            | 3100         |
+|    policy_gradient_loss | -0.00247     |
+|    std                  | 0.226        |
+|    value_loss           | 298          |
+------------------------------------------
+[QPenalty] mean_penalty=0.010052  mean_q=-0.029477  active_frac=0.101  mean_step_reward=-0.8841  penalty_ratio=0.0115  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.101       |
+|    mean_penalty         | 0.0101      |
+|    mean_q               | -0.0295     |
+|    mean_step_reward     | -0.884      |
+|    penalty_ratio        | 0.0115      |
+| rollout/                |             |
+|    ep_len_mean          | 149         |
+|    ep_rew_mean          | -135        |
+| time/                   |             |
+|    fps                  | 73          |
+|    iterations           | 6           |
+|    time_elapsed         | 1336        |
+|    total_timesteps      | 5111808     |
+| train/                  |             |
+|    approx_kl            | 0.007612028 |
+|    clip_fraction        | 0.0764      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.143       |
+|    explained_variance   | 0.836       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 22.4        |
+|    n_updates            | 3110        |
+|    policy_gradient_loss | -0.00265    |
+|    std                  | 0.225       |
+|    value_loss           | 299         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010590  mean_q=-0.029101  active_frac=0.106  mean_step_reward=-0.8795  penalty_ratio=0.0122  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.106       |
+|    mean_penalty         | 0.0106      |
+|    mean_q               | -0.0291     |
+|    mean_step_reward     | -0.879      |
+|    penalty_ratio        | 0.0122      |
+| rollout/                |             |
+|    ep_len_mean          | 148         |
+|    ep_rew_mean          | -126        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 7           |
+|    time_elapsed         | 1572        |
+|    total_timesteps      | 5128192     |
+| train/                  |             |
+|    approx_kl            | 0.008044525 |
+|    clip_fraction        | 0.0942      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.151       |
+|    explained_variance   | 0.843       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 304         |
+|    n_updates            | 3120        |
+|    policy_gradient_loss | -0.00347    |
+|    std                  | 0.223       |
+|    value_loss           | 248         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010645  mean_q=-0.028974  active_frac=0.106  mean_step_reward=-1.0241  penalty_ratio=0.0105  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.106        |
+|    mean_penalty         | 0.0106       |
+|    mean_q               | -0.029       |
+|    mean_step_reward     | -1.02        |
+|    penalty_ratio        | 0.0105       |
+| rollout/                |              |
+|    ep_len_mean          | 142          |
+|    ep_rew_mean          | -140         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 8            |
+|    time_elapsed         | 1802         |
+|    total_timesteps      | 5144576      |
+| train/                  |              |
+|    approx_kl            | 0.0081010405 |
+|    clip_fraction        | 0.0851       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.166        |
+|    explained_variance   | 0.848        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 11.8         |
+|    n_updates            | 3130         |
+|    policy_gradient_loss | -0.00319     |
+|    std                  | 0.222        |
+|    value_loss           | 251          |
+------------------------------------------
+[QPenalty] mean_penalty=0.011700  mean_q=-0.028159  active_frac=0.117  mean_step_reward=-1.0469  penalty_ratio=0.0113  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.117        |
+|    mean_penalty         | 0.0117       |
+|    mean_q               | -0.0282      |
+|    mean_step_reward     | -1.05        |
+|    penalty_ratio        | 0.0113       |
+| rollout/                |              |
+|    ep_len_mean          | 160          |
+|    ep_rew_mean          | -166         |
+| time/                   |              |
+|    fps                  | 73           |
+|    iterations           | 9            |
+|    time_elapsed         | 2010         |
+|    total_timesteps      | 5160960      |
+| train/                  |              |
+|    approx_kl            | 0.0072262837 |
+|    clip_fraction        | 0.0609       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.177        |
+|    explained_variance   | 0.75         |
+|    learning_rate        | 0.0001       |
+|    loss                 | 226          |
+|    n_updates            | 3140         |
+|    policy_gradient_loss | -0.00383     |
+|    std                  | 0.222        |
+|    value_loss           | 430          |
+------------------------------------------
+[QPenalty] mean_penalty=0.013141  mean_q=-0.028841  active_frac=0.131  mean_step_reward=-1.0795  penalty_ratio=0.0123  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.131       |
+|    mean_penalty         | 0.0131      |
+|    mean_q               | -0.0288     |
+|    mean_step_reward     | -1.08       |
+|    penalty_ratio        | 0.0123      |
+| rollout/                |             |
+|    ep_len_mean          | 137         |
+|    ep_rew_mean          | -150        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 10          |
+|    time_elapsed         | 2259        |
+|    total_timesteps      | 5177344     |
+| train/                  |             |
+|    approx_kl            | 0.008296048 |
+|    clip_fraction        | 0.0788      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.188       |
+|    explained_variance   | 0.804       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 54.1        |
+|    n_updates            | 3150        |
+|    policy_gradient_loss | -0.00402    |
+|    std                  | 0.22        |
+|    value_loss           | 376         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.013397  mean_q=-0.026556  active_frac=0.134  mean_step_reward=-0.8812  penalty_ratio=0.0154  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.134       |
+|    mean_penalty         | 0.0134      |
+|    mean_q               | -0.0266     |
+|    mean_step_reward     | -0.881      |
+|    penalty_ratio        | 0.0154      |
+| rollout/                |             |
+|    ep_len_mean          | 154         |
+|    ep_rew_mean          | -135        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 11          |
+|    time_elapsed         | 2477        |
+|    total_timesteps      | 5193728     |
+| train/                  |             |
+|    approx_kl            | 0.006050496 |
+|    clip_fraction        | 0.0599      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.194       |
+|    explained_variance   | 0.822       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 51.1        |
+|    n_updates            | 3160        |
+|    policy_gradient_loss | -0.0032     |
+|    std                  | 0.22        |
+|    value_loss           | 478         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010992  mean_q=-0.029290  active_frac=0.110  mean_step_reward=-1.0463  penalty_ratio=0.0106  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.11        |
+|    mean_penalty         | 0.011       |
+|    mean_q               | -0.0293     |
+|    mean_step_reward     | -1.05       |
+|    penalty_ratio        | 0.0106      |
+| rollout/                |             |
+|    ep_len_mean          | 134         |
+|    ep_rew_mean          | -145        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 12          |
+|    time_elapsed         | 2728        |
+|    total_timesteps      | 5210112     |
+| train/                  |             |
+|    approx_kl            | 0.009013636 |
+|    clip_fraction        | 0.107       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.2         |
+|    explained_variance   | 0.856       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 18.7        |
+|    n_updates            | 3170        |
+|    policy_gradient_loss | -0.00334    |
+|    std                  | 0.219       |
+|    value_loss           | 255         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.012378  mean_q=-0.029127  active_frac=0.124  mean_step_reward=-0.8361  penalty_ratio=0.0150  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.124       |
+|    mean_penalty         | 0.0124      |
+|    mean_q               | -0.0291     |
+|    mean_step_reward     | -0.836      |
+|    penalty_ratio        | 0.015       |
+| rollout/                |             |
+|    ep_len_mean          | 140         |
+|    ep_rew_mean          | -108        |
+| time/                   |             |
+|    fps                  | 71          |
+|    iterations           | 13          |
+|    time_elapsed         | 2961        |
+|    total_timesteps      | 5226496     |
+| train/                  |             |
+|    approx_kl            | 0.007384562 |
+|    clip_fraction        | 0.0615      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.197       |
+|    explained_variance   | 0.815       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 86.8        |
+|    n_updates            | 3180        |
+|    policy_gradient_loss | -0.00397    |
+|    std                  | 0.22        |
+|    value_loss           | 433         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.012292  mean_q=-0.028698  active_frac=0.123  mean_step_reward=-0.8594  penalty_ratio=0.0145  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.123       |
+|    mean_penalty         | 0.0123      |
+|    mean_q               | -0.0287     |
+|    mean_step_reward     | -0.859      |
+|    penalty_ratio        | 0.0145      |
+| rollout/                |             |
+|    ep_len_mean          | 157         |
+|    ep_rew_mean          | -134        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 14          |
+|    time_elapsed         | 3182        |
+|    total_timesteps      | 5242880     |
+| train/                  |             |
+|    approx_kl            | 0.009144729 |
+|    clip_fraction        | 0.0916      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.202       |
+|    explained_variance   | 0.872       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 23.5        |
+|    n_updates            | 3190        |
+|    policy_gradient_loss | -0.0025     |
+|    std                  | 0.218       |
+|    value_loss           | 224         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.011725  mean_q=-0.029506  active_frac=0.117  mean_step_reward=-0.8746  penalty_ratio=0.0136  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.117       |
+|    mean_penalty         | 0.0117      |
+|    mean_q               | -0.0295     |
+|    mean_step_reward     | -0.875      |
+|    penalty_ratio        | 0.0136      |
+| rollout/                |             |
+|    ep_len_mean          | 145         |
+|    ep_rew_mean          | -124        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 15          |
+|    time_elapsed         | 3412        |
+|    total_timesteps      | 5259264     |
+| train/                  |             |
+|    approx_kl            | 0.009097623 |
+|    clip_fraction        | 0.0929      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.214       |
+|    explained_variance   | 0.844       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 13.3        |
+|    n_updates            | 3200        |
+|    policy_gradient_loss | -0.00244    |
+|    std                  | 0.217       |
+|    value_loss           | 249         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.011884  mean_q=-0.027753  active_frac=0.119  mean_step_reward=-0.9628  penalty_ratio=0.0125  n=16384
+----------------------------------------
+| q/                      |            |
+|    active_frac          | 0.119      |
+|    mean_penalty         | 0.0119     |
+|    mean_q               | -0.0278    |
+|    mean_step_reward     | -0.963     |
+|    penalty_ratio        | 0.0125     |
+| rollout/                |            |
+|    ep_len_mean          | 160        |
+|    ep_rew_mean          | -154       |
+| time/                   |            |
+|    fps                  | 72         |
+|    iterations           | 16         |
+|    time_elapsed         | 3628       |
+|    total_timesteps      | 5275648    |
+| train/                  |            |
+|    approx_kl            | 0.00777108 |
+|    clip_fraction        | 0.0853     |
+|    clip_range           | 0.2        |
+|    entropy_loss         | 0.223      |
+|    explained_variance   | 0.823      |
+|    learning_rate        | 0.0001     |
+|    loss                 | 24.9       |
+|    n_updates            | 3210       |
+|    policy_gradient_loss | -0.0019    |
+|    std                  | 0.217      |
+|    value_loss           | 303        |
+----------------------------------------
+[QPenalty] mean_penalty=0.012067  mean_q=-0.029653  active_frac=0.121  mean_step_reward=-1.0429  penalty_ratio=0.0117  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.121       |
+|    mean_penalty         | 0.0121      |
+|    mean_q               | -0.0297     |
+|    mean_step_reward     | -1.04       |
+|    penalty_ratio        | 0.0117      |
+| rollout/                |             |
+|    ep_len_mean          | 137         |
+|    ep_rew_mean          | -143        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 17          |
+|    time_elapsed         | 3863        |
+|    total_timesteps      | 5292032     |
+| train/                  |             |
+|    approx_kl            | 0.009961056 |
+|    clip_fraction        | 0.09        |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.227       |
+|    explained_variance   | 0.85        |
+|    learning_rate        | 0.0001      |
+|    loss                 | 72.5        |
+|    n_updates            | 3220        |
+|    policy_gradient_loss | -0.00333    |
+|    std                  | 0.216       |
+|    value_loss           | 275         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010602  mean_q=-0.029022  active_frac=0.106  mean_step_reward=-0.8905  penalty_ratio=0.0120  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.106       |
+|    mean_penalty         | 0.0106      |
+|    mean_q               | -0.029      |
+|    mean_step_reward     | -0.891      |
+|    penalty_ratio        | 0.012       |
+| rollout/                |             |
+|    ep_len_mean          | 145         |
+|    ep_rew_mean          | -118        |
+| time/                   |             |
+|    fps                  | 71          |
+|    iterations           | 18          |
+|    time_elapsed         | 4099        |
+|    total_timesteps      | 5308416     |
+| train/                  |             |
+|    approx_kl            | 0.007759345 |
+|    clip_fraction        | 0.0643      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.223       |
+|    explained_variance   | 0.799       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 121         |
+|    n_updates            | 3230        |
+|    policy_gradient_loss | -0.00428    |
+|    std                  | 0.217       |
+|    value_loss           | 467         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.011346  mean_q=-0.027464  active_frac=0.113  mean_step_reward=-0.9673  penalty_ratio=0.0119  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.113        |
+|    mean_penalty         | 0.0113       |
+|    mean_q               | -0.0275      |
+|    mean_step_reward     | -0.967       |
+|    penalty_ratio        | 0.0119       |
+| rollout/                |              |
+|    ep_len_mean          | 162          |
+|    ep_rew_mean          | -162         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 19           |
+|    time_elapsed         | 4312         |
+|    total_timesteps      | 5324800      |
+| train/                  |              |
+|    approx_kl            | 0.0085452935 |
+|    clip_fraction        | 0.0898       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.23         |
+|    explained_variance   | 0.835        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 38.9         |
+|    n_updates            | 3240         |
+|    policy_gradient_loss | -0.00328     |
+|    std                  | 0.215        |
+|    value_loss           | 314          |
+------------------------------------------
+[QPenalty] mean_penalty=0.011401  mean_q=-0.028213  active_frac=0.114  mean_step_reward=-1.2266  penalty_ratio=0.0094  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.114       |
+|    mean_penalty         | 0.0114      |
+|    mean_q               | -0.0282     |
+|    mean_step_reward     | -1.23       |
+|    penalty_ratio        | 0.00938     |
+| rollout/                |             |
+|    ep_len_mean          | 178         |
+|    ep_rew_mean          | -216        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 20          |
+|    time_elapsed         | 4513        |
+|    total_timesteps      | 5341184     |
+| train/                  |             |
+|    approx_kl            | 0.009913233 |
+|    clip_fraction        | 0.0944      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.241       |
+|    explained_variance   | 0.822       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 23.2        |
+|    n_updates            | 3250        |
+|    policy_gradient_loss | -0.00344    |
+|    std                  | 0.214       |
+|    value_loss           | 258         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.009186  mean_q=-0.028569  active_frac=0.092  mean_step_reward=-0.9339  penalty_ratio=0.0099  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.0919      |
+|    mean_penalty         | 0.00919     |
+|    mean_q               | -0.0286     |
+|    mean_step_reward     | -0.934      |
+|    penalty_ratio        | 0.00993     |
+| rollout/                |             |
+|    ep_len_mean          | 152         |
+|    ep_rew_mean          | -139        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 21          |
+|    time_elapsed         | 4744        |
+|    total_timesteps      | 5357568     |
+| train/                  |             |
+|    approx_kl            | 0.006755381 |
+|    clip_fraction        | 0.0534      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.247       |
+|    explained_variance   | 0.73        |
+|    learning_rate        | 0.0001      |
+|    loss                 | 363         |
+|    n_updates            | 3260        |
+|    policy_gradient_loss | -0.00334    |
+|    std                  | 0.214       |
+|    value_loss           | 540         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.011102  mean_q=-0.029482  active_frac=0.111  mean_step_reward=-0.9047  penalty_ratio=0.0124  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.111        |
+|    mean_penalty         | 0.0111       |
+|    mean_q               | -0.0295      |
+|    mean_step_reward     | -0.905       |
+|    penalty_ratio        | 0.0124       |
+| rollout/                |              |
+|    ep_len_mean          | 141          |
+|    ep_rew_mean          | -126         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 22           |
+|    time_elapsed         | 4985         |
+|    total_timesteps      | 5373952      |
+| train/                  |              |
+|    approx_kl            | 0.0087011065 |
+|    clip_fraction        | 0.097        |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.249        |
+|    explained_variance   | 0.827        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 133          |
+|    n_updates            | 3270         |
+|    policy_gradient_loss | -0.00237     |
+|    std                  | 0.214        |
+|    value_loss           | 286          |
+------------------------------------------
+[QPenalty] mean_penalty=0.011682  mean_q=-0.029559  active_frac=0.117  mean_step_reward=-0.8874  penalty_ratio=0.0133  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.117       |
+|    mean_penalty         | 0.0117      |
+|    mean_q               | -0.0296     |
+|    mean_step_reward     | -0.887      |
+|    penalty_ratio        | 0.0133      |
+| rollout/                |             |
+|    ep_len_mean          | 156         |
+|    ep_rew_mean          | -139        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 23          |
+|    time_elapsed         | 5209        |
+|    total_timesteps      | 5390336     |
+| train/                  |             |
+|    approx_kl            | 0.009503233 |
+|    clip_fraction        | 0.0806      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.245       |
+|    explained_variance   | 0.828       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 51.5        |
+|    n_updates            | 3280        |
+|    policy_gradient_loss | -0.00301    |
+|    std                  | 0.215       |
+|    value_loss           | 342         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010681  mean_q=-0.031570  active_frac=0.107  mean_step_reward=-0.8670  penalty_ratio=0.0125  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.107        |
+|    mean_penalty         | 0.0107       |
+|    mean_q               | -0.0316      |
+|    mean_step_reward     | -0.867       |
+|    penalty_ratio        | 0.0125       |
+| rollout/                |              |
+|    ep_len_mean          | 135          |
+|    ep_rew_mean          | -110         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 24           |
+|    time_elapsed         | 5453         |
+|    total_timesteps      | 5406720      |
+| train/                  |              |
+|    approx_kl            | 0.0095538385 |
+|    clip_fraction        | 0.0963       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.251        |
+|    explained_variance   | 0.843        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 73.8         |
+|    n_updates            | 3290         |
+|    policy_gradient_loss | -0.00394     |
+|    std                  | 0.213        |
+|    value_loss           | 275          |
+------------------------------------------
+[QPenalty] mean_penalty=0.010437  mean_q=-0.027954  active_frac=0.104  mean_step_reward=-1.0503  penalty_ratio=0.0100  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.104       |
+|    mean_penalty         | 0.0104      |
+|    mean_q               | -0.028      |
+|    mean_step_reward     | -1.05       |
+|    penalty_ratio        | 0.01        |
+| rollout/                |             |
+|    ep_len_mean          | 155         |
+|    ep_rew_mean          | -166        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 25          |
+|    time_elapsed         | 5671        |
+|    total_timesteps      | 5423104     |
+| train/                  |             |
+|    approx_kl            | 0.008541245 |
+|    clip_fraction        | 0.0909      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.261       |
+|    explained_variance   | 0.844       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 327         |
+|    n_updates            | 3300        |
+|    policy_gradient_loss | -0.00227    |
+|    std                  | 0.212       |
+|    value_loss           | 298         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.009271  mean_q=-0.028707  active_frac=0.093  mean_step_reward=-0.8414  penalty_ratio=0.0111  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.0927      |
+|    mean_penalty         | 0.00927     |
+|    mean_q               | -0.0287     |
+|    mean_step_reward     | -0.841      |
+|    penalty_ratio        | 0.0111      |
+| rollout/                |             |
+|    ep_len_mean          | 145         |
+|    ep_rew_mean          | -125        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 26          |
+|    time_elapsed         | 5911        |
+|    total_timesteps      | 5439488     |
+| train/                  |             |
+|    approx_kl            | 0.010008034 |
+|    clip_fraction        | 0.0784      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.267       |
+|    explained_variance   | 0.837       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 32.6        |
+|    n_updates            | 3310        |
+|    policy_gradient_loss | -0.0032     |
+|    std                  | 0.212       |
+|    value_loss           | 363         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.012842  mean_q=-0.026726  active_frac=0.128  mean_step_reward=-1.0922  penalty_ratio=0.0119  n=16384
+-----------------------------------------
+| q/                      |             |
+|    active_frac          | 0.128       |
+|    mean_penalty         | 0.0128      |
+|    mean_q               | -0.0267     |
+|    mean_step_reward     | -1.09       |
+|    penalty_ratio        | 0.0119      |
+| rollout/                |             |
+|    ep_len_mean          | 168         |
+|    ep_rew_mean          | -182        |
+| time/                   |             |
+|    fps                  | 72          |
+|    iterations           | 27          |
+|    time_elapsed         | 6121        |
+|    total_timesteps      | 5455872     |
+| train/                  |             |
+|    approx_kl            | 0.008414929 |
+|    clip_fraction        | 0.104       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | 0.277       |
+|    explained_variance   | 0.883       |
+|    learning_rate        | 0.0001      |
+|    loss                 | 79.5        |
+|    n_updates            | 3320        |
+|    policy_gradient_loss | -0.00273    |
+|    std                  | 0.21        |
+|    value_loss           | 206         |
+-----------------------------------------
+[QPenalty] mean_penalty=0.010437  mean_q=-0.028078  active_frac=0.104  mean_step_reward=-0.9403  penalty_ratio=0.0112  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.104        |
+|    mean_penalty         | 0.0104       |
+|    mean_q               | -0.0281      |
+|    mean_step_reward     | -0.94        |
+|    penalty_ratio        | 0.0112       |
+| rollout/                |              |
+|    ep_len_mean          | 164          |
+|    ep_rew_mean          | -153         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 28           |
+|    time_elapsed         | 6333         |
+|    total_timesteps      | 5472256      |
+| train/                  |              |
+|    approx_kl            | 0.0075804368 |
+|    clip_fraction        | 0.0757       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.283        |
+|    explained_variance   | 0.84         |
+|    learning_rate        | 0.0001       |
+|    loss                 | 93.9         |
+|    n_updates            | 3330         |
+|    policy_gradient_loss | -0.00346     |
+|    std                  | 0.21         |
+|    value_loss           | 338          |
+------------------------------------------
+[QPenalty] mean_penalty=0.013031  mean_q=-0.028154  active_frac=0.130  mean_step_reward=-1.0941  penalty_ratio=0.0121  n=16384
+--------------------------------------
+| q/                      |          |
+|    active_frac          | 0.13     |
+|    mean_penalty         | 0.013    |
+|    mean_q               | -0.0282  |
+|    mean_step_reward     | -1.09    |
+|    penalty_ratio        | 0.0121   |
+| rollout/                |          |
+|    ep_len_mean          | 140      |
+|    ep_rew_mean          | -144     |
+| time/                   |          |
+|    fps                  | 72       |
+|    iterations           | 29       |
+|    time_elapsed         | 6570     |
+|    total_timesteps      | 5488640  |
+| train/                  |          |
+|    approx_kl            | 0.009249 |
+|    clip_fraction        | 0.0921   |
+|    clip_range           | 0.2      |
+|    entropy_loss         | 0.293    |
+|    explained_variance   | 0.868    |
+|    learning_rate        | 0.0001   |
+|    loss                 | 38       |
+|    n_updates            | 3340     |
+|    policy_gradient_loss | -0.00147 |
+|    std                  | 0.209    |
+|    value_loss           | 264      |
+--------------------------------------
+[QPenalty] mean_penalty=0.010474  mean_q=-0.029530  active_frac=0.105  mean_step_reward=-1.1039  penalty_ratio=0.0096  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.105        |
+|    mean_penalty         | 0.0105       |
+|    mean_q               | -0.0295      |
+|    mean_step_reward     | -1.1         |
+|    penalty_ratio        | 0.00958      |
+| rollout/                |              |
+|    ep_len_mean          | 147          |
+|    ep_rew_mean          | -158         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 30           |
+|    time_elapsed         | 6806         |
+|    total_timesteps      | 5505024      |
+| train/                  |              |
+|    approx_kl            | 0.0074014505 |
+|    clip_fraction        | 0.0717       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.303        |
+|    explained_variance   | 0.796        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 53.3         |
+|    n_updates            | 3350         |
+|    policy_gradient_loss | -0.00339     |
+|    std                  | 0.208        |
+|    value_loss           | 530          |
+------------------------------------------
+[QPenalty] mean_penalty=0.010181  mean_q=-0.028698  active_frac=0.102  mean_step_reward=-0.9228  penalty_ratio=0.0112  n=16384
+------------------------------------------
+| q/                      |              |
+|    active_frac          | 0.102        |
+|    mean_penalty         | 0.0102       |
+|    mean_q               | -0.0287      |
+|    mean_step_reward     | -0.923       |
+|    penalty_ratio        | 0.0112       |
+| rollout/                |              |
+|    ep_len_mean          | 157          |
+|    ep_rew_mean          | -146         |
+| time/                   |              |
+|    fps                  | 72           |
+|    iterations           | 31           |
+|    time_elapsed         | 7016         |
+|    total_timesteps      | 5521408      |
+| train/                  |              |
+|    approx_kl            | 0.0090281945 |
+|    clip_fraction        | 0.0784       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | 0.315        |
+|    explained_variance   | 0.847        |
+|    learning_rate        | 0.0001       |
+|    loss                 | 135          |
+|    n_updates            | 3360         |
+|    policy_gradient_loss | -0.00421     |
+|    std                  | 0.206        |
+|    value_loss           | 452          |
+------------------------------------------
+Saved fine-tuned model to: /home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m_goal2_safe_v3_confirm_b0.10000000000000002_s2/20261122_144358_pass1_1116973/model/model.zip
+[eval] success_rate=0.978 safe_success_rate_hazards_only=0.850 safe_success_rate_strict=0.562
+[eval] out_dir=/home/infres/dutra-24/projects/safe-gym/safety-va-rl/runs/finetune/ppo_5m_goal2_safe_v3_confirm_b0.10000000000000002_s2/20261122_144358_pass1_1116973/final_eval/selection_n500

@@ -1,0 +1,92 @@
+{
+  "base": "ppo_5m700k_goal2",
+  "pool": "test",
+  "n": 1000,
+  "beta": 17.320508075688775,
+  "chosen": {
+    "path": "runs/sweeps/ppo_5m700k_goal2_pass1_select/chosen_beta.json",
+    "sha256": "02c4d78b036aaafcfc1ac8cfb9de9257d8c932968a249cdc6389cff280b096a6"
+  },
+  "seed_pools_file": "configs/seed_pools.json",
+  "seed_pools_sha256": "2dd5a31370e76a284f39d7a9dd8af52d1b630b1d742a8861fd95fe361e6be288",
+  "evals": {
+    "ppo_5m700k_goal2": {
+      "eval_dir": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5700000/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b17.320508075688775_s0": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s0/20261122_122448_pass1_1116970/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b17.320508075688775_s1": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s1/20261122_122448_pass1_1116970/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b17.320508075688775_s2": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s2/20261122_122448_pass1_1116970/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b17.320508075688775_s3": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s3/20261122_122748_pass1_1116971/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b17.320508075688775_s4": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s4/20261122_122748_pass1_1116971/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b17.320508075688775_s5": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s5/20261122_122748_pass1_1116971/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b0.0_s0": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s0/20261122_075353_pass1_1116979/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b0.0_s1": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s1/20261122_075353_pass1_1116979/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b0.0_s2": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s2/20261122_075353_pass1_1116979/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b0.0_s3": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s3/20261122_075607_pass1_1116980/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b0.0_s4": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s4/20261122_075607_pass1_1116980/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    },
+    "ppo_5m700k_goal2_v3_final_b0.0_s5": {
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s5/20261122_075607_pass1_1116980/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116983",
+      "hostname": "nodecpu04"
+    }
+  }
+}

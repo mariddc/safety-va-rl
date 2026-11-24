@@ -1,0 +1,244 @@
+{
+  "beta": 17.320508075688775,
+  "beta_file": {
+    "path": "runs/sweeps/ppo_5m700k_goal2_pass1_select/top3.json",
+    "sha256": "8a6cd1f5a3c53d4230ad206b5737457433b78ad2d33c670158ec88e7ebe022c6",
+    "rank": 1
+  },
+  "pool": "confirm",
+  "seed_indices": [
+    0,
+    1,
+    2
+  ],
+  "seeds": [
+    6000000,
+    6001000,
+    6002000
+  ],
+  "code_commit": "3ecd838c06d69c31ceac37d8e4ca5c9633c856ef",
+  "dirty": false,
+  "job_id": "1116967",
+  "hostname": "nodecpu04",
+  "wall_time_s": 7813.444867152022,
+  "objective_key": "safe_success_rate_strict",
+  "objective": 0.65,
+  "runs": [
+    {
+      "seed_index": 0,
+      "run_dir": "runs/finetune/ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s0/20261122_054336_pass1_1116967",
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s0/20261122_054336_pass1_1116967/final_eval/selection_n500",
+      "reused_finetune": false,
+      "reused_eval": false,
+      "n_episodes": 500,
+      "reward": {
+        "mean": 418.0871844129562,
+        "std": 519.0427500904885
+      },
+      "episode_length": {
+        "mean": 148.11,
+        "time_to_goal_success_only": 136.01419878296147
+      },
+      "cost": {
+        "mean": 8.358,
+        "max": 98.0,
+        "unsafe_rate": 0.344
+      },
+      "success_rate": 0.986,
+      "safety_rate_hazards_only": 0.812,
+      "safety_rate_vases_touch_only": 0.794,
+      "strict_safety_rate": 0.662,
+      "safe_success_rate_hazards_only": 0.798,
+      "safe_success_rate_strict": 0.648,
+      "safety_breakdown": {
+        "hazards": {
+          "any_contact_rate": 0.188,
+          "entries_mean": 0.212,
+          "contact_steps_mean": 2.752,
+          "cost_sum_mean": 2.752,
+          "entries_max": 2,
+          "contact_steps_max": 45,
+          "cost_sum_max": 45.0
+        },
+        "vases": {
+          "any_touch_rate": 0.206,
+          "touch_steps_mean": 1.09,
+          "touch_cost_sum_mean": 1.09,
+          "touch_steps_max": 33,
+          "touch_cost_sum_max": 33.0,
+          "any_velocity_cost_rate": 0.214,
+          "velocity_steps_mean": 5.744,
+          "velocity_cost_sum_mean": 5.744,
+          "velocity_steps_max": 98,
+          "velocity_cost_sum_max": 98.0
+        }
+      },
+      "tb": {
+        "q/active_frac": {
+          "last": 0.05999755859375,
+          "mean": 0.09173583984375
+        },
+        "q/penalty_ratio": {
+          "last": 0.4756448566913605,
+          "mean": 0.6199439100680812
+        },
+        "train/value_loss": {
+          "last": 4773.9248046875,
+          "mean": 5669.158333333334
+        },
+        "train/approx_kl": {
+          "last": 0.00546739436686039,
+          "mean": 0.0048393540394802885
+        },
+        "train/clip_fraction": {
+          "last": 0.04801635816693306,
+          "mean": 0.04295328743755818
+        }
+      }
+    },
+    {
+      "seed_index": 1,
+      "run_dir": "runs/finetune/ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s1/20261122_054336_pass1_1116967",
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s1/20261122_054336_pass1_1116967/final_eval/selection_n500",
+      "reused_finetune": false,
+      "reused_eval": false,
+      "n_episodes": 500,
+      "reward": {
+        "mean": 408.35392877423766,
+        "std": 566.0851928012195
+      },
+      "episode_length": {
+        "mean": 154.936,
+        "time_to_goal_success_only": 134.15573770491804
+      },
+      "cost": {
+        "mean": 7.502,
+        "max": 87.0,
+        "unsafe_rate": 0.312
+      },
+      "success_rate": 0.976,
+      "safety_rate_hazards_only": 0.824,
+      "safety_rate_vases_touch_only": 0.834,
+      "strict_safety_rate": 0.694,
+      "safe_success_rate_hazards_only": 0.8,
+      "safe_success_rate_strict": 0.67,
+      "safety_breakdown": {
+        "hazards": {
+          "any_contact_rate": 0.176,
+          "entries_mean": 0.192,
+          "contact_steps_mean": 2.598,
+          "cost_sum_mean": 2.598,
+          "entries_max": 2,
+          "contact_steps_max": 45,
+          "cost_sum_max": 45.0
+        },
+        "vases": {
+          "any_touch_rate": 0.166,
+          "touch_steps_mean": 1.064,
+          "touch_cost_sum_mean": 1.064,
+          "touch_steps_max": 29,
+          "touch_cost_sum_max": 29.0,
+          "any_velocity_cost_rate": 0.174,
+          "velocity_steps_mean": 5.006,
+          "velocity_cost_sum_mean": 5.006,
+          "velocity_steps_max": 87,
+          "velocity_cost_sum_max": 87.0
+        }
+      },
+      "tb": {
+        "q/active_frac": {
+          "last": 0.05596923828125,
+          "mean": 0.08362603956653226
+        },
+        "q/penalty_ratio": {
+          "last": 0.3717210590839386,
+          "mean": 0.5539658059996944
+        },
+        "train/value_loss": {
+          "last": 3354.451416015625,
+          "mean": 5453.272330729166
+        },
+        "train/approx_kl": {
+          "last": 0.005851601250469685,
+          "mean": 0.0051688636342684426
+        },
+        "train/clip_fraction": {
+          "last": 0.05346069484949112,
+          "mean": 0.04647481304903825
+        }
+      }
+    },
+    {
+      "seed_index": 2,
+      "run_dir": "runs/finetune/ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s2/20261122_054336_pass1_1116967",
+      "eval_dir": "runs/finetune/ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s2/20261122_054336_pass1_1116967/final_eval/selection_n500",
+      "reused_finetune": false,
+      "reused_eval": false,
+      "n_episodes": 500,
+      "reward": {
+        "mean": 422.7758670889139,
+        "std": 490.5616564307448
+      },
+      "episode_length": {
+        "mean": 148.66,
+        "time_to_goal_success_only": 134.8170731707317
+      },
+      "cost": {
+        "mean": 8.034,
+        "max": 93.0,
+        "unsafe_rate": 0.354
+      },
+      "success_rate": 0.984,
+      "safety_rate_hazards_only": 0.786,
+      "safety_rate_vases_touch_only": 0.82,
+      "strict_safety_rate": 0.648,
+      "safe_success_rate_hazards_only": 0.77,
+      "safe_success_rate_strict": 0.632,
+      "safety_breakdown": {
+        "hazards": {
+          "any_contact_rate": 0.214,
+          "entries_mean": 0.228,
+          "contact_steps_mean": 3.098,
+          "cost_sum_mean": 3.098,
+          "entries_max": 2,
+          "contact_steps_max": 38,
+          "cost_sum_max": 38.0
+        },
+        "vases": {
+          "any_touch_rate": 0.18,
+          "touch_steps_mean": 0.964,
+          "touch_cost_sum_mean": 0.964,
+          "touch_steps_max": 24,
+          "touch_cost_sum_max": 24.0,
+          "any_velocity_cost_rate": 0.182,
+          "velocity_steps_mean": 5.058,
+          "velocity_cost_sum_mean": 5.058,
+          "velocity_steps_max": 93,
+          "velocity_cost_sum_max": 93.0
+        }
+      },
+      "tb": {
+        "q/active_frac": {
+          "last": 0.06903076171875,
+          "mean": 0.09471474924395161
+        },
+        "q/penalty_ratio": {
+          "last": 0.39140909910202026,
+          "mean": 0.7442531537625098
+        },
+        "train/value_loss": {
+          "last": 5892.99609375,
+          "mean": 5438.034879557292
+        },
+        "train/approx_kl": {
+          "last": 0.004677438177168369,
+          "mean": 0.005197258309150735
+        },
+        "train/clip_fraction": {
+          "last": 0.04579467698931694,
+          "mean": 0.04683268225441376
+        }
+      }
+    }
+  ]
+}

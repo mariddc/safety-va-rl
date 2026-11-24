@@ -1,0 +1,92 @@
+{
+  "base": "ppo_5m_goal2_safe",
+  "pool": "test",
+  "n": 1000,
+  "beta": 0.839842469356632,
+  "chosen": {
+    "path": "runs/sweeps/ppo_5m_goal2_safe_pass1_select/chosen_beta.json",
+    "sha256": "f401fa1efaf4be97b05e0ac0f6646b85e0167d24b13f74609a3cb43065aa25fa"
+  },
+  "seed_pools_file": "configs/seed_pools.json",
+  "seed_pools_sha256": "2dd5a31370e76a284f39d7a9dd8af52d1b630b1d742a8861fd95fe361e6be288",
+  "evals": {
+    "ppo_5m_goal2_safe": {
+      "eval_dir": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.839842469356632_s0": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.839842469356632_s0/20261122_185835_pass1_1116977/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.839842469356632_s1": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.839842469356632_s1/20261122_185835_pass1_1116977/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.839842469356632_s2": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.839842469356632_s2/20261122_185835_pass1_1116977/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.839842469356632_s3": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.839842469356632_s3/20261122_185835_pass1_1116978/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.839842469356632_s4": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.839842469356632_s4/20261122_185835_pass1_1116978/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.839842469356632_s5": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.839842469356632_s5/20261122_185835_pass1_1116978/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.0_s0": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.0_s0/20261122_100358_pass1_1116981/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.0_s1": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.0_s1/20261122_100358_pass1_1116981/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.0_s2": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.0_s2/20261122_100358_pass1_1116981/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.0_s3": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.0_s3/20261122_101339_pass1_1116982/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.0_s4": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.0_s4/20261122_101339_pass1_1116982/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    },
+    "ppo_5m_goal2_safe_v3_final_b0.0_s5": {
+      "eval_dir": "runs/finetune/ppo_5m_goal2_safe_v3_final_b0.0_s5/20261122_101339_pass1_1116982/final_eval/test_n1000",
+      "evaluated": "this job",
+      "job_id": "1116984",
+      "hostname": "nodecpu10"
+    }
+  }
+}

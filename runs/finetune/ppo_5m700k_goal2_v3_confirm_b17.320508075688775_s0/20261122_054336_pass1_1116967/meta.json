@@ -1,0 +1,70 @@
+{
+  "exp_name": "ppo_5m700k_goal2_v3_confirm_b17.320508075688775_s0",
+  "status": "finished",
+  "error": null,
+  "pass": "pass1",
+  "start_time": "2026-11-22T04:43:36+00:00",
+  "end_time": "2026-11-22T06:35:37+00:00",
+  "exec_mode": "slurm",
+  "hostname": "nodecpu04",
+  "slurm_job_id": "1116967",
+  "git": {
+    "commit": "3ecd838c06d69c31ceac37d8e4ca5c9633c856ef",
+    "dirty": false,
+    "dirty_paths": [],
+    "dirty_allowed": false
+  },
+  "seed": 6000000,
+  "beta": 17.320508075688775,
+  "timesteps": 500000,
+  "n_envs": 8,
+  "env_id": "SafetyPointGoal2-v0",
+  "reward_wrapper": "complete",
+  "reward_kwargs": {
+    "goal_bonus": 800.0,
+    "shaping_k": 1.5
+  },
+  "hyperparameters": {
+    "requested": {
+      "learning_rate": 0.0001,
+      "n_steps": 2048,
+      "batch_size": 64,
+      "n_epochs": 10,
+      "gamma": 0.99,
+      "gae_lambda": 0.95,
+      "clip_range": 0.2,
+      "ent_coef": 0.0,
+      "vf_coef": 0.5,
+      "max_grad_norm": 0.5,
+      "device": "cpu",
+      "n_envs": 8,
+      "seed": 6000000
+    },
+    "effective": {
+      "learning_rate": 0.0001,
+      "n_steps": 2048,
+      "batch_size": 64,
+      "n_epochs": 10,
+      "gamma": 0.99,
+      "gae_lambda": 0.95,
+      "clip_range": 0.2,
+      "ent_coef": 0.0,
+      "vf_coef": 0.5,
+      "max_grad_norm": 0.5,
+      "device": "cpu",
+      "n_envs": 8,
+      "seed": 6000000
+    }
+  },
+  "q_path": "logs/datasets/eil/ppo/SafetyPointGoal2-v0/ppo_5m700k_goal2/SafetyPointGoal2-v0/eil_aL0.2_aE0.0_v3/q_theta.pt",
+  "q_sha256": "1b348c76d5d0c343bb5a4b2ceb4f7f177e5dbfcde19a166be95198bdd5cef875",
+  "q_hash_check": "matched",
+  "B": 0.0,
+  "lambda_I": 1.0,
+  "dataset_id": "eil_aL0.2_aE0.0_v3",
+  "base_exp": "ppo_5m700k_goal2",
+  "base_model_path": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5700000/model/model.zip",
+  "base_model_sha256": "80145ecdcc5671465096a87cc6a96ce323a376e2c6be4d115ddad8e8801832c7",
+  "timesteps_at_start": 5701632,
+  "timesteps_trained": 507904
+}
