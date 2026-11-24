@@ -43,6 +43,9 @@ cluster/local_*.log
 **/videos/
 **/*.mp4
 **/*.meta.json
+# Test-episode illustration videos (shown and unlabeled replays) are kept
+!results/video/*.mp4
+!results/video/raw/*.mp4
 
 # Sweep runtime artifacts
 **/sweep_trial_*/
