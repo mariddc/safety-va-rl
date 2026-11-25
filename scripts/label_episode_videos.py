@@ -59,7 +59,8 @@ def main():
         path = out_dir / f"{stem}_s{i}_side_by_side.mp4"
         write_mp4(path, side)
         keys = ["exp_name", "run_dir", "model_sha256", "match"]
-        meta = {"stem": stem, "episode_seed": panels[0][2]["episode_seed"], "train_seed": i,
+        common = ["stem", "episode_seed", "train_seed", "index", "test_hostname", "render", "machine", "git", "time"]
+        meta = {**{k: ft[k] for k in common},
                 "panels": [{**{k: m[k] for k in keys}, "label": panel_label(m)} for *_, m in panels],
                 "match": all(m["match"] for *_, m in panels)}
         path.with_suffix(".json").write_text(json.dumps(meta, indent=2))
