@@ -1,5 +1,7 @@
 {
+  "stem": "ppo_5m_goal2_safe_ep2000978",
   "episode_seed": 2000978,
+  "train_seed": 2,
   "index": "runs/final_test/ppo_5m_goal2_safe_pass1_test_n1000.json",
   "test_hostname": "nodecpu10",
   "render": {
@@ -18,13 +20,15 @@
     "mujoco": "2.3.3"
   },
   "git": {
-    "commit": "38c17a7ed7a9969b1f2f36a7d7563d1d70402778",
+    "commit": "92ce7666ab86dd29eda8b8cad41dddb751543c5a",
     "dirty": false,
     "dirty_paths": []
   },
-  "time": "2026-11-24T20:51:28+00:00",
+  "time": "2026-11-24T23:51:01+00:00",
+  "tag": "base",
+  "role": "base",
+  "beta": null,
   "exp_name": "ppo_5m_goal2_safe",
-  "label": "base",
   "run_dir": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000",
   "model_sha256": "1ee75d7763be268ad86d117b0c7a624762a5014ba260f308e196aab36c5cdd8b",
   "episodes_csv": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5000000/final_eval/test_n1000/episodes.csv",
@@ -42,5 +46,6 @@
     "hazard_steps": 14.0,
     "vase_contact_steps": 1.0
   },
-  "match": true
+  "match": true,
+  "label": "base"
 }

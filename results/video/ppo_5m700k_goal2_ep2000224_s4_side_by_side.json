@@ -1,5 +1,7 @@
 {
+  "stem": "ppo_5m700k_goal2_ep2000224",
   "episode_seed": 2000224,
+  "train_seed": 4,
   "index": "runs/final_test/ppo_5m700k_goal2_pass1_test_n1000.json",
   "test_hostname": "nodecpu04",
   "render": {
@@ -18,32 +20,32 @@
     "mujoco": "2.3.3"
   },
   "git": {
-    "commit": "38c17a7ed7a9969b1f2f36a7d7563d1d70402778",
+    "commit": "92ce7666ab86dd29eda8b8cad41dddb751543c5a",
     "dirty": false,
     "dirty_paths": []
   },
-  "time": "2026-11-24T20:47:20+00:00",
+  "time": "2026-11-24T23:48:48+00:00",
   "panels": [
     {
       "exp_name": "ppo_5m700k_goal2",
-      "label": "base",
       "run_dir": "experiments/ppo/SafetyPointGoal2-v0/n_timesteps_5700000",
       "model_sha256": "80145ecdcc5671465096a87cc6a96ce323a376e2c6be4d115ddad8e8801832c7",
-      "match": true
+      "match": true,
+      "label": "base"
     },
     {
       "exp_name": "ppo_5m700k_goal2_v3_final_b0.0_s4",
-      "label": "\u03b2 = 0 fine-tune (seed 4)",
       "run_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b0.0_s4/20261122_075607_pass1_1116980",
       "model_sha256": "c7e04e2645779bfc3bdfdef2fb17e0518d63a2354caa4a454b0d474ddee851e2",
-      "match": false
+      "match": false,
+      "label": "\u03b2 = 0 fine-tune (seed 4)"
     },
     {
       "exp_name": "ppo_5m700k_goal2_v3_final_b17.320508075688775_s4",
-      "label": "\u03b2 = 17.32 fine-tune (seed 4)",
       "run_dir": "runs/finetune/ppo_5m700k_goal2_v3_final_b17.320508075688775_s4/20261122_122748_pass1_1116971",
       "model_sha256": "43691ff24a0f1cbaae3e97086107577717d577df8fe3afa2d34a9d1880b2ed0a",
-      "match": true
+      "match": true,
+      "label": "\u03b2 = 17.32 fine-tune (seed 4)"
     }
   ],
   "match": false
